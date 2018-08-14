@@ -1,0 +1,240 @@
+/*
+ * echocancel.cxx
+ *
+ * Open Phone Abstraction Library (OPAL)
+ * Formally known as the Open H323 project.
+ *
+ * Copyright (c) 2001 Post Increment
+ *
+ * The contents of this file are subject to the Mozilla Public License
+ * Version 1.0 (the "License"); you may not use this file except in
+ * compliance with the License. You may obtain a copy of the License at
+ * http://www.mozilla.org/MPL/
+ *
+ * Software distributed under the License is distributed on an "AS IS"
+ * basis, WITHOUT WARRANTY OF ANY KIND, either express or implied. See
+ * the License for the specific language governing rights and limitations
+ * under the License.
+ *
+ * The Original Code is Open Phone Abstraction Library.
+ *
+ * The author of this code is Damien Sandras
+ *
+ * Contributor(s): Miguel Rodriguez Perez.
+ *
+ * $Revision: 21004 $
+ * $Author: rjongbloed $
+ * $Date: 2008-09-16 02:08:56 -0500 (Tue, 16 Sep 2008) $
+ */
+
+#include <ptlib.h>
+
+#ifdef __GNUC__
+#pragma implementation "echocancel.h"
+#endif
+
+#include <opal/buildopts.h>
+
+extern "C" {
+#include <audioechoCancel.h>
+#ifdef OPAL_SYSTEM_SPEEX
+#if OPAL_HAVE_SPEEX_SPEEX_H
+#include <speex/speex_echo.h>
+#include <speex/speex_preprocess.h>
+#else
+#include <speex_echo.h>
+#include <speex_preprocess.h>
+#endif
+#else
+#include "../src/codec/speex/libspeex/speex_echo.h"
+#include "../src/codec/speex/libspeex/speex_preprocess.h"
+#endif
+};
+
+#include <codec/echocancel.h>
+
+///////////////////////////////////////////////////////////////////////////////
+
+OpalEchoCanceler::OpalEchoCanceler()
+#ifdef _MSC_VER
+#pragma warning(disable:4355)
+#endif
+  : receiveHandler(PCREATE_NOTIFIER(ReceivedPacket)),
+    sendHandler(PCREATE_NOTIFIER(SentPacket))
+#ifdef _MSC_VER
+#pragma warning(default:4355)
+#endif
+{
+  echoState = NULL;
+  preprocessState = NULL;
+
+  e_buf = NULL;
+  echo_buf = NULL;
+  ref_buf = NULL;
+  noise = NULL;
+
+  echo_chan = new PQueueChannel();
+  echo_chan->Open(10000);
+  echo_chan->SetReadTimeout(10);
+  echo_chan->SetWriteTimeout(10);
+
+  mean = 0;
+  clockRate = 8000;
+
+	DSPEcho=-1;
+	DSPtoRead =160;
+	inBuf =NULL;
+	outBuf = NULL;
+	echoCancelParam = malloc(sizeof(Audio_CancelParam));
+	audioProcessParam = malloc(sizeof(Audio_ProcessParam));
+	DSPEcho = CreatechoCancel(&inBuf,&outBuf,(Audio_CancelParam *)echoCancelParam);
+
+	//ne = fopen("/mnt/pcm/ne.pcm", "wb");
+	//if (!ne)
+	//{
+	//	printf ("ne.pcm File in Open Error....\n");
+	//}
+	//fa = fopen("/mnt/pcm/fa.pcm", "wb");
+	//if (!fa)
+	//{
+	//	printf ("fa.pcm File in Open Error....\n");
+	//}
+
+	//out = fopen("/mnt/pcm/out.pcm", "wb");
+	//if (!out)
+	//{
+	//	printf ("out.pcm File out Open Error....\n");
+	//} 
+	PTRACE(4, "Echo Canceler\tHandler created");
+}
+
+
+OpalEchoCanceler::~OpalEchoCanceler()
+{
+  PWaitAndSignal m(stateMutex);
+  if (echoState) {
+    speex_echo_state_destroy(echoState);
+    echoState = NULL;
+  }
+  
+  if (preprocessState) {
+    speex_preprocess_state_destroy(preprocessState);
+    preprocessState = NULL;
+  }
+  if (DSPEcho != -1)
+  {
+	DeleteechoCancel(&inBuf,&outBuf);
+	DSPEcho =-1;
+  }
+/*
+	if (ne)
+		fclose(ne);
+	if (fa)
+		fclose(fa);
+	if (out)
+		fclose(out);
+*/
+
+  if (ref_buf)
+    free(ref_buf);
+  if (e_buf)
+    free(e_buf);
+  if (echo_buf)
+    free(echo_buf);
+  if (noise)
+    free(noise);
+  
+  echo_chan->Close();
+  delete(echo_chan);
+}
+
+
+void OpalEchoCanceler::SetParameters(const Params& newParam)
+{
+  PWaitAndSignal m(stateMutex);
+  param = newParam;
+
+  if (echoState) {
+    speex_echo_state_destroy(echoState);
+    echoState = NULL;
+  }
+  
+  if (preprocessState) {
+    speex_preprocess_state_destroy(preprocessState);
+    preprocessState = NULL;
+  }
+}
+
+
+void OpalEchoCanceler::SetClockRate(const int rate)
+{
+  clockRate = rate;
+}
+
+
+void OpalEchoCanceler::SentPacket(RTP_DataFrame& echo_frame, INT)
+{
+  if (echo_frame.GetPayloadSize() == 0)
+    return;
+
+  if (param.m_mode == NoCancelation)
+    return;
+
+  /* Write to the soundcard, and write the frame to the PQueueChannel */
+  echo_chan->Write(echo_frame.GetPayloadPtr(), echo_frame.GetPayloadSize());
+}
+
+
+void OpalEchoCanceler::ReceivedPacket(RTP_DataFrame& input_frame, INT)
+{//after read, it is dispatch, ne , 320 =160*2
+
+  int inputSize = 0;
+  int i = 1;
+  int outOff = 0;
+  
+  if (input_frame.GetPayloadSize() == 0)
+    return;
+  
+  if (param.m_mode == NoCancelation)
+{
+ printf("*********************************param.m_mode == NoCancelation*************************************\n");
+    return;
+}
+
+  inputSize = input_frame.GetPayloadSize(); // Size is in bytes
+
+  PWaitAndSignal m(stateMutex);
+	
+  if (DSPEcho == -1)
+  {
+	  DSPEcho = CreatechoCancel(&inBuf,&outBuf,(Audio_CancelParam *)echoCancelParam);
+  }
+  if (e_buf == NULL)
+    e_buf = ( unsigned char *)malloc(inputSize);
+  for (int count =0 ; count < inputSize/DSPtoRead;count++)
+  {
+	  memcpy((unsigned char *)inBuf,input_frame.GetPayloadPtr()+count*DSPtoRead, DSPtoRead);
+
+	//if (ne)
+	//{
+	//	fwrite((unsigned char *)inBuf, 1, DSPtoRead, ne);
+	//	fflush(ne);
+	//}
+	  echo_chan->Read((( unsigned char *) inBuf)+1024, DSPtoRead);
+	//if (fa)
+	//{
+	//	fwrite((( unsigned char *) inBuf)+1024, 1, DSPtoRead, fa);
+	//	fflush(fa);
+	//}
+	 printf("*********************************ProcessechoCancel*************************************\n");
+	  DSPEcho = ProcessechoCancel(&inBuf,&outBuf,(Audio_ProcessParam *)audioProcessParam);
+	  memcpy(e_buf+outOff,outBuf, ((Audio_ProcessParam *)audioProcessParam)->outBufSize);
+	//if (out)
+	//{
+		//fwrite(outBuf, 1, ((Audio_ProcessParam *)audioProcessParam)->outBufSize, out);
+		//fflush(out);
+	//}
+	  outOff+=((Audio_ProcessParam *)audioProcessParam)->outBufSize;
+  }
+ memcpy(input_frame.GetPayloadPtr(), e_buf, input_frame.GetPayloadSize());
+}

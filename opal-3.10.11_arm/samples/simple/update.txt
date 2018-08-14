@@ -1,0 +1,382 @@
+  0:00.152	             SimpleOPAL	                (0)		Version 3.10.11 by Open Phone Abstraction Library on Windows XP (v5.1.2600-i586 (Model=42 Stepping=7)) with PTLib (v2.10.11 (svn:30295)) at 2015/3/12 16:16:53.093
+  0:00.239	             SimpleOPAL	     capi_ep.cxx(528)	CAPI	DLL not installed, or invalid.
+  0:00.239	             SimpleOPAL	     capi_ep.cxx(654)	CAPI	Not registered with drivers, or not installed.
+  0:00.265	             SimpleOPAL	        main.cxx(960)	Simple	Registered media formats:
+          Format Name       = PCM-16
+           Media Type       = audio
+         Payload Type       = [pt=127]
+        Encoding Name       = 
+             Channels (R/W) = 1          UnsignedInt
+           Clock Rate (R/O) = 8000       UnsignedInt
+           Frame Time (R/O) = 8          UnsignedInt
+         Max Bit Rate (R/O) = 128000     UnsignedInt
+       Max Frame Size (R/O) = 16         UnsignedInt
+Max Frames Per Packet (R/O) = 256        UnsignedInt
+         Needs Jitter (R/O) = 1          Boolean
+             Protocol (R/O) =            String
+ Rx Frames Per Packet (R/W) = 240        UnsignedInt
+
+          Format Name       = G.711-uLaw-64k
+           Media Type       = audio
+         Payload Type       = PCMU
+        Encoding Name       = PCMU
+             Channels (R/W) = 1          UnsignedInt
+           Clock Rate (R/O) = 8000       UnsignedInt
+           Frame Time (R/O) = 8          UnsignedInt
+         Max Bit Rate (R/O) = 64000      UnsignedInt
+       Max Frame Size (R/O) = 8          UnsignedInt
+Max Frames Per Packet (R/O) = 256        UnsignedInt
+         Needs Jitter (R/O) = 1          Boolean
+             Protocol (R/O) =            String
+ Rx Frames Per Packet (R/W) = 240        UnsignedInt
+ Tx Frames Per Packet (R/W) = 20         UnsignedInt
+
+          Format Name       = G.711-ALaw-64k
+           Media Type       = audio
+         Payload Type       = PCMA
+        Encoding Name       = PCMA
+             Channels (R/W) = 1          UnsignedInt
+           Clock Rate (R/O) = 8000       UnsignedInt
+           Frame Time (R/O) = 8          UnsignedInt
+         Max Bit Rate (R/O) = 64000      UnsignedInt
+       Max Frame Size (R/O) = 8          UnsignedInt
+Max Frames Per Packet (R/O) = 256        UnsignedInt
+         Needs Jitter (R/O) = 1          Boolean
+             Protocol (R/O) =            String
+ Rx Frames Per Packet (R/W) = 240        UnsignedInt
+ Tx Frames Per Packet (R/W) = 20         UnsignedInt
+
+         Format Name       = YUV420P
+          Media Type       = video
+        Payload Type       = [pt=127]
+       Encoding Name       = 
+          Clock Rate (R/O) = 90000      UnsignedInt
+        Content Role (R/W) = No Role    Enum
+   Content Role Mask (R/W) = 0          UnsignedInt
+        Frame Height (R/W) = 1080       UnsignedInt
+          Frame Time (R/W) = 1525       UnsignedInt
+         Frame Width (R/W) = 1920       UnsignedInt
+        Max Bit Rate (R/W) = 583925760  UnsignedInt
+ Max Rx Frame Height (R/W) = 1152       UnsignedInt
+  Max Rx Frame Width (R/W) = 1408       UnsignedInt
+  Max Tx Packet Size (R/O) = 1444       UnsignedInt
+ Min Rx Frame Height (R/W) = 96         UnsignedInt
+  Min Rx Frame Width (R/W) = 128        UnsignedInt
+            Protocol (R/O) =            String
+ Rate Control Period (R/W) = 1000       UnsignedInt
+     Rate Controller (R/W) =            String
+     Target Bit Rate (R/W) = 7936000    UnsignedInt
+ Tx Key Frame Period (R/W) = 125        UnsignedInt
+
+         Format Name       = RFC4175_YCbCr-4:2:0
+          Media Type       = video
+        Payload Type       = [pt=97]
+       Encoding Name       = raw
+          Clock Rate (R/O) = 90000       FMTP name: rate () UnsignedInt
+        Content Role (R/W) = No Role    Enum
+   Content Role Mask (R/W) = 0          UnsignedInt
+        Frame Height (R/W) = 1080        FMTP name: height () UnsignedInt
+          Frame Time (R/W) = 1525       UnsignedInt
+         Frame Width (R/W) = 1920        FMTP name: width () UnsignedInt
+        Max Bit Rate (R/W) = 186624000  UnsignedInt
+ Max Rx Frame Height (R/W) = 1080       UnsignedInt
+  Max Rx Frame Width (R/W) = 1920       UnsignedInt
+  Max Tx Packet Size (R/O) = 1444       UnsignedInt
+ Min Rx Frame Height (R/W) = 96         UnsignedInt
+  Min Rx Frame Width (R/W) = 128        UnsignedInt
+            Protocol (R/O) =            String
+ Rate Control Period (R/W) = 1000       UnsignedInt
+     Rate Controller (R/W) =            String
+ rfc4175_colorimetry (R/O) = BT601-5     FMTP name: colorimetry () String
+       rfc4175_depth (R/O) = 8           FMTP name: depth () Unknown
+    rfc4175_sampling (R/O) = YCbCr-4:2:0  FMTP name: sampling () String
+     Target Bit Rate (R/W) = 7936000    UnsignedInt
+ Tx Key Frame Period (R/W) = 125        UnsignedInt
+
+         Format Name       = RGB24
+          Media Type       = video
+        Payload Type       = [pt=127]
+       Encoding Name       = 
+          Clock Rate (R/O) = 90000      UnsignedInt
+        Content Role (R/W) = No Role    Enum
+   Content Role Mask (R/W) = 0          UnsignedInt
+        Frame Height (R/W) = 1080       UnsignedInt
+          Frame Time (R/W) = 1525       UnsignedInt
+         Frame Width (R/W) = 1920       UnsignedInt
+        Max Bit Rate (R/W) = 1167851520 UnsignedInt
+ Max Rx Frame Height (R/W) = 1152       UnsignedInt
+  Max Rx Frame Width (R/W) = 1408       UnsignedInt
+  Max Tx Packet Size (R/O) = 1444       UnsignedInt
+ Min Rx Frame Height (R/W) = 96         UnsignedInt
+  Min Rx Frame Width (R/W) = 128        UnsignedInt
+            Protocol (R/O) =            String
+ Rate Control Period (R/W) = 1000       UnsignedInt
+     Rate Controller (R/W) =            String
+     Target Bit Rate (R/W) = 7936000    UnsignedInt
+ Tx Key Frame Period (R/W) = 125        UnsignedInt
+
+         Format Name       = RFC4175_RGB
+          Media Type       = video
+        Payload Type       = [pt=99]
+       Encoding Name       = raw
+          Clock Rate (R/O) = 90000       FMTP name: rate () UnsignedInt
+        Content Role (R/W) = No Role    Enum
+   Content Role Mask (R/W) = 0          UnsignedInt
+        Frame Height (R/W) = 1080        FMTP name: height () UnsignedInt
+          Frame Time (R/W) = 1525       UnsignedInt
+         Frame Width (R/W) = 1920        FMTP name: width () UnsignedInt
+        Max Bit Rate (R/W) = 373248000  UnsignedInt
+ Max Rx Frame Height (R/W) = 1080       UnsignedInt
+  Max Rx Frame Width (R/W) = 1920       UnsignedInt
+  Max Tx Packet Size (R/O) = 1444       UnsignedInt
+ Min Rx Frame Height (R/W) = 96         UnsignedInt
+  Min Rx Frame Width (R/W) = 128        UnsignedInt
+            Protocol (R/O) =            String
+ Rate Control Period (R/W) = 1000       UnsignedInt
+     Rate Controller (R/W) =            String
+ rfc4175_colorimetry (R/O) = BT601-5     FMTP name: colorimetry () String
+       rfc4175_depth (R/O) = 8           FMTP name: depth () Unknown
+    rfc4175_sampling (R/O) = RGB         FMTP name: sampling () String
+     Target Bit Rate (R/W) = 7936000    UnsignedInt
+ Tx Key Frame Period (R/W) = 125        UnsignedInt
+
+          Format Name       = PCM-16-16kHz
+           Media Type       = audio
+         Payload Type       = [pt=127]
+        Encoding Name       = 
+             Channels (R/W) = 1          UnsignedInt
+           Clock Rate (R/O) = 16000      UnsignedInt
+           Frame Time (R/O) = 16         UnsignedInt
+         Max Bit Rate (R/O) = 256000     UnsignedInt
+       Max Frame Size (R/O) = 32         UnsignedInt
+Max Frames Per Packet (R/O) = 256        UnsignedInt
+         Needs Jitter (R/O) = 1          Boolean
+             Protocol (R/O) =            String
+ Rx Frames Per Packet (R/W) = 240        UnsignedInt
+
+          Format Name       = PCM-16-32kHz
+           Media Type       = audio
+         Payload Type       = [pt=127]
+        Encoding Name       = 
+             Channels (R/W) = 1          UnsignedInt
+           Clock Rate (R/O) = 32000      UnsignedInt
+           Frame Time (R/O) = 32         UnsignedInt
+         Max Bit Rate (R/O) = 512000     UnsignedInt
+       Max Frame Size (R/O) = 64         UnsignedInt
+Max Frames Per Packet (R/O) = 256        UnsignedInt
+         Needs Jitter (R/O) = 1          Boolean
+             Protocol (R/O) =            String
+ Rx Frames Per Packet (R/W) = 240        UnsignedInt
+
+          Format Name       = PCM-16-48kHz
+           Media Type       = audio
+         Payload Type       = [pt=127]
+        Encoding Name       = 
+             Channels (R/W) = 1          UnsignedInt
+           Clock Rate (R/O) = 48000      UnsignedInt
+           Frame Time (R/O) = 48         UnsignedInt
+         Max Bit Rate (R/O) = 768000     UnsignedInt
+       Max Frame Size (R/O) = 96         UnsignedInt
+Max Frames Per Packet (R/O) = 256        UnsignedInt
+         Needs Jitter (R/O) = 1          Boolean
+             Protocol (R/O) =            String
+ Rx Frames Per Packet (R/W) = 240        UnsignedInt
+
+          Format Name       = PCM-16S-16kHz
+           Media Type       = audio
+         Payload Type       = [pt=127]
+        Encoding Name       = 
+             Channels (R/W) = 2          UnsignedInt
+           Clock Rate (R/O) = 16000      UnsignedInt
+           Frame Time (R/O) = 16         UnsignedInt
+         Max Bit Rate (R/O) = 512000     UnsignedInt
+       Max Frame Size (R/O) = 64         UnsignedInt
+Max Frames Per Packet (R/O) = 256        UnsignedInt
+         Needs Jitter (R/O) = 1          Boolean
+             Protocol (R/O) =            String
+ Rx Frames Per Packet (R/W) = 240        UnsignedInt
+
+          Format Name       = PCM-16S-32kHz
+           Media Type       = audio
+         Payload Type       = [pt=127]
+        Encoding Name       = 
+             Channels (R/W) = 2          UnsignedInt
+           Clock Rate (R/O) = 32000      UnsignedInt
+           Frame Time (R/O) = 32         UnsignedInt
+         Max Bit Rate (R/O) = 1024000    UnsignedInt
+       Max Frame Size (R/O) = 128        UnsignedInt
+Max Frames Per Packet (R/O) = 256        UnsignedInt
+         Needs Jitter (R/O) = 1          Boolean
+             Protocol (R/O) =            String
+ Rx Frames Per Packet (R/W) = 240        UnsignedInt
+
+          Format Name       = PCM-16S-48kHz
+           Media Type       = audio
+         Payload Type       = [pt=127]
+        Encoding Name       = 
+             Channels (R/W) = 2          UnsignedInt
+           Clock Rate (R/O) = 48000      UnsignedInt
+           Frame Time (R/O) = 48         UnsignedInt
+         Max Bit Rate (R/O) = 1536000    UnsignedInt
+       Max Frame Size (R/O) = 192        UnsignedInt
+Max Frames Per Packet (R/O) = 256        UnsignedInt
+         Needs Jitter (R/O) = 1          Boolean
+             Protocol (R/O) =            String
+ Rx Frames Per Packet (R/W) = 240        UnsignedInt
+
+                Format Name       = H.264
+                 Media Type       = video
+               Payload Type       = [pt=98]
+              Encoding Name       = H264
+                 Clock Rate (R/O) = 90000      UnsignedInt
+               Content Role (R/W) = No Role    Enum
+          Content Role Mask (R/W) = 0          UnsignedInt
+               Frame Height (R/W) = 1080       UnsignedInt
+                 Frame Time (R/W) = 1525       UnsignedInt
+                Frame Width (R/W) = 1920       UnsignedInt
+        Generic Parameter 3 (R/O) = 972         H.245 Ordinal: 3 Collapsing TCS OLC UnsignedInt
+        Generic Parameter 4 (R/O) = 32          H.245 Ordinal: 4 Collapsing TCS OLC UnsignedInt
+       Generic Parameter 41 (R/O) = 8           H.245 Ordinal: 41 Collapsing TCS OLC BooleanArray
+       Generic Parameter 42 (R/O) = 85          H.245 Ordinal: 42 Collapsing TCS OLC UnsignedInt
+               H.241 Max BR (R/O) = 0           H.245 Ordinal: 6 Collapsing TCS OLC RM UnsignedInt
+               H.241 Max FS (R/O) = 0           H.245 Ordinal: 4 Collapsing TCS OLC RM UnsignedInt
+             H.241 Max MBPS (R/O) = 0           H.245 Ordinal: 3 Collapsing TCS OLC RM UnsignedInt
+               Max Bit Rate (R/W) = 10000000   UnsignedInt
+        Max Rx Frame Height (R/W) = 1080       UnsignedInt
+         Max Rx Frame Width (R/W) = 1920       UnsignedInt
+         Max Tx Packet Size (R/O) = 1444       UnsignedInt
+       Media Packetizations (R/W) = 0.0.8.241.0.0.0.0,0.0.8.241.0.0.0.1 String
+        Min Rx Frame Height (R/W) = 96         UnsignedInt
+         Min Rx Frame Width (R/W) = 128        UnsignedInt
+                   Protocol (R/O) =            String
+        Rate Control Period (R/W) = 1000       UnsignedInt
+            Rate Controller (R/W) =            String
+Send Access Unit Delimiters (R/W) = 0          Boolean
+            Target Bit Rate (R/W) = 7936000    UnsignedInt
+ Temporal Spatial Trade Off (R/W) = 31         UnsignedInt
+        Tx Key Frame Period (R/W) = 125        UnsignedInt
+
+                Format Name       = H.239
+                 Media Type       = video
+               Payload Type       = [pt=106]
+              Encoding Name       = H264
+                 Clock Rate (R/O) = 90000      UnsignedInt
+               Content Role (R/W) = No Role    Enum
+          Content Role Mask (R/W) = 0          UnsignedInt
+               Frame Height (R/W) = 1080       UnsignedInt
+                 Frame Time (R/W) = 1525       UnsignedInt
+                Frame Width (R/W) = 1920       UnsignedInt
+        Generic Parameter 3 (R/O) = 486         H.245 Ordinal: 3 Collapsing TCS OLC UnsignedInt
+        Generic Parameter 4 (R/O) = 32          H.245 Ordinal: 4 Collapsing TCS OLC UnsignedInt
+       Generic Parameter 41 (R/O) = 8           H.245 Ordinal: 41 Collapsing TCS OLC BooleanArray
+       Generic Parameter 42 (R/O) = 85          H.245 Ordinal: 42 Collapsing TCS OLC UnsignedInt
+               H.241 Max BR (R/O) = 0           H.245 Ordinal: 6 Collapsing TCS OLC RM UnsignedInt
+               H.241 Max FS (R/O) = 0           H.245 Ordinal: 4 Collapsing TCS OLC RM UnsignedInt
+             H.241 Max MBPS (R/O) = 0           H.245 Ordinal: 3 Collapsing TCS OLC RM UnsignedInt
+               Max Bit Rate (R/W) = 2000000    UnsignedInt
+        Max Rx Frame Height (R/W) = 1080       UnsignedInt
+         Max Rx Frame Width (R/W) = 1920       UnsignedInt
+         Max Tx Packet Size (R/O) = 1444       UnsignedInt
+       Media Packetizations (R/W) = 0.0.8.241.0.0.0.0,0.0.8.241.0.0.0.1 String
+        Min Rx Frame Height (R/W) = 96         UnsignedInt
+         Min Rx Frame Width (R/W) = 128        UnsignedInt
+                   Protocol (R/O) =            String
+        Rate Control Period (R/W) = 1000       UnsignedInt
+            Rate Controller (R/W) =            String
+Send Access Unit Delimiters (R/W) = 0          Boolean
+            Target Bit Rate (R/W) = 7936000    UnsignedInt
+ Temporal Spatial Trade Off (R/W) = 31         UnsignedInt
+        Tx Key Frame Period (R/W) = 125        UnsignedInt
+
+         Format Name       = UserInput/RFC2833
+          Media Type       = userinput
+        Payload Type       = [pt=101]
+       Encoding Name       = telephone-event
+          Clock Rate (R/O) = 8000       UnsignedInt
+              Events (R/W) =   FMTP name: FMTP (0-15) Unknown
+          Frame Time (R/O) = 80         UnsignedInt
+        Max Bit Rate (R/O) = 640        UnsignedInt
+      Max Frame Size (R/O) = 4          UnsignedInt
+        Needs Jitter (R/O) = 1          Boolean
+            Protocol (R/O) =            String
+
+         Format Name       = NamedSignalEvent
+          Media Type       = userinput
+        Payload Type       = [pt=100]
+       Encoding Name       = NSE
+          Clock Rate (R/O) = 8000       UnsignedInt
+              Events (R/W) =   FMTP name: FMTP (192,193) Unknown
+          Frame Time (R/O) = 80         UnsignedInt
+        Max Bit Rate (R/O) = 640        UnsignedInt
+      Max Frame Size (R/O) = 4          UnsignedInt
+        Needs Jitter (R/O) = 1          Boolean
+            Protocol (R/O) =            String
+
+         Format Name       = MSRP
+          Media Type       = msrp
+        Payload Type       = [pt=127]
+       Encoding Name       = 
+        Accept Types (R/W) = message/cpim message/html text/plain String
+          Clock Rate (R/O) = 1000       UnsignedInt
+        Max Bit Rate (R/O) = 1440       UnsignedInt
+      Max Frame Size (R/O) = 512        UnsignedInt
+                Path (R/W) =            String
+            Protocol (R/O) =            String
+
+         Format Name       = SIP-IM
+          Media Type       = sip-im
+        Payload Type       = [pt=127]
+       Encoding Name       = 
+          Clock Rate (R/O) = 1000       UnsignedInt
+        Max Bit Rate (R/O) = 1440       UnsignedInt
+      Max Frame Size (R/O) = 512        UnsignedInt
+            Protocol (R/O) =            String
+                 URL (R/W) =            String
+
+         Format Name       = T.140
+          Media Type       = t140
+        Payload Type       = [pt=102]
+       Encoding Name       = t140
+          Clock Rate (R/O) = 1000       UnsignedInt
+        Max Bit Rate (R/O) = 1440       UnsignedInt
+      Max Frame Size (R/O) = 512        UnsignedInt
+            Protocol (R/O) =            String
+
+         Format Name       = H.224/H323AnnexQ
+          Media Type       = h224
+        Payload Type       = [pt=96]
+       Encoding Name       = h224
+          Clock Rate (R/O) = 4800       UnsignedInt
+      HDLC Tunneling (R/O) = 0          Boolean
+        Max Bit Rate (R/O) = 6400       UnsignedInt
+            Protocol (R/O) =            String
+
+         Format Name       = H.224/HDLCTunneling
+          Media Type       = h224
+        Payload Type       = [pt=127]
+       Encoding Name       = h224
+          Clock Rate (R/O) = 4800       UnsignedInt
+      HDLC Tunneling (R/O) = 1          Boolean
+        Max Bit Rate (R/O) = 6400       UnsignedInt
+            Protocol (R/O) =            String
+
+          Format Name       = T.38
+           Media Type       = fax
+         Payload Type       = T38
+        Encoding Name       = t38
+         Max Bit Rate (R/O) = 1440       UnsignedInt
+       Max Frame Size (R/O) = 528        UnsignedInt
+             Protocol (R/O) =            String
+ T38FaxFillBitRemoval (R/W) = 0          Boolean
+      T38FaxMaxBuffer (R/W) = 2000       Unknown
+    T38FaxMaxDatagram (R/W) = 528        Unknown
+ T38FaxRateManagement (R/W) = transferredTCF Enum
+T38FaxTranscodingJBIG (R/W) = 0          Boolean
+ T38FaxTranscodingMMR (R/W) = 0          Boolean
+          T38FaxUdpEC (R/W) = t38UDPRedundancy Enum
+        T38FaxVersion (R/W) = 0          Unknown
+        T38MaxBitRate (R/W) = 14400      Unknown
+              Use-ECM (R/W) = 1          Boolean
+
+
+  0:05.884	     Opal Listener:1420	   h264codec.cxx(65)	PlugIn	ToUpdatePicture: 0
