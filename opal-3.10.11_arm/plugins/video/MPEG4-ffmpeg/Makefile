@@ -43,7 +43,7 @@ endif
 vpath   %.cxx $(COMMONDIR)
 
 INSTALL_DIR := opal-3.10.11/codecs/video
-PLUGINDIR   := /home/tool/nfsGao/opal/opal-3.10.11_arm/plugins
+PLUGINDIR   := /home/lee/sm_for_certify/sanweixinan/crypto_voip_sm/crypto_opal/opal-3.10.11_arm/plugins
 include $(PLUGINDIR)/plugin-inc.mak
 
 ###########################################

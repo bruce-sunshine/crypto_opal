@@ -235,7 +235,7 @@ PSSLPrivateKey::~PSSLPrivateKey()
 }
 
 
-PBoolean PSSLPrivateKey::Create(unsigned modulus,
+PBoolean PSSLPrivateKey::Create(unsigned modulus,			//note, bruce
                             void (*callback)(int,int,void *),
                             void *cb_arg)
 {
@@ -440,7 +440,7 @@ PSSLCertificate::~PSSLCertificate()
 }
 
 
-PBoolean PSSLCertificate::CreateRoot(const PString & subject,
+PBoolean PSSLCertificate::CreateRoot(const PString & subject,			//note, bruce
                                  const PSSLPrivateKey & privateKey)
 {
   if (certificate != NULL) {

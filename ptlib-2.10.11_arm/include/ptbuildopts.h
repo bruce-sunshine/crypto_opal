@@ -189,9 +189,9 @@
 // OpenSSL library for secure sockets layer
 //
 
-/* #undef P_OSSL */
-/* #undef P_OSSL_AES */
-/* #undef P_SSL_USE_CONST */
+#define P_OSSL 1
+#define P_OSSL_AES 1
+#define P_SSL_USE_CONST 1
 
 #if defined(P_OSSL) && !defined(_WIN32_WCE)
   #define P_SSL 1

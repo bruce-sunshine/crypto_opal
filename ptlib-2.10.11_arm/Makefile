@@ -31,7 +31,7 @@
 PREFIX=/usr/local
 exec_prefix = ${PREFIX}
 export LIBDIR=${exec_prefix}/lib
-export PTLIBDIR=/home/tool/opal/ptlib-2.10.11_arm
+export PTLIBDIR=/home/lee/sm_for_certify/sanweixinan/crypto_voip_sm/crypto_opal/ptlib-2.10.11_arm
 
 INSTALL=/usr/bin/install -c
 

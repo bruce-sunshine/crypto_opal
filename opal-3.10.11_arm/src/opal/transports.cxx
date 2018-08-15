@@ -1598,7 +1598,7 @@ PBoolean OpalTransportTCPS::Connect()
   socket->SetReadTimeout(PMaxTimeInterval);
 
   PString certificateFile = endpoint.GetSSLCertificate();
-  if (!SetSSLCertificate(*sslContext, certificateFile, PTrue)) {
+  if (!SetSSLCertificate(*sslContext, certificateFile, PTrue)) {		//note, bruce
     PTRACE(1, "OpalTCPS\tCould not load certificate \"" << certificateFile << '"');
     return PFalse;
   }
@@ -1691,7 +1691,7 @@ void OpalListenerTCPS::Construct()
   sslContext = new PSSLContext();
 
   PString certificateFile = endpoint.GetSSLCertificate();
-  if (!SetSSLCertificate(*sslContext, certificateFile, PTrue)) {
+  if (!SetSSLCertificate(*sslContext, certificateFile, PTrue)) {	//note, bruce
     PTRACE(1, "OpalTCPS\tCould not load certificate \"" << certificateFile << '"');
   }
 }

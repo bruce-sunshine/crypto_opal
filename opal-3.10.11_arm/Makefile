@@ -57,10 +57,10 @@ endif
 
 ifeq ($(VERBOSE),)
 Q=@
-Q_CC = @echo [CC] `echo $< | sed s^/home/tool/nfsGao/opal/opal-3.10.11_arm/^^` ; 
-Q_DEP= @echo [DEP] `echo $< | sed s^/home/tool/nfsGao/opal/opal-3.10.11_arm/^^` ; 
-Q_AR = @echo [AR] `echo $@ | sed s^/home/tool/nfsGao/opal/opal-3.10.11_arm/^^` ;
-Q_LD = @echo [LD] `echo $@ | sed s^/home/tool/nfsGao/opal/opal-3.10.11_arm/^^` ;
+Q_CC = @echo [CC] `echo $< | sed s^/home/lee/sm_for_certify/sanweixinan/crypto_voip_sm/crypto_opal/opal-3.10.11_arm/^^` ; 
+Q_DEP= @echo [DEP] `echo $< | sed s^/home/lee/sm_for_certify/sanweixinan/crypto_voip_sm/crypto_opal/opal-3.10.11_arm/^^` ; 
+Q_AR = @echo [AR] `echo $@ | sed s^/home/lee/sm_for_certify/sanweixinan/crypto_voip_sm/crypto_opal/opal-3.10.11_arm/^^` ;
+Q_LD = @echo [LD] `echo $@ | sed s^/home/lee/sm_for_certify/sanweixinan/crypto_voip_sm/crypto_opal/opal-3.10.11_arm/^^` ;
 endif
 
 

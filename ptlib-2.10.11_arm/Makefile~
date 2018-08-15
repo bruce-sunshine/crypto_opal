@@ -28,10 +28,10 @@
 # $Date: 2011-05-21 12:13:34 -0500 (Sat, 21 May 2011) $
 #
 
-PREFIX=/home/tool/opal/ptlib-2.10.11_arm
+PREFIX=/usr/local
 exec_prefix = ${PREFIX}
-export LIBDIR=${exec_prefix}/lib_linux_arm
-export PTLIBDIR=/home/tool/opal/ptlib-2.10.11_arm
+export LIBDIR=${exec_prefix}/lib
+export PTLIBDIR=/home/lee/sm_for_certify/sanweixinan/crypto_voip_sm/crypto_opal/ptlib-2.10.11_arm
 
 INSTALL=/usr/bin/install -c
 

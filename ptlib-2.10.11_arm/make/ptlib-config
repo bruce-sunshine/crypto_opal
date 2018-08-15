@@ -8,9 +8,9 @@ prefix=/usr/local
 exec_prefix=${prefix}
 
 VERSION="2.10.11"
-CCFLAGS=" -DPTRACING=1 -D_REENTRANT   -fno-exceptions"
-LDFLAGS=""
-LIBS=" -lpthread -lrt -lexpat  -lresolv -ldl -lpt"
+CCFLAGS=" -DPTRACING=1 -D_REENTRANT -I/usr/local/ssl/include   -fno-exceptions"
+LDFLAGS="-L/usr/local/ssl/lib"
+LIBS=" -lpthread -lrt -lssl -lcrypto -lexpat  -lresolv -ldl -lpt"
 LIBDIR="${exec_prefix}/lib"
 PTINSTDIR="/usr/local/share/ptlib"
 MACHTYPE="arm"

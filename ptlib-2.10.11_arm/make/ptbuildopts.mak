@@ -15,11 +15,11 @@ MACHTYPE   = arm
 OSTYPE	   = linux
 OSRELEASE  = "3.16.0-30-generic"
 
-STDCCFLAGS    +=  -DPTRACING=1 -D_REENTRANT   -fno-exceptions 
+STDCCFLAGS    +=  -DPTRACING=1 -D_REENTRANT -I/usr/local/ssl/include   -fno-exceptions 
 STDCXXFLAGS   +=  -felide-constructors -Wreorder 
 OPTSTDCCFLAGS += 
-LDFLAGS	      += 
-ENDLDLIBS     +=  -lpthread -lrt -lexpat  -lresolv -ldl
+LDFLAGS	      += -L/usr/local/ssl/lib
+ENDLDLIBS     +=  -lpthread -lrt -lssl -lcrypto -lexpat  -lresolv -ldl
 DEBUG_FLAG    += -g3 -ggdb -O0
 
 AR		= ar
@@ -30,7 +30,7 @@ USE_GCC         = yes
 USE_PCH		= 
 HAS_IPV6        = 
 HAS_RESOLVER	= 1
-HAS_OPENSSL	= 
+HAS_OPENSSL	= 1
 HAS_OPENLDAP	= 
 HAS_SASL	= 
 HAS_SASL2	= 

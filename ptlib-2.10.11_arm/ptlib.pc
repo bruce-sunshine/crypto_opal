@@ -11,14 +11,14 @@ objdir=obj_linux_arm${suffix}
 Name: ptlib
 Description: PT Library
 Version: 2.10.11
-Libs:  -L${libdir} -lpt${suffix}
-Libs.private:  -lpthread -lrt -lexpat  -lresolv -ldl
-Cflags: -I${includedir}  -DPTRACING=1 -D_REENTRANT   -fno-exceptions
+Libs: -L/usr/local/ssl/lib -L${libdir} -lpt${suffix}
+Libs.private:  -lpthread -lrt -lssl -lcrypto -lexpat  -lresolv -ldl
+Cflags: -I${includedir}  -DPTRACING=1 -D_REENTRANT -I/usr/local/ssl/include   -fno-exceptions
 
 PTLIB_IPV6=no
 PTLIB_RESOLVER=yes
-PTLIB_OPENSSL=no
-PTLIB_OPENSSL_AES=no
+PTLIB_OPENSSL=yes
+PTLIB_OPENSSL_AES=yes
 PTLIB_OPENLDAP=no
 PTLIB_SASL=no
 PTLIB_SASL2=no
