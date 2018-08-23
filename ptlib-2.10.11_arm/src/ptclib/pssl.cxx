@@ -252,8 +252,11 @@ PBoolean PSSLPrivateKey::Create(unsigned modulus,			//note, bruce
   if (key == NULL)
     return PFalse;
 
-  if (EVP_PKEY_assign_RSA(key, RSA_generate_key(modulus, 0x10001, callback, cb_arg)))
-    return PTrue;
+//  if (EVP_PKEY_assign_RSA(key, RSA_generate_key(modulus, 0x10001, callback, cb_arg)))
+//    return PTrue;
+
+  if (EVP_PKEY_assign_EC_KEY(key, EC_KEY_new_by_curve_name(NID_ecdsa_with_SHA512 )))	//note, bruce, to be change, NID_sm2_with_sm3
+	  return PTrue;
 
   EVP_PKEY_free(key);
   key = NULL;
