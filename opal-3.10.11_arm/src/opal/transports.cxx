@@ -1527,14 +1527,14 @@ OpalTransportTCPS::OpalTransportTCPS(OpalEndPoint & ep,
                                      PBoolean reuseAddr)
   : OpalTransportTCP(ep, binding, port, reuseAddr)
 {
-  sslContext = new PSSLContext(PSSLContext::TLSv1);
+  sslContext = new PSSLContext(PSSLContext::TLSv1_2);
 }
 
 
 OpalTransportTCPS::OpalTransportTCPS(OpalEndPoint & ep, PTCPSocket * socket)
   : OpalTransportTCP(ep, PIPSocket::GetDefaultIpAny(), 0)
 {
-  sslContext = new PSSLContext(PSSLContext::TLSv1);
+  sslContext = new PSSLContext(PSSLContext::TLSv1_2);
   PSSLChannel * sslChannel = new PSSLChannel(sslContext);
   if (!sslChannel->Open(socket))
     delete sslChannel;

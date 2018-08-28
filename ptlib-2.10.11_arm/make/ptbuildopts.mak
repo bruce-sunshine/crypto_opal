@@ -15,11 +15,11 @@ MACHTYPE   = arm
 OSTYPE	   = linux
 OSRELEASE  = "3.16.0-30-generic"
 
-STDCCFLAGS    +=  -DPTRACING=1 -D_REENTRANT -I/usr/local/ssl/include   -fno-exceptions 
+STDCCFLAGS    +=  -DPTRACING=1 -D_REENTRANT -I/usr/local/Gmssl_arm/include     -fno-exceptions 
 STDCXXFLAGS   +=  -felide-constructors -Wreorder 
 OPTSTDCCFLAGS += 
-LDFLAGS	      += -L/usr/local/ssl/lib
-ENDLDLIBS     +=  -lpthread -lrt -lssl -lcrypto -lexpat  -lresolv -ldl
+LDFLAGS	      += 
+ENDLDLIBS     +=  -lpthread -lrt -L/usr/local/Gmssl_arm/lib -lssl -lcrypto   -lexpat  -lresolv -ldl
 DEBUG_FLAG    += -g3 -ggdb -O0
 
 AR		= ar

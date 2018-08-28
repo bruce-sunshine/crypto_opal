@@ -1,0 +1,1 @@
+./Configure linux-armv4 -march=armv7-a  --prefix=/usr/local/Gmssl_arm --openssldir=/usr/local/Gmssl_arm --cross-compile-prefix=arm-arago-linux-gnueabi- no-asm enable-ssl-trace threads

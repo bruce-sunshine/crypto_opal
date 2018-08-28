@@ -11,9 +11,9 @@ objdir=obj_linux_arm${suffix}
 Name: ptlib
 Description: PT Library
 Version: 2.10.11
-Libs: -L/usr/local/ssl/lib -L${libdir} -lpt${suffix}
-Libs.private:  -lpthread -lrt -lssl -lcrypto -lexpat  -lresolv -ldl
-Cflags: -I${includedir}  -DPTRACING=1 -D_REENTRANT -I/usr/local/ssl/include   -fno-exceptions
+Libs:  -L${libdir} -lpt${suffix}
+Libs.private:  -lpthread -lrt -L/usr/local/Gmssl_arm/lib -lssl -lcrypto   -lexpat  -lresolv -ldl
+Cflags: -I${includedir}  -DPTRACING=1 -D_REENTRANT -I/usr/local/Gmssl_arm/include     -fno-exceptions
 
 PTLIB_IPV6=no
 PTLIB_RESOLVER=yes

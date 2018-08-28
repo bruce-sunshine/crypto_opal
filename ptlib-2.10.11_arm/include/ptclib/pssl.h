@@ -37,6 +37,17 @@
 
 #include <ptlib/sockets.h>
 
+extern "C" {
+
+#include <openssl/ssl.h>
+#include <openssl/err.h>
+#include <openssl/rand.h>
+
+#include <openssl/crypto.h>
+#include <openssl/bio.h>
+#include <openssl/ossl_typ.h>
+//#include <openssl/dh.h>
+};
 
 struct ssl_st;
 struct ssl_ctx_st;
@@ -265,7 +276,8 @@ class PSSLCertificate : public PObject
     x509_st * certificate;
 };
 
-
+//delete by bruce
+#if 1
 /**Diffie-Hellman parameters for SSL.
    This class embodies a set of Diffie Helman parameters as used by
    PSSLContext and PSSLChannel classes.
@@ -330,7 +342,7 @@ class PSSLDiffieHellman : public PObject
   protected:
     dh_st * dh;
 };
-
+#endif
 
 /**Context for SSL channels.
    This class embodies a common environment for all connections made via SSL
@@ -339,10 +351,10 @@ class PSSLDiffieHellman : public PObject
   */
 class PSSLContext {
   public:
-    enum Method {
+    enum Method {	//changed by bruce, 0823
       SSLv23,
-      SSLv3,
-      TLSv1
+      TLSv1_1,
+      TLSv1_2
     };
 
     /**Create a new context for SSL channels.

@@ -94,15 +94,14 @@
 
 #define USE_SOCKETS
 
-//extern "C" {
-//
-//#include <openssl/ssl.h>
-//#include <openssl/err.h>
-//#include <openssl/rand.h>
-//
-//};
+extern "C" {
 
-//#define BIO_s_file_internal    BIO_s_file	//added by bruce, 20180823
+#include <openssl/ssl.h>
+#include <openssl/err.h>
+#include <openssl/rand.h>
+
+};
+
 
 #ifdef _MSC_VER
   #pragma comment(lib, P_SSL_LIB1)
@@ -141,8 +140,7 @@ PFACTORY_CREATE_SINGLETON(PProcessStartupFactory, PSSLInitialiser);
 class PSSL_BIO
 {
   public:
-//    PSSL_BIO(const BIO_METHOD *method = BIO_s_file_internal())	//added by bruce, add const
-  PSSL_BIO(const BIO_METHOD *method = BIO_s_file())	//added by bruce, add const
+    PSSL_BIO(BIO_METHOD *method = BIO_s_file_internal())
       { bio = BIO_new(method); }
 
     ~PSSL_BIO()
@@ -254,11 +252,11 @@ PBoolean PSSLPrivateKey::Create(unsigned modulus,			//note, bruce
   if (key == NULL)
     return PFalse;
 
-  if (EVP_PKEY_assign_RSA(key, RSA_generate_key(modulus, 0x10001, callback, cb_arg)))
-    return PTrue;
+//  if (EVP_PKEY_assign_RSA(key, RSA_generate_key(modulus, 0x10001, callback, cb_arg)))
+//    return PTrue;
 
-//  if (EVP_PKEY_assign_EC_KEY(key, EC_KEY_new_by_curve_name(NID_ecdsa_with_SHA512 )))	//note, bruce, to be change, NID_sm2_with_sm3
-//	  return PTrue;
+  if (EVP_PKEY_assign_EC_KEY(key, EC_KEY_new_by_curve_name(NID_ecdsa_with_SHA512 )))	//note, bruce, to be change, NID_sm2_with_sm3
+	  return PTrue;
 
   EVP_PKEY_free(key);
   key = NULL;
@@ -609,8 +607,8 @@ PBoolean PSSLCertificate::Save(const PFilePath & certFile, PBoolean append, PSSL
 }
 
 
-/////////////////////////////////////////////////////////////////////////////// delete by bruce
-#if 1
+///////////////////////////////////////////////////////////////////////////////
+
 PSSLDiffieHellman::PSSLDiffieHellman()
 {
   dh = NULL;
@@ -628,25 +626,17 @@ PSSLDiffieHellman::PSSLDiffieHellman(const PFilePath & dhFile,
 PSSLDiffieHellman::PSSLDiffieHellman(const BYTE * pData, PINDEX pSize,
                                      const BYTE * gData, PINDEX gSize)
 {
-	const BIGNUM *p = NULL;		//changed by lee
-	const BIGNUM *g = NULL;
-	dh = DH_new();
-	if (dh == NULL)
-		return;
+  dh = DH_new();
+  if (dh == NULL)
+    return;
 
-	//  dh->p = BN_bin2bn(pData, pSize, NULL);
-	DH_set0_pqg(dh, BN_bin2bn(pData, pSize, NULL), NULL, NULL);
-	//  dh->g = BN_bin2bn(gData, gSize, NULL);
-	DH_set0_pqg(dh, NULL, NULL, BN_bin2bn(gData, gSize, NULL));
-	//
-	//  if (dh->p != NULL && dh->g != NULL)
-	//    return;
-	DH_get0_pqg(dh, &p, NULL, &g);
-	if ( p !=NULL && g != NULL)
-		return;
+  dh->p = BN_bin2bn(pData, pSize, NULL);
+  dh->g = BN_bin2bn(gData, gSize, NULL);
+  if (dh->p != NULL && dh->g != NULL)
+    return;
 
-	DH_free(dh);
-	dh = NULL;
+  DH_free(dh);
+  dh = NULL;
 }
 
 
@@ -726,7 +716,7 @@ PBoolean PSSLDiffieHellman::Load(const PFilePath & dhFile,
 
   return PFalse;
 }
-#endif
+
 
 ///////////////////////////////////////////////////////////////////////////////
 
@@ -806,7 +796,7 @@ PSSLContext::PSSLContext(Method method, const void * sessionId, PINDEX idSize)
 
 PSSLContext::PSSLContext(const void * sessionId, PINDEX idSize)
 {
-  Construct(TLSv1_2, sessionId, idSize);	//changed by bruce
+  Construct(SSLv23, sessionId, idSize);
 }
 
 void PSSLContext::Construct(Method method, const void * sessionId, PINDEX idSize)
@@ -818,16 +808,15 @@ void PSSLContext::Construct(Method method, const void * sessionId, PINDEX idSize
   SSL_METHOD * meth;
 
   switch (method) {
-    case TLSv1_1:
-      meth = TLSv1_method();
+    case SSLv3:
+      meth = SSLv3_method();
       break;
-    case TLSv1_2:
-      meth = TLSv1_2_method();
+    case TLSv1:
+      meth = TLSv1_method(); 
       break;
     case SSLv23:
     default:
-//      meth = SSLv23_method();	//changed by bruce
-    	meth = TLSv1_2_method();
+      meth = SSLv23_method();
       break;
   }
 
@@ -850,8 +839,6 @@ void PSSLContext::Construct(Method method, const void * sessionId, PINDEX idSize
     SSL_CTX_sess_set_cache_size(context, 128);
   }
 
-  printf("set cipher = ECDHE-SM2-WITH-SMS4-SM3\n");
-  SetCipherList("ECDHE-SM2-WITH-SMS4-SM3");		//added by bruce
   // set default verify mode
   SSL_CTX_set_verify(context, SSL_VERIFY_NONE, VerifyCallBack);
 }
@@ -1010,11 +997,9 @@ PBoolean PSSLChannel::Write(const void * buf, PINDEX len)
   return returnValue;
 }
 
-void bio_Psock_sdt_free(void);
+
 PBoolean PSSLChannel::Close()
 {
-  bio_Psock_sdt_free();		//added by bruce
-  printf("close PSSLChannel\n");
   PBoolean ok = SSL_shutdown(ssl);
   return PIndirectChannel::Close() && ok;
 }
@@ -1135,8 +1120,8 @@ PBoolean PSSLChannel::RawSSLRead(void * buf, PINDEX & len)
 //
 
 
-//#define PSSLCHANNEL(bio)      ((PSSLChannel *)(bio->ptr))
-#define PSSLCHANNEL(bio)      ((PSSLChannel *)(BIO_get_data(bio)))
+#define PSSLCHANNEL(bio)      ((PSSLChannel *)(bio->ptr))
+
 extern "C" {
 
 #if (OPENSSL_VERSION_NUMBER < 0x00906000)
@@ -1148,14 +1133,10 @@ typedef long (*lfptr)();
 
 static int Psock_new(BIO * bio)
 {
-//  bio->init     = 0;
-//  bio->num      = 0;
-//  bio->ptr      = NULL;    // this is really (PSSLChannel *)
-//  bio->flags    = 0;
-	BIO_set_init(bio, 0);
-	BIO_set_data(bio, NULL);
-	BIO_set_flags(bio, 0);
-
+  bio->init     = 0;
+  bio->num      = 0;
+  bio->ptr      = NULL;    // this is really (PSSLChannel *)
+  bio->flags    = 0;
 
   return(1);
 }
@@ -1163,21 +1144,17 @@ static int Psock_new(BIO * bio)
 
 static int Psock_free(BIO * bio)
 {
-	if (bio == NULL)
-		return 0;
+  if (bio == NULL)
+    return 0;
 
-	//  if (bio->shutdown) {
-	if(BIO_get_shutdown(bio)){
-		//    if (bio->init) {
-		if(BIO_get_init(bio)){
-			PSSLCHANNEL(bio)->Shutdown(PSocket::ShutdownReadAndWrite);
-			PSSLCHANNEL(bio)->Close();
-		}
-		//    bio->init  = 0;
-		//    bio->flags = 0;
-		BIO_set_init(bio, 0);
-		BIO_set_flags(bio, 0);
-	}
+  if (bio->shutdown) {
+    if (bio->init) {
+      PSSLCHANNEL(bio)->Shutdown(PSocket::ShutdownReadAndWrite);
+      PSSLCHANNEL(bio)->Close();
+    }
+    bio->init  = 0;
+    bio->flags = 0;
+  }
   return 1;
 }
 
@@ -1186,13 +1163,11 @@ static long Psock_ctrl(BIO * bio, int cmd, long num, void * /*ptr*/)
 {
   switch (cmd) {
     case BIO_CTRL_SET_CLOSE:
-//      bio->shutdown = (int)num;
-    	BIO_set_shutdown(bio, (int)num);
+      bio->shutdown = (int)num;
       return 1;
 
     case BIO_CTRL_GET_CLOSE:
-//      return bio->shutdown;
-    	return BIO_get_shutdown(bio);
+      return bio->shutdown;
 
     case BIO_CTRL_FLUSH:
       return 1;
@@ -1266,7 +1241,7 @@ static int Psock_puts(BIO * bio, const char * str)
 
 };
 
-#if 0
+
 static BIO_METHOD methods_Psock =
 {
   BIO_TYPE_SOCKET,
@@ -1278,8 +1253,7 @@ static BIO_METHOD methods_Psock =
   NULL,
   (lfptr)Psock_ctrl,
   (ifptr)Psock_new,
-  (ifptr)Psock_free,
-  NULL,
+  (ifptr)Psock_free
 #else
   Psock_write,
   Psock_read,
@@ -1287,53 +1261,24 @@ static BIO_METHOD methods_Psock =
   NULL,
   Psock_ctrl,
   Psock_new,
-  Psock_free,
-  NULL,
+  Psock_free
 #endif
 };
-#endif
 
-static BIO_METHOD *methods_Psock = NULL;
-const BIO_METHOD *bio_Psock_sdt(void)
-{
-	    if (methods_Psock == NULL) {
-	    	methods_Psock = BIO_meth_new(BIO_TYPE_SOCKET, "PTLib-PSSLChannel");
-	        if (   methods_Psock == NULL
-	            || !BIO_meth_set_write(methods_Psock, Psock_write)
-	            || !BIO_meth_set_read(methods_Psock, Psock_read)
-	            || !BIO_meth_set_puts(methods_Psock, Psock_puts)
-	            || !BIO_meth_set_gets(methods_Psock, NULL)
-	            || !BIO_meth_set_ctrl(methods_Psock, Psock_ctrl)
-	            || !BIO_meth_set_create(methods_Psock, Psock_new)
-	            || !BIO_meth_set_destroy(methods_Psock, Psock_free))
-	            return NULL;
-	    }
-	    return methods_Psock;
-}
-
-void bio_Psock_sdt_free(void)
-{
-    BIO_meth_free(methods_Psock);
-}
 
 PBoolean PSSLChannel::OnOpen()
 {
-//  BIO * bio = BIO_new(&methods_Psock);
-	BIO * bio = BIO_new(bio_Psock_sdt());
+  BIO * bio = BIO_new(&methods_Psock);
   if (bio == NULL) {
-	  printf("PSSLChannel OnOpen failed\n");
     SSLerr(SSL_F_SSL_SET_FD,ERR_R_BUF_LIB);
     return PFalse;
   }
 
   // "Open" then bio
-//  bio->ptr  = this;
-//  bio->init = 1;
-  BIO_set_data(bio, this);
-  BIO_set_init(bio, 1);
+  bio->ptr  = this;
+  bio->init = 1;
 
   SSL_set_bio(ssl, bio, bio);
-  printf("PSSLChannel OnOpen ok\n");
   return PTrue;
 }
 
