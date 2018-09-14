@@ -697,7 +697,7 @@ static SUB_STATE_RETURN read_state_machine(SSL *s)
 /*
  * Send a previously constructed message to the peer.
  */
-static int statem_do_write(SSL *s)
+static int statem_do_write(SSL *s)		//note,bruce
 {
     OSSL_STATEM *st = &s->statem;
 
@@ -823,7 +823,7 @@ static SUB_STATE_RETURN write_state_machine(SSL *s)
             if (SSL_IS_DTLS(s) && st->use_timer) {
                 dtls1_start_timer(s);
             }
-            ret = statem_do_write(s);
+            ret = statem_do_write(s);	//note, bruce
             if (ret <= 0) {
                 return SUB_STATE_ERROR;
             }

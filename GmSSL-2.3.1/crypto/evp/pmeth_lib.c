@@ -337,7 +337,7 @@ int EVP_PKEY_CTX_ctrl_str(EVP_PKEY_CTX *ctx,
         }
         return EVP_PKEY_CTX_set_signature_md(ctx, md);
     }
-    return ctx->pmeth->ctrl_str(ctx, name, value);
+    return ctx->pmeth->ctrl_str(ctx, name, value);		//note, bruce ,set ctx pmeth param
 }
 
 /* Utility functions to send a string of hex string to a ctrl */

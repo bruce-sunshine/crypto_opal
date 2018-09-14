@@ -253,13 +253,28 @@ PBoolean PSSLPrivateKey::Create(unsigned modulus,			//note, bruce
   key = EVP_PKEY_new();
   if (key == NULL)
     return PFalse;
-
+//////////////changed by bruce, for sm2 private key//////////////
+#if 0
   if (EVP_PKEY_assign_RSA(key, RSA_generate_key(modulus, 0x10001, callback, cb_arg)))
-    return PTrue;
+	  return PTrue;
+#else
+	EC_KEY *ec_key = NULL;
+	if (!(ec_key = EC_KEY_new_by_curve_name(OBJ_sn2nid("sm2p256v1")))) {
+		cout << "EC_KEY_new_by_curve_name failed" << endl;
+		return PFalse;
+	}
+	EC_GROUP_set_asn1_flag((EC_GROUP *)EC_KEY_get0_group(ec_key), OPENSSL_EC_NAMED_CURVE);
+	if(EC_KEY_generate_key(ec_key) !=1)
+	{
+		cout << "gen ec_key error" << endl;
+		return PFalse;
+	}
 
-//  if (EVP_PKEY_assign_EC_KEY(key, EC_KEY_new_by_curve_name(NID_ecdsa_with_SHA512 )))	//note, bruce, to be change, NID_sm2_with_sm3
-//	  return PTrue;
+	if (EVP_PKEY_assign_EC_KEY(key, ec_key))
+		return PTrue;
+#endif
 
+  cout << "EVP_PKEY_assign_ecc error" << endl;
   EVP_PKEY_free(key);
   key = NULL;
   return PFalse;
@@ -500,8 +515,11 @@ PBoolean PSSLCertificate::CreateRoot(const PString & subject,			//note, bruce
       X509_set_pubkey(certificate, pkey);
       EVP_PKEY_free(pkey);
       X509_PUBKEY_free(pubkey);
-
+#if 0
       if (X509_sign(certificate, privateKey, EVP_md5()) > 0)
+#else
+      if (X509_sign(certificate, privateKey, EVP_sm3()) > 0)	//changed by bruce, for use sm3 digest
+#endif
         return PTrue;
     }
   }
@@ -850,7 +868,7 @@ void PSSLContext::Construct(Method method, const void * sessionId, PINDEX idSize
     SSL_CTX_sess_set_cache_size(context, 128);
   }
 
-  printf("set cipher = ECDHE-SM2-WITH-SMS4-SM3\n");
+//  printf("set cipher = ECDHE-SM2-WITH-SMS4-SM3\n");
   SetCipherList("ECDHE-SM2-WITH-SMS4-SM3");		//added by bruce
   // set default verify mode
   SSL_CTX_set_verify(context, SSL_VERIFY_NONE, VerifyCallBack);
@@ -1013,7 +1031,7 @@ PBoolean PSSLChannel::Write(const void * buf, PINDEX len)
 void bio_Psock_sdt_free(void);
 PBoolean PSSLChannel::Close()
 {
-  bio_Psock_sdt_free();		//added by bruce
+//  bio_Psock_sdt_free();		//added by bruce
   printf("close PSSLChannel\n");
   PBoolean ok = SSL_shutdown(ssl);
   return PIndirectChannel::Close() && ok;
@@ -1040,6 +1058,17 @@ PString PSSLChannel::GetErrorText(ErrorGroup group) const
 
   char buf[200];
   return ERR_error_string(lastErrorNumber[group]&0x7fffffff, buf);
+}
+
+void PSSLChannel::getsslInfo()
+{
+	printf("ssl version %s\n",SSL_get_version(ssl));
+	printf("ssleay version %s\n",SSLeay_version(0));
+	printf ("SSL connection using %s\n", SSL_get_cipher (ssl));
+	//	int err = SSL_export_keying_material(ssl, buf, 128, NULL,0, NULL, 0, 1);
+	//	printf("err=%d\n",err);
+	//	PrintData("SSL_export_keying_material", (char*)buf,128,NULL);
+
 }
 
 

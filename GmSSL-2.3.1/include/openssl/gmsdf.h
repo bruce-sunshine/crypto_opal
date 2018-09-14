@@ -68,8 +68,8 @@ extern "C" {
 
 int SDF_LoadLibrary(char *so_path, char *vendor);
 int SDF_UnloadLibrary(void);
-int SDF_ImportKey(void *hSessionHandle, unsigned char *pucKey,
-	unsigned int uiKeyLength, void **phKeyHandle);
+//int SDF_ImportKey(void *hSessionHandle, unsigned char *pucKey,
+//	unsigned int uiKeyLength, void **phKeyHandle);
 
 int SDF_PrintDeviceInfo(DEVICEINFO *devInfo);
 int SDF_PrintRSAPublicKey(RSArefPublicKey *ref);

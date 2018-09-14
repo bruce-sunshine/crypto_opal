@@ -92,6 +92,7 @@ int HMAC_Update(HMAC_CTX *ctx, const unsigned char *data, size_t len)
 {
     if (!ctx->md)
         return 0;
+//    printf("engine id = %d\n",ctx->md_ctx->engine->id);		//added by bruce
     return EVP_DigestUpdate(ctx->md_ctx, data, len);
 }
 

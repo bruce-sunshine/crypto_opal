@@ -1823,7 +1823,7 @@ int bio_to_mem(unsigned char **out, int maxlen, BIO *in)
     return ret;
 }
 
-int pkey_ctrl_string(EVP_PKEY_CTX *ctx, const char *value)
+int pkey_ctrl_string(EVP_PKEY_CTX *ctx, const char *value)	//note, bruce *value = ec_paramgen_curve:P-256 , ec_param_enc:named_curve
 {
     int rv;
     char *stmp, *vtmp = NULL;
@@ -1834,7 +1834,7 @@ int pkey_ctrl_string(EVP_PKEY_CTX *ctx, const char *value)
     if (vtmp) {
         *vtmp = 0;
         vtmp++;
-    }
+    }												//note , vtmp = P-256, named_curve
     rv = EVP_PKEY_CTX_ctrl_str(ctx, stmp, vtmp);
     OPENSSL_free(stmp);
     return rv;

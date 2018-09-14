@@ -80,7 +80,7 @@ int genpkey_main(int argc, char **argv)
                 goto opthelp;
             break;
         case OPT_OUT:
-            outfile = opt_arg();
+            outfile = opt_arg();		//note, bruce, get out pem name
             break;
         case OPT_PASS:
             passarg = opt_arg();
@@ -95,7 +95,7 @@ int genpkey_main(int argc, char **argv)
                 goto end;
             break;
         case OPT_ALGORITHM:
-            if (!init_gen_str(&ctx, opt_arg(), e, do_param))
+            if (!init_gen_str(&ctx, opt_arg(), e, do_param))	//note, bruce
                 goto end;
             break;
         case OPT_PKEYOPT:
@@ -103,7 +103,7 @@ int genpkey_main(int argc, char **argv)
                 BIO_printf(bio_err, "%s: No keytype specified.\n", prog);
                 goto opthelp;
             }
-            if (pkey_ctrl_string(ctx, opt_arg()) <= 0) {
+            if (pkey_ctrl_string(ctx, opt_arg()) <= 0) {		//note, bruce
                 BIO_printf(bio_err,
                            "%s: Error setting %s parameter:\n",
                            prog, opt_arg());
@@ -134,9 +134,9 @@ int genpkey_main(int argc, char **argv)
 
     //BIO_printf(bio_err, "Using configuration from %s\n", configfile);
 
-    if ((conf = app_load_config(configfile)) == NULL)
+    if ((conf = app_load_config(configfile)) == NULL)		//note, bruce
         goto end;
-    if (configfile != default_config_file && !app_load_modules(conf))
+    if (configfile != default_config_file && !app_load_modules(conf))	//note, bruce
         goto end;
 
     private = do_param ? 0 : 1;
@@ -144,17 +144,17 @@ int genpkey_main(int argc, char **argv)
     if (ctx == NULL)
         goto opthelp;
 
-    if (!app_passwd(passarg, NULL, &pass, NULL)) {
+    if (!app_passwd(passarg, NULL, &pass, NULL)) {		//note, bruce
         BIO_puts(bio_err, "Error getting password\n");
         goto end;
     }
 
-    out = bio_open_owner(outfile, outformat, private);
+    out = bio_open_owner(outfile, outformat, private);	//note, bruce
     if (out == NULL)
         goto end;
 
-    EVP_PKEY_CTX_set_cb(ctx, genpkey_cb);
-    EVP_PKEY_CTX_set_app_data(ctx, bio_err);
+    EVP_PKEY_CTX_set_cb(ctx, genpkey_cb);	//note, bruce
+    EVP_PKEY_CTX_set_app_data(ctx, bio_err);	//note, bruce
 
     if (do_param) {
         if (EVP_PKEY_paramgen(ctx, &pkey) <= 0) {
@@ -163,7 +163,7 @@ int genpkey_main(int argc, char **argv)
             goto end;
         }
     } else {
-        if (EVP_PKEY_keygen(ctx, &pkey) <= 0) {
+        if (EVP_PKEY_keygen(ctx, &pkey) <= 0) {		//note, bruce, significant
             BIO_puts(bio_err, "Error generating key\n");
             ERR_print_errors(bio_err);
             goto end;
@@ -172,9 +172,9 @@ int genpkey_main(int argc, char **argv)
 
     if (do_param)
         rv = PEM_write_bio_Parameters(out, pkey);
-    else if (outformat == FORMAT_PEM) {
+    else if (outformat == FORMAT_PEM) {		//note, bruce
         assert(private);
-        rv = PEM_write_bio_PrivateKey(out, pkey, cipher, NULL, 0, NULL, pass);
+        rv = PEM_write_bio_PrivateKey(out, pkey, cipher, NULL, 0, NULL, pass);		//note, bruce, write private.pem
     } else if (outformat == FORMAT_ASN1) {
         assert(private);
         rv = i2d_PrivateKey_bio(out, pkey);
@@ -256,7 +256,7 @@ static int init_keygen_file(EVP_PKEY_CTX **pctx, const char *file, ENGINE *e)
 }
 
 int init_gen_str(EVP_PKEY_CTX **pctx,
-                 const char *algname, ENGINE *e, int do_param)
+                 const char *algname, ENGINE *e, int do_param)		//note, bruce
 {
     EVP_PKEY_CTX *ctx = NULL;
     const EVP_PKEY_ASN1_METHOD *ameth;
@@ -268,7 +268,7 @@ int init_gen_str(EVP_PKEY_CTX **pctx,
         return 0;
     }
 
-    ameth = EVP_PKEY_asn1_find_str(&tmpeng, algname, -1);
+    ameth = EVP_PKEY_asn1_find_str(&tmpeng, algname, -1);	//note, bruce, according the asn name find EVP_PKEY_ASN1_METHOD
 
 #ifndef OPENSSL_NO_ENGINE
     if (!ameth && e)
@@ -282,11 +282,11 @@ int init_gen_str(EVP_PKEY_CTX **pctx,
 
     ERR_clear_error();
 
-    EVP_PKEY_asn1_get0_info(&pkey_id, NULL, NULL, NULL, NULL, ameth);
+    EVP_PKEY_asn1_get0_info(&pkey_id, NULL, NULL, NULL, NULL, ameth);	//note, bruce, get pkey_id
 #ifndef OPENSSL_NO_ENGINE
     ENGINE_finish(tmpeng);
 #endif
-    ctx = EVP_PKEY_CTX_new_id(pkey_id, e);
+    ctx = EVP_PKEY_CTX_new_id(pkey_id, e);	//note, bruce
 
     if (!ctx)
         goto err;
@@ -294,7 +294,7 @@ int init_gen_str(EVP_PKEY_CTX **pctx,
         if (EVP_PKEY_paramgen_init(ctx) <= 0)
             goto err;
     } else {
-        if (EVP_PKEY_keygen_init(ctx) <= 0)
+        if (EVP_PKEY_keygen_init(ctx) <= 0)		//note, bruce
             goto err;
     }
 

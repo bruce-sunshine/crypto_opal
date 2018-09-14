@@ -582,7 +582,7 @@ int ssl3_write_bytes(SSL *s, int type, const void *buf_, int len)
             }
         }
 
-        i = do_ssl3_write(s, type, &(buf[tot]), pipelens, numpipes, 0);
+        i = do_ssl3_write(s, type, &(buf[tot]), pipelens, numpipes, 0);		//note, bruce
         if (i <= 0) {
             /* XXX should we ssl3_release_write_buffer if i<0? */
             s->rlayer.wnum = tot;
@@ -810,12 +810,12 @@ int do_ssl3_write(SSL *s, int type, const unsigned char *buf,
         }
     }
 
-    if (s->method->ssl3_enc->enc(s, wr, numpipes, 1) < 1)
+    if (s->method->ssl3_enc->enc(s, wr, numpipes, 1) < 1)					//note, bruce, set sm3 init
         goto err;
 
     for (j = 0; j < numpipes; j++) {
         if (SSL_USE_ETM(s) && mac_size != 0) {
-            if (s->method->ssl3_enc->mac(s, &wr[j],
+            if (s->method->ssl3_enc->mac(s, &wr[j],							//note, bruce, SSL_do_handshake, use this
                                          outbuf[j] + wr[j].length, 1) < 0)
                 goto err;
             SSL3_RECORD_add_length(&wr[j], mac_size);
@@ -1038,7 +1038,7 @@ int ssl3_read_bytes(SSL *s, int type, int *recvd_type, unsigned char *buf,
     do {
         /* get new records if necessary */
         if (num_recs == 0) {
-            ret = ssl3_get_record(s);
+            ret = ssl3_get_record(s);		//note, bruce
             if (ret <= 0)
                 return (ret);
             num_recs = RECORD_LAYER_get_numrpipes(&s->rlayer);

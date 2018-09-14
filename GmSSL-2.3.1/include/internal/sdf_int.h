@@ -386,6 +386,12 @@ typedef int (*SDF_DeleteObject_FuncPtr)(
 	unsigned char *pucFileName,
 	unsigned int uiNameLen);
 
+typedef int (*SDF_ImportKey_FuncPtr)(
+		void* hSessionHandle,
+		unsigned char *pucKey,
+		unsigned int uiKeyLength,
+		void **phKeyHandle);
+
 typedef struct sdf_method_st {
 	char *name;
 	DSO *dso;
@@ -437,6 +443,7 @@ typedef struct sdf_method_st {
 	SDF_ReadObject_FuncPtr ReadObject;
 	SDF_WriteObject_FuncPtr WriteObject;
 	SDF_DeleteObject_FuncPtr DeleteObject;
+	SDF_ImportKey_FuncPtr ImportKey;			//added by bruce, 0913
 } SDF_METHOD;
 
 SDF_METHOD *SDF_METHOD_load_library(const char *so_path);

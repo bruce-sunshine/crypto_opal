@@ -203,13 +203,13 @@ int req_main(int argc, char **argv)
             }
 #endif
             break;
-        case OPT_KEY:
+        case OPT_KEY:				//note, bruce
             keyfile = opt_arg();
             break;
         case OPT_PUBKEY:
             pubkey = 1;
             break;
-        case OPT_NEW:
+        case OPT_NEW:		//note, bruce
             newreq = 1;
             break;
         case OPT_CONFIG:
@@ -222,7 +222,7 @@ int req_main(int argc, char **argv)
         case OPT_IN:
             infile = opt_arg();
             break;
-        case OPT_OUT:
+        case OPT_OUT:			//note, bruce
             outfile = opt_arg();
             break;
         case OPT_KEYOUT:
@@ -290,7 +290,7 @@ int req_main(int argc, char **argv)
             text = 1;
             break;
 #ifndef OPENSSL_NO_CA
-        case OPT_X509:
+        case OPT_X509:		//note, bruce
             x509 = 1;
             newreq = 1;
             break;
@@ -334,10 +334,10 @@ int req_main(int argc, char **argv)
         goto opthelp;
 
     if (!nmflag_set)
-        nmflag = XN_FLAG_ONELINE;
+        nmflag = XN_FLAG_ONELINE;		//note, bruce
 
     /* TODO: simplify this as pkey is still always NULL here */
-    private = newreq && (pkey == NULL) ? 1 : 0;
+    private = newreq && (pkey == NULL) ? 1 : 0;		//note, bruce, private = 1
 
     if (!app_passwd(passargin, passargout, &passin, &passout)) {
         BIO_printf(bio_err, "Error getting passwords\n");
@@ -347,13 +347,13 @@ int req_main(int argc, char **argv)
     if (verbose)
         BIO_printf(bio_err, "Using configuration from %s\n", template);
     req_conf = app_load_config(template);
-    if (template != default_config_file && !app_load_modules(req_conf))
+    if (template != default_config_file && !app_load_modules(req_conf))		//note, bruce, load cnf file
         goto end;
 
     if (req_conf != NULL) {
         p = NCONF_get_string(req_conf, NULL, "oid_file");
         if (p == NULL)
-            ERR_clear_error();
+            ERR_clear_error();		//note, bruce
         if (p != NULL) {
             BIO *oid_bio;
 
@@ -384,14 +384,14 @@ int req_main(int argc, char **argv)
     }
 
     if (!extensions) {
-        extensions = NCONF_get_string(req_conf, SECTION, V3_EXTENSIONS);
+        extensions = NCONF_get_string(req_conf, SECTION, V3_EXTENSIONS);	//note, bruce
         if (!extensions)
             ERR_clear_error();
     }
     if (extensions) {
         /* Check syntax of file */
         X509V3_CTX ctx;
-        X509V3_set_ctx_test(&ctx);
+        X509V3_set_ctx_test(&ctx);		//note, bruce
         X509V3_set_nconf(&ctx, req_conf);
         if (!X509V3_EXT_add_nconf(req_conf, &ctx, extensions, NULL)) {
             BIO_printf(bio_err,
@@ -400,14 +400,14 @@ int req_main(int argc, char **argv)
         }
     }
 
-    if (passin == NULL) {
+    if (passin == NULL) {		//note, bruce, read cnf default passin
         passin = nofree_passin =
             NCONF_get_string(req_conf, SECTION, "input_password");
         if (passin == NULL)
             ERR_clear_error();
     }
 
-    if (passout == NULL) {
+    if (passout == NULL) {		//note, bruce, read cnf default passout
         passout = nofree_passout =
             NCONF_get_string(req_conf, SECTION, "output_password");
         if (passout == NULL)
@@ -418,13 +418,13 @@ int req_main(int argc, char **argv)
     if (!p)
         ERR_clear_error();
 
-    if (p && !ASN1_STRING_set_default_mask_asc(p)) {
+    if (p && !ASN1_STRING_set_default_mask_asc(p)) {		//note, bruce
         BIO_printf(bio_err, "Invalid global string mask setting %s\n", p);
         goto end;
     }
 
     if (chtype != MBSTRING_UTF8) {
-        p = NCONF_get_string(req_conf, SECTION, UTF8_IN);
+        p = NCONF_get_string(req_conf, SECTION, UTF8_IN);	//note, bruce
         if (!p)
             ERR_clear_error();
         else if (strcmp(p, "yes") == 0)
@@ -432,7 +432,7 @@ int req_main(int argc, char **argv)
     }
 
     if (!req_exts) {
-        req_exts = NCONF_get_string(req_conf, SECTION, REQ_EXTENSIONS);
+        req_exts = NCONF_get_string(req_conf, SECTION, REQ_EXTENSIONS);	//note, bruce
         if (!req_exts)
             ERR_clear_error();
     }
@@ -450,15 +450,15 @@ int req_main(int argc, char **argv)
     }
 
     if (keyfile != NULL) {
-        pkey = load_key(keyfile, keyform, 0, passin, e, "Private Key");
+        pkey = load_key(keyfile, keyform, 0, passin, e, "Private Key");			//note, bruce, load private key, check passin
         if (!pkey) {
             /* load_key() has already printed an appropriate message */
             goto end;
         } else {
-            char *randfile = NCONF_get_string(req_conf, SECTION, "RANDFILE");
+            char *randfile = NCONF_get_string(req_conf, SECTION, "RANDFILE");	//note, bruce
             if (randfile == NULL)
                 ERR_clear_error();
-            app_RAND_load_file(randfile, 0);
+            app_RAND_load_file(randfile, 0);	//note, bruce
         }
     }
 
@@ -587,19 +587,19 @@ int req_main(int argc, char **argv)
         }
     }
 
-    if (newreq) {
+    if (newreq) {			//note, bruce
         if (pkey == NULL) {
             BIO_printf(bio_err, "you need to specify a private key\n");
             goto end;
         }
 
         if (req == NULL) {
-            req = X509_REQ_new();
+            req = X509_REQ_new();	//note, bruce, significant
             if (req == NULL) {
                 goto end;
             }
 
-            i = make_REQ(req, pkey, subj, multirdn, !x509, chtype);
+            i = make_REQ(req, pkey, subj, multirdn, !x509, chtype);		//enter interactive mode, significant, bruce
             subj = NULL;        /* done processing '-subj' option */
             if (!i) {
                 BIO_printf(bio_err, "problems making Certificate Request\n");
@@ -608,30 +608,30 @@ int req_main(int argc, char **argv)
         }
         if (x509) {
             EVP_PKEY *tmppkey;
-            X509V3_CTX ext_ctx;
+            X509V3_CTX ext_ctx;					//note bruce, x509ss is certificate point
             if ((x509ss = X509_new()) == NULL)
                 goto end;
 
             /* Set version to V3 */
-            if (extensions && !X509_set_version(x509ss, 2))
+            if (extensions && !X509_set_version(x509ss, 2))	//note bruce, set version
                 goto end;
             if (serial) {
                 if (!X509_set_serialNumber(x509ss, serial))
                     goto end;
             } else {
-                if (!rand_serial(NULL, X509_get_serialNumber(x509ss)))
+                if (!rand_serial(NULL, X509_get_serialNumber(x509ss)))		//note bruce, set serial
                     goto end;
             }
 
-            if (!X509_set_issuer_name(x509ss, X509_REQ_get_subject_name(req)))
+            if (!X509_set_issuer_name(x509ss, X509_REQ_get_subject_name(req)))	//note bruce, set issuer name
                 goto end;
-            if (!set_cert_times(x509ss, NULL, NULL, days))
+            if (!set_cert_times(x509ss, NULL, NULL, days))		//note bruce, set expired days
                 goto end;
             if (!X509_set_subject_name
-                (x509ss, X509_REQ_get_subject_name(req)))
+                (x509ss, X509_REQ_get_subject_name(req)))		//note bruce, set subject name
                 goto end;
             tmppkey = X509_REQ_get0_pubkey(req);
-            if (!tmppkey || !X509_set_pubkey(x509ss, tmppkey))
+            if (!tmppkey || !X509_set_pubkey(x509ss, tmppkey))	//note, bruce, distract pubkey
                 goto end;
 
             /* Set up V3 context struct */
@@ -648,7 +648,7 @@ int req_main(int argc, char **argv)
                 goto end;
             }
 
-            i = do_X509_sign(x509ss, pkey, digest, sigopts);
+            i = do_X509_sign(x509ss, pkey, digest, sigopts);	//note, bruce, x509 sign
             if (!i) {
                 ERR_print_errors(bio_err);
                 goto end;
@@ -726,7 +726,7 @@ int req_main(int argc, char **argv)
         goto end;
     }
 
-    out = bio_open_default(outfile,
+    out = bio_open_default(outfile,					//note, bruce, start to write certificate file
                            keyout != NULL && outfile != NULL &&
                            strcmp(keyout, outfile) == 0 ? 'a' : 'w',
                            outformat);
@@ -799,7 +799,7 @@ int req_main(int argc, char **argv)
         if (outformat == FORMAT_ASN1)
             i = i2d_X509_bio(out, x509ss);
         else
-            i = PEM_write_bio_X509(out, x509ss);
+            i = PEM_write_bio_X509(out, x509ss);		//note, bruce, writing certificate file
         if (!i) {
             BIO_printf(bio_err, "unable to write X509 certificate\n");
             goto end;
@@ -1480,9 +1480,9 @@ int do_X509_sign(X509 *x, EVP_PKEY *pkey, const EVP_MD *md,
     int rv;
     EVP_MD_CTX *mctx = EVP_MD_CTX_new();
 
-    rv = do_sign_init(mctx, pkey, md, sigopts);
+    rv = do_sign_init(mctx, pkey, md, sigopts);		//note, bruce, init sign
     if (rv > 0)
-        rv = X509_sign_ctx(x, mctx);
+        rv = X509_sign_ctx(x, mctx);		//note, bruce, excute sign
     EVP_MD_CTX_free(mctx);
     return rv > 0 ? 1 : 0;
 }

@@ -88,7 +88,7 @@ static const EVP_MD sm3_md = {
 	NID_sm3,
 	NID_sm2sign_with_sm3,
 	SM3_DIGEST_LENGTH,
-	0, /* flags */
+	0,
 	init,
 	update,
 	final,

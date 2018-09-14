@@ -210,6 +210,8 @@ int (*EVP_MD_meth_get_ctrl(const EVP_MD *md))(EVP_MD_CTX *ctx, int cmd,
 # define EVP_MD_CTX_FLAG_PAD_X931        0x10/* X9.31 mode */
 # define EVP_MD_CTX_FLAG_PAD_PSS         0x20/* PSS mode */
 
+# define EVP_MD_CTX_FLAG_SDT_SDF_ENGINE_SM3_INIT        0x40	//added by bruce
+
 # define EVP_MD_CTX_FLAG_NO_INIT         0x0100/* Don't initialize md_data */
 /*
  * Some functions such as EVP_DigestSign only finalise copies of internal

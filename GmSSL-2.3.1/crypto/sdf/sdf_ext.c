@@ -294,14 +294,9 @@ int SDF_PrintECCSignature(ECCSignature *blob)
 	return SDR_OK;
 }
 
-int SDF_ImportKey(
-	void *hSessionHandle,
-	unsigned char *pucKey,
-	unsigned int uiKeyLength,
-	void **phKeyHandle)
-{
-	return 0;
-}
+
+
+
 
 int SDF_NewECCCipher(ECCCipher **cipher, size_t ulDataLen)
 {

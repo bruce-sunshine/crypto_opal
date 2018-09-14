@@ -3156,7 +3156,7 @@ int SSL_do_handshake(SSL *s)
 
             ret = ssl_start_async_job(s, &args, ssl_do_handshake_intern);
         } else {
-            ret = s->handshake_func(s);
+            ret = s->handshake_func(s);		//note, bruce
         }
     }
     return ret;

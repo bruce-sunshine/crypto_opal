@@ -1602,3 +1602,30 @@ int SDF_DeleteFile(
 
 	return SDR_OK;
 }
+
+
+int SDF_ImportKey(
+	void *hSessionHandle,
+	unsigned char *pucKey,
+	unsigned int uiKeyLength,
+	void **phKeyHandle)
+{									//added by bruce, 0913
+//	return 0;
+	int ret = SDR_UNKNOWERR;
+	if (!sdf_method || !sdf_method->ImportKey) {
+		SDFerr(SDF_F_SDF_IMPORTKEY, SDF_R_NOT_INITIALIZED);
+		return SDR_NOTSUPPORT;
+	}
+
+	if ((ret = sdf_method->ImportKey(
+		hSessionHandle,
+		pucKey,
+		uiKeyLength,
+		phKeyHandle) != SDR_OK)) {
+		SDFerr(SDF_F_SDF_IMPORTKEY, sdf_get_error_reason(ret));
+		return ret;
+	}
+
+	return SDR_OK;
+
+}

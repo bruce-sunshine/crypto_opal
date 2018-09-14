@@ -464,6 +464,12 @@ int SDF_DeleteFile(
 	unsigned char *pucFileName,
 	unsigned int uiNameLen);
 
+int SDF_ImportKey(			//added by bruce
+	void *hSessionHandle,
+	unsigned char *pucKey,
+	unsigned int uiKeyLength,
+	void **phKeyHandle);
+
 #define SDR_OK			0x0
 #define SDR_BASE		0x01000000
 #define SDR_UNKNOWERR		(SDR_BASE + 0x00000001)

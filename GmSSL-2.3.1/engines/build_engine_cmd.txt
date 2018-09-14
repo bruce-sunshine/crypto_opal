@@ -1,0 +1,2 @@
+gcc -fPIC -g -o sdt_sdf.o -c sdt_sdf.c  -I../include -I../crypto/include
+gcc -shared -g -o sdt_sdf_engine.so -lcrypto sdt_sdf.o  -L/usr/local/Gmssl_x86_64/lib

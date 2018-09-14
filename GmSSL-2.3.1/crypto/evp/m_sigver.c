@@ -67,7 +67,7 @@ static int do_sigver_init(EVP_MD_CTX *ctx, EVP_PKEY_CTX **pctx,
 int EVP_DigestSignInit(EVP_MD_CTX *ctx, EVP_PKEY_CTX **pctx,
                        const EVP_MD *type, ENGINE *e, EVP_PKEY *pkey)
 {
-    return do_sigver_init(ctx, pctx, type, e, pkey, 0);
+    return do_sigver_init(ctx, pctx, type, e, pkey, 0);		//note, bruce, init sm3
 }
 
 int EVP_DigestVerifyInit(EVP_MD_CTX *ctx, EVP_PKEY_CTX **pctx,

@@ -82,7 +82,7 @@ int EVP_PKEY_keygen_init(EVP_PKEY_CTX *ctx)
     return ret;
 }
 
-int EVP_PKEY_keygen(EVP_PKEY_CTX *ctx, EVP_PKEY **ppkey)
+int EVP_PKEY_keygen(EVP_PKEY_CTX *ctx, EVP_PKEY **ppkey)		//note, bruce, gen EVP_PKEY
 {
     int ret;
 

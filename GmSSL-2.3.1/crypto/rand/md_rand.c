@@ -484,7 +484,7 @@ static int rand_bytes(unsigned char *buf, int num, int pseudo)
         }
     }
 
-    if (!MD_Init(m)
+    if (!MD_Init(m)														//note, bruce
         || !MD_Update(m, (unsigned char *)&(md_c[0]), sizeof(md_c))
         || !MD_Update(m, local_md, MD_DIGEST_LENGTH))
         goto err;
@@ -493,7 +493,7 @@ static int rand_bytes(unsigned char *buf, int num, int pseudo)
      * Prevent deadlocks if we end up in an async engine
      */
     ASYNC_block_pause();
-    if (!MD_Update(m, md, MD_DIGEST_LENGTH) || !MD_Final(m, md)) {
+    if (!MD_Update(m, md, MD_DIGEST_LENGTH) || !MD_Final(m, md)) {		//note, bruce, sm3 final
         CRYPTO_THREAD_unlock(rand_lock);
         goto err;
     }

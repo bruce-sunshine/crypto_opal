@@ -73,7 +73,8 @@
 /* ciphers */
 #define SGD_SM1			0x00000100
 #define SGD_SSF33		0x00000200
-#define SGD_SM4			0x00000400
+//#define SGD_SM4			0x00000400
+#define SGD_SM4			0x00002000		//changed by bruce, according the sanweixinan swsds.h
 #define SGD_ZUC			0x00000800
 
 /* ciphers with modes */
@@ -113,7 +114,7 @@
 #define SGD_SM3			0x00000001
 #define SGD_SHA1		0x00000002
 #define SGD_SHA256		0x00000004
-#define SGD_HASH_FROM		0x00000008
+#define SGD_HASH_FROM	0x00000008
 #define SGD_HASH_TO		0x000000FF
 
 /* signatue schemes */

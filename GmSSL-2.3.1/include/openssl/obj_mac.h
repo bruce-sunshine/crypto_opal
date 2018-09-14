@@ -5018,6 +5018,16 @@
 #define NID_hmac_sm3            1127
 #define OBJ_hmac_sm3            OBJ_sm_scheme,401L,2L
 
+///////////////////////////added by bruce, begin////////////////////////////////
+#define SN_sdt_sdf_sm3             "SDT_SDF-SM3"
+#define LN_sdt_sdf_sm3             "sdt_sdf-sm3"
+#define NID_sdt_sdf_sm3            1200
+#define OBJ_sdt_sdf_sm3            OBJ_sm_scheme,401L,3L
+
+
+
+///////////////////////////added by bruce, end////////////////////////////////
+
 #define SN_sm2sign_with_sm3             "SM2Sign-with-SM3"
 #define LN_sm2sign_with_sm3             "sm2sign-with-sm3"
 #define NID_sm2sign_with_sm3            1128

@@ -411,7 +411,7 @@ int ssl3_get_record(SSL *s)
             }
             rr[j].length -= mac_size;
             mac = rr[j].data + rr[j].length;
-            i = s->method->ssl3_enc->mac(s, &rr[j], md, 0 /* not send */ );
+            i = s->method->ssl3_enc->mac(s, &rr[j], md, 0 /* not send */ );		//note, bruce
             if (i < 0 || CRYPTO_memcmp(md, mac, (size_t)mac_size) != 0) {
                 al = SSL_AD_BAD_RECORD_MAC;
                 SSLerr(SSL_F_SSL3_GET_RECORD,
@@ -730,7 +730,7 @@ int tls1_enc(SSL *s, SSL3_RECORD *recs, unsigned int n_recs, int send)
                          */
                         SSLerr(SSL_F_TLS1_ENC, ERR_R_INTERNAL_ERROR);
                         return -1;
-                    } else if (RAND_bytes(recs[ctr].input, ivlen) <= 0) {
+                    } else if (RAND_bytes(recs[ctr].input, ivlen) <= 0) {	//node, bruce, set sm3 init
                         SSLerr(SSL_F_TLS1_ENC, ERR_R_INTERNAL_ERROR);
                         return -1;
                     }
@@ -1030,7 +1030,7 @@ int tls1_mac(SSL *ssl, SSL3_RECORD *rec, unsigned char *md, int send)
         hmac = EVP_MD_CTX_new();
         if (hmac == NULL || !EVP_MD_CTX_copy(hmac, hash))
             return -1;
-        mac_ctx = hmac;
+        mac_ctx = hmac;		//note, bruce, SSL_do_handshake, use this
     }
 
     if (SSL_IS_DTLS(ssl)) {
@@ -1069,7 +1069,7 @@ int tls1_mac(SSL *ssl, SSL3_RECORD *rec, unsigned char *md, int send)
             return -1;
         }
     } else {
-        if (EVP_DigestSignUpdate(mac_ctx, header, sizeof(header)) <= 0
+        if (EVP_DigestSignUpdate(mac_ctx, header, sizeof(header)) <= 0		//note, bruce, SSL_do_handshake, use this
             || EVP_DigestSignUpdate(mac_ctx, rec->input, rec->length) <= 0
             || EVP_DigestSignFinal(mac_ctx, md, &md_size) <= 0) {
             EVP_MD_CTX_free(hmac);

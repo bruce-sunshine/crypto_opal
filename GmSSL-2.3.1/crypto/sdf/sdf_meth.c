@@ -121,6 +121,7 @@ SDF_METHOD *SDF_METHOD_load_library(const char *so_path)
 	SDF_METHOD_BIND_FUNCTION_EX(ReadObject,ReadFile);
 	SDF_METHOD_BIND_FUNCTION_EX(WriteObject,WriteFile);
 	SDF_METHOD_BIND_FUNCTION_EX(DeleteObject,DeleteFile);
+	SDF_METHOD_BIND_FUNCTION(ImportKey);	//added by bruce, 0913
 
 	ret = sdf;
 	sdf = NULL;
