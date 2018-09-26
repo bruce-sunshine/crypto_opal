@@ -425,7 +425,7 @@ typedef HANDLE HCONTAINER;
 #ifdef SGD_MAX_ECC_BITS_256
 #define ECCref_MAX_BITS			256
 #else
-#define ECCref_MAX_BITS			512
+#define ECCref_MAX_BITS			256		//changed by bruce, 512-->256, according to swsds.h
 #endif
 #define ECCref_MAX_LEN			((ECCref_MAX_BITS+7) / 8)
 

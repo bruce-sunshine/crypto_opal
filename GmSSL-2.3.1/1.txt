@@ -1,0 +1,11 @@
+engines/skf_dummy.c:80:14: warning: 'sm2key_pemstr' defined but not used
+test/pailliertest.c: In function 'test_paillier':
+test/pailliertest.c:158:3: warning: format '%lu' expects type 'long unsigned int', but argument 2 has type 'unsigned int'
+test/serpenttest.c: In function 'main':
+test/serpenttest.c:121:28: warning: unused variable 'pt2'
+test/skftest.c:128:61: warning: missing terminating " character
+test/skftest.c:129:13: warning: missing terminating " character
+test/threadstest.c: In function 'thread_run':
+test/threadstest.c:66:5: warning: dereferencing type-punned pointer will break strict-aliasing rules
+test/threadstest.c: In function 'run_thread':
+test/threadstest.c:74:5: warning: dereferencing type-punned pointer will break strict-aliasing rules

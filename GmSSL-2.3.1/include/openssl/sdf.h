@@ -345,7 +345,15 @@ int SDF_InternalPrivateKeyOperation_RSA(
 	unsigned char *pucDataOutput,
 	unsigned int *puiOutputLength);
 
-int SDF_ExternalVerify_ECC(
+int SDF_ExternalSign_ECC(
+		void* hSessionHandle,
+		unsigned int uiAlgID,
+		ECCrefPrivateKey *pucPrivateKey,
+		unsigned char *pucData,
+		unsigned int uiDataLength,
+		ECCSignature *pucSignature);
+
+int SDF_ExternalVerify_ECC(		//added by bruce,0917
 	void *hSessionHandle,
 	unsigned int uiAlgID,
 	ECCrefPublicKey *pucPublicKey,
@@ -374,6 +382,15 @@ int SDF_ExternalEncrypt_ECC(
 	unsigned char *pucData,
 	unsigned int uiDataLength,
 	ECCCipher *pucEncData);
+
+int SDF_ExternalDecrypt_ECC(		//added by bruce,0917
+	void* hSessionHandle,
+	unsigned char uiAlgID,
+	ECCrefPrivateKey *pucPrivateKey,
+	ECCCipher *pucEncData,
+	unsigned char *pucData,
+	unsigned int *puiDataLength);
+
 
 int SDF_InternalEncrypt_ECC(
 	void *hSessionHandle,

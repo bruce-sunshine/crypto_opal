@@ -354,7 +354,7 @@ static SSL_CIPHER ssl3_ciphers[] = {
      },
     {
      1,
-     GMTLS_TXT_ECDHE_SM2_WITH_SMS4_SM3,
+     GMTLS_TXT_ECDHE_SM2_WITH_SMS4_SM3,			//note, bruce, using this method
      GMTLS_CK_ECDHE_SM2_WITH_SMS4_SM3,
      SSL_kECDHE,
      SSL_aSM2,

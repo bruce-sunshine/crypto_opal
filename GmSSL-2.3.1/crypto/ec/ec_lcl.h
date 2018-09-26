@@ -268,6 +268,7 @@ struct ec_key_st {
     int flags;
     CRYPTO_EX_DATA ex_data;
     CRYPTO_RWLOCK *lock;
+    void* data;		//added by bruce, 0917
 };
 
 struct ec_point_st {

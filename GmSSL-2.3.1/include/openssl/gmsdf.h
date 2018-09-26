@@ -149,6 +149,8 @@ int ERR_load_SDF_strings(void);
 # define SDF_F_SDF_RELEASEPRIVATEKEYACCESSRIGHT           145
 # define SDF_F_SDF_WRITEFILE                              146
 
+# define SDF_F_SDF_EXTERNALDECRYPT_ECC                    230	//added by bruce, 0917
+# define SDF_F_SDF_EXTERNALSIGN_ECC                    	  231	//added by bruce, 0918
 /* Reason codes. */
 # define SDF_R_ALGORITHM_MODE_NOT_SUPPORTED               111
 # define SDF_R_ALGORITHM_NOT_SUPPORTED                    112

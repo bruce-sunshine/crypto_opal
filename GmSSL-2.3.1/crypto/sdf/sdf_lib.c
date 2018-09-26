@@ -1030,6 +1030,37 @@ int SDF_InternalPrivateKeyOperation_RSA(
 	return SDR_OK;
 }
 
+
+int SDF_ExternalSign_ECC(				//added by bruce, 0918
+		void* hSessionHandle,
+		unsigned int uiAlgID,
+		ECCrefPrivateKey *pucPrivateKey,
+		unsigned char *pucData,
+		unsigned int uiDataLength,
+		ECCSignature *pucSignature)
+{
+	int ret = SDR_UNKNOWERR;
+
+	if (!sdf_method || !sdf_method->ExternalSign_ECC) {
+		SDFerr(SDF_F_SDF_EXTERNALSIGN_ECC, SDF_R_NOT_INITIALIZED);
+		return SDR_NOTSUPPORT;
+	}
+
+	if ((ret = sdf_method->ExternalSign_ECC(
+		hSessionHandle,
+		uiAlgID,
+		pucPrivateKey,
+		pucData,
+		uiDataLength,
+		pucSignature)) != SDR_OK) {
+		SDFerr(SDF_F_SDF_EXTERNALSIGN_ECC,
+			sdf_get_error_reason(ret));
+		return ret;
+	}
+
+	return SDR_OK;
+}
+
 int SDF_ExternalVerify_ECC(
 	void *hSessionHandle,
 	unsigned int uiAlgID,
@@ -1161,6 +1192,37 @@ int SDF_ExternalEncrypt_ECC(
 
 	return SDR_OK;
 }
+
+int SDF_ExternalDecrypt_ECC(		//added by bruce,0917
+	void* hSessionHandle,
+	unsigned char uiAlgID,
+	ECCrefPrivateKey *pucPrivateKey,
+	ECCCipher *pucEncData,
+	unsigned char *pucData,
+	unsigned int *puiDataLength)
+{
+	int ret = SDR_UNKNOWERR;
+	if (!sdf_method || !sdf_method->ExternalDecrypt_ECC) {
+		SDFerr(SDF_F_SDF_EXTERNALDECRYPT_ECC, SDF_R_NOT_INITIALIZED);
+		return SDR_NOTSUPPORT;
+	}
+	if ((ret = sdf_method->ExternalDecrypt_ECC(
+			hSessionHandle,
+			uiAlgID,
+			pucPrivateKey,
+			pucEncData,
+			pucData,
+			puiDataLength)) != SDR_OK) {
+		SDFerr(SDF_F_SDF_EXTERNALDECRYPT_ECC,
+			sdf_get_error_reason(ret));
+		return ret;
+	}
+
+	return SDR_OK;
+
+}
+
+
 
 int SDF_InternalEncrypt_ECC(
 	void *hSessionHandle,

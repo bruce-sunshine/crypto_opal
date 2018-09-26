@@ -104,11 +104,12 @@ SDF_METHOD *SDF_METHOD_load_library(const char *so_path)
 	SDF_METHOD_BIND_FUNCTION(ExternalPublicKeyOperation_RSA);
 	//SDF_METHOD_BIND_FUNCTION(InternalPublicKeyOperation_RSA);
 	SDF_METHOD_BIND_FUNCTION(InternalPrivateKeyOperation_RSA);
+	SDF_METHOD_BIND_FUNCTION(ExternalSign_ECC);			//added by bruce, 0918
 	SDF_METHOD_BIND_FUNCTION(ExternalVerify_ECC);
 	SDF_METHOD_BIND_FUNCTION(InternalSign_ECC);
 	SDF_METHOD_BIND_FUNCTION(InternalVerify_ECC);
 	SDF_METHOD_BIND_FUNCTION(ExternalEncrypt_ECC);
-	//SDF_METHOD_BIND_FUNCTION(ExternalDecrypt_ECC);
+	SDF_METHOD_BIND_FUNCTION(ExternalDecrypt_ECC);		//added by bruce, 0917
 	SDF_METHOD_BIND_FUNCTION(InternalEncrypt_ECC);
 	SDF_METHOD_BIND_FUNCTION(InternalDecrypt_ECC);
 	SDF_METHOD_BIND_FUNCTION(Encrypt);
