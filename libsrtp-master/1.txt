@@ -1,0 +1,502 @@
+In file included from test/srtp_driver.c:54:0:
+./include/srtp_priv.h:48:1: warning: C++ style comments are not allowed in ISO C90 [enabled by default]
+ // Leave this as the top level import. Ensures the existence of defines
+ ^
+./include/srtp_priv.h:48:1: warning: (this will be reported only once per input file) [enabled by default]
+In file included from ./include/srtp_priv.h:51:0,
+                 from test/srtp_driver.c:54:
+./include/srtp.h:322:1: warning: C++ style comments are not allowed in ISO C90 [enabled by default]
+ //added by bruce for choose SM4 mode
+ ^
+./include/srtp.h:322:1: warning: (this will be reported only once per input file) [enabled by default]
+In file included from crypto/include/datatypes.h:50:0,
+                 from crypto/include/rdbx.h:50,
+                 from ./include/srtp_priv.h:52,
+                 from test/srtp_driver.c:54:
+crypto/include/integers.h:140:8: warning: C++ style comments are not allowed in ISO C90 [enabled by default]
+ #endif // WORDS_BIGENDIAN
+        ^
+crypto/include/integers.h:140:8: warning: (this will be reported only once per input file) [enabled by default]
+In file included from crypto/include/err.h:51:0,
+                 from crypto/include/rdbx.h:51,
+                 from ./include/srtp_priv.h:52,
+                 from test/srtp_driver.c:54:
+./include/srtp.h:322:1: warning: C++ style comments are not allowed in ISO C90 [enabled by default]
+ //added by bruce for choose SM4 mode
+ ^
+./include/srtp.h:322:1: warning: (this will be reported only once per input file) [enabled by default]
+In file included from ./include/srtp_priv.h:54:0,
+                 from test/srtp_driver.c:54:
+crypto/include/integers.h:140:8: warning: C++ style comments are not allowed in ISO C90 [enabled by default]
+ #endif // WORDS_BIGENDIAN
+        ^
+crypto/include/integers.h:140:8: warning: (this will be reported only once per input file) [enabled by default]
+In file included from test/srtp_driver.c:54:0:
+./include/srtp_priv.h:182:5: warning: type of bit-field ‘cc’ is a GCC extension [-Wpedantic]
+     unsigned char cc : 4;      /* CSRC count             */
+     ^
+./include/srtp_priv.h:183:5: warning: type of bit-field ‘x’ is a GCC extension [-Wpedantic]
+     unsigned char x : 1;       /* header extension flag  */
+     ^
+./include/srtp_priv.h:184:5: warning: type of bit-field ‘p’ is a GCC extension [-Wpedantic]
+     unsigned char p : 1;       /* padding flag           */
+     ^
+./include/srtp_priv.h:185:5: warning: type of bit-field ‘version’ is a GCC extension [-Wpedantic]
+     unsigned char version : 2; /* protocol version       */
+     ^
+./include/srtp_priv.h:186:5: warning: type of bit-field ‘pt’ is a GCC extension [-Wpedantic]
+     unsigned char pt : 7;      /* payload type           */
+     ^
+./include/srtp_priv.h:187:5: warning: type of bit-field ‘m’ is a GCC extension [-Wpedantic]
+     unsigned char m : 1;       /* marker bit             */
+     ^
+./include/srtp_priv.h:224:5: warning: type of bit-field ‘rc’ is a GCC extension [-Wpedantic]
+     unsigned char rc : 5;      /* reception report count */
+     ^
+./include/srtp_priv.h:225:5: warning: type of bit-field ‘p’ is a GCC extension [-Wpedantic]
+     unsigned char p : 1;       /* padding flag           */
+     ^
+./include/srtp_priv.h:226:5: warning: type of bit-field ‘version’ is a GCC extension [-Wpedantic]
+     unsigned char version : 2; /* protocol version       */
+     ^
+./include/srtp_priv.h:227:5: warning: type of bit-field ‘pt’ is a GCC extension [-Wpedantic]
+     unsigned char pt : 8;      /* payload type           */
+     ^
+test/srtp_driver.c:2528:9: warning: C++ style comments are not allowed in ISO C90 [enabled by default]
+ #endif  // OPENSSL
+         ^
+test/srtp_driver.c:2528:9: warning: (this will be reported only once per input file) [enabled by default]
+In file included from test/srtp_driver.c:3716:0:
+./include/ekt.h:65:1: warning: C++ style comments are not allowed in ISO C90 [enabled by default]
+ // left in commented out as reminder to not include private headers
+ ^
+./include/ekt.h:65:1: warning: (this will be reported only once per input file) [enabled by default]
+In file included from crypto/include/rdb.h:50:0,
+                 from test/replay_driver.c:52:
+crypto/include/integers.h:140:8: warning: C++ style comments are not allowed in ISO C90 [enabled by default]
+ #endif // WORDS_BIGENDIAN
+        ^
+crypto/include/integers.h:140:8: warning: (this will be reported only once per input file) [enabled by default]
+In file included from crypto/include/err.h:51:0,
+                 from crypto/include/rdb.h:52,
+                 from test/replay_driver.c:52:
+./include/srtp.h:322:1: warning: C++ style comments are not allowed in ISO C90 [enabled by default]
+ //added by bruce for choose SM4 mode
+ ^
+./include/srtp.h:322:1: warning: (this will be reported only once per input file) [enabled by default]
+In file included from ./include/ut_sim.h:52:0,
+                 from test/replay_driver.c:53:
+crypto/include/integers.h:140:8: warning: C++ style comments are not allowed in ISO C90 [enabled by default]
+ #endif // WORDS_BIGENDIAN
+        ^
+crypto/include/integers.h:140:8: warning: (this will be reported only once per input file) [enabled by default]
+In file included from crypto/include/datatypes.h:50:0,
+                 from crypto/include/rdbx.h:50,
+                 from test/roc_driver.c:61:
+crypto/include/integers.h:140:8: warning: C++ style comments are not allowed in ISO C90 [enabled by default]
+ #endif // WORDS_BIGENDIAN
+        ^
+crypto/include/integers.h:140:8: warning: (this will be reported only once per input file) [enabled by default]
+In file included from crypto/include/err.h:51:0,
+                 from crypto/include/rdbx.h:51,
+                 from test/roc_driver.c:61:
+./include/srtp.h:322:1: warning: C++ style comments are not allowed in ISO C90 [enabled by default]
+ //added by bruce for choose SM4 mode
+ ^
+./include/srtp.h:322:1: warning: (this will be reported only once per input file) [enabled by default]
+In file included from ./include/ut_sim.h:52:0,
+                 from test/roc_driver.c:62:
+crypto/include/integers.h:140:8: warning: C++ style comments are not allowed in ISO C90 [enabled by default]
+ #endif // WORDS_BIGENDIAN
+        ^
+crypto/include/integers.h:140:8: warning: (this will be reported only once per input file) [enabled by default]
+test/roc_driver.c: In function ‘roc_test’:
+test/roc_driver.c:147:22: warning: ISO C90 does not support ‘long long’ [-Wlong-long]
+       (unsigned long long)local, delta, (unsigned long long)est);
+                      ^
+test/roc_driver.c:147:56: warning: ISO C90 does not support ‘long long’ [-Wlong-long]
+       (unsigned long long)local, delta, (unsigned long long)est);
+                                                        ^
+test/roc_driver.c:147:7: warning: ISO C90 does not support the ‘ll’ gnu_printf length modifier [-Wformat=]
+       (unsigned long long)local, delta, (unsigned long long)est);
+       ^
+test/roc_driver.c:147:7: warning: ISO C90 does not support the ‘ll’ gnu_printf length modifier [-Wformat=]
+In file included from crypto/include/datatypes.h:50:0,
+                 from crypto/include/rdbx.h:50,
+                 from test/rdbx_driver.c:53:
+crypto/include/integers.h:140:8: warning: C++ style comments are not allowed in ISO C90 [enabled by default]
+ #endif // WORDS_BIGENDIAN
+        ^
+crypto/include/integers.h:140:8: warning: (this will be reported only once per input file) [enabled by default]
+In file included from crypto/include/err.h:51:0,
+                 from crypto/include/rdbx.h:51,
+                 from test/rdbx_driver.c:53:
+./include/srtp.h:322:1: warning: C++ style comments are not allowed in ISO C90 [enabled by default]
+ //added by bruce for choose SM4 mode
+ ^
+./include/srtp.h:322:1: warning: (this will be reported only once per input file) [enabled by default]
+In file included from ./include/ut_sim.h:52:0,
+                 from test/rdbx_driver.c:59:
+crypto/include/integers.h:140:8: warning: C++ style comments are not allowed in ISO C90 [enabled by default]
+ #endif // WORDS_BIGENDIAN
+        ^
+crypto/include/integers.h:140:8: warning: (this will be reported only once per input file) [enabled by default]
+test/rdbx_driver.c: In function ‘print_rdbx’:
+test/rdbx_driver.c:139:18: warning: ISO C90 does not support ‘long long’ [-Wlong-long]
+   (unsigned long long)(rdbx->index),
+                  ^
+test/rdbx_driver.c:141:1: warning: ISO C90 does not support the ‘ll’ gnu_printf length modifier [-Wformat=]
+ );
+ ^
+In file included from test/rtpw.c:88:0:
+./include/srtp.h:322:1: warning: C++ style comments are not allowed in ISO C90 [enabled by default]
+ //added by bruce for choose SM4 mode
+ ^
+./include/srtp.h:322:1: warning: (this will be reported only once per input file) [enabled by default]
+In file included from test/rtp.h:63:0,
+                 from test/rtpw.c:89:
+./include/srtp_priv.h:48:1: warning: C++ style comments are not allowed in ISO C90 [enabled by default]
+ // Leave this as the top level import. Ensures the existence of defines
+ ^
+./include/srtp_priv.h:48:1: warning: (this will be reported only once per input file) [enabled by default]
+In file included from ./include/srtp_priv.h:51:0,
+                 from test/rtp.h:63,
+                 from test/rtpw.c:89:
+./include/srtp.h:322:1: warning: C++ style comments are not allowed in ISO C90 [enabled by default]
+ //added by bruce for choose SM4 mode
+ ^
+./include/srtp.h:322:1: warning: (this will be reported only once per input file) [enabled by default]
+In file included from crypto/include/datatypes.h:50:0,
+                 from crypto/include/rdbx.h:50,
+                 from ./include/srtp_priv.h:52,
+                 from test/rtp.h:63,
+                 from test/rtpw.c:89:
+crypto/include/integers.h:140:8: warning: C++ style comments are not allowed in ISO C90 [enabled by default]
+ #endif // WORDS_BIGENDIAN
+        ^
+crypto/include/integers.h:140:8: warning: (this will be reported only once per input file) [enabled by default]
+In file included from ./include/srtp_priv.h:54:0,
+                 from test/rtp.h:63,
+                 from test/rtpw.c:89:
+crypto/include/integers.h:140:8: warning: C++ style comments are not allowed in ISO C90 [enabled by default]
+ #endif // WORDS_BIGENDIAN
+        ^
+crypto/include/integers.h:140:8: warning: (this will be reported only once per input file) [enabled by default]
+In file included from test/rtp.h:63:0,
+                 from test/rtpw.c:89:
+./include/srtp_priv.h:182:5: warning: type of bit-field ‘cc’ is a GCC extension [-Wpedantic]
+     unsigned char cc : 4;      /* CSRC count             */
+     ^
+./include/srtp_priv.h:183:5: warning: type of bit-field ‘x’ is a GCC extension [-Wpedantic]
+     unsigned char x : 1;       /* header extension flag  */
+     ^
+./include/srtp_priv.h:184:5: warning: type of bit-field ‘p’ is a GCC extension [-Wpedantic]
+     unsigned char p : 1;       /* padding flag           */
+     ^
+./include/srtp_priv.h:185:5: warning: type of bit-field ‘version’ is a GCC extension [-Wpedantic]
+     unsigned char version : 2; /* protocol version       */
+     ^
+./include/srtp_priv.h:186:5: warning: type of bit-field ‘pt’ is a GCC extension [-Wpedantic]
+     unsigned char pt : 7;      /* payload type           */
+     ^
+./include/srtp_priv.h:187:5: warning: type of bit-field ‘m’ is a GCC extension [-Wpedantic]
+     unsigned char m : 1;       /* marker bit             */
+     ^
+./include/srtp_priv.h:224:5: warning: type of bit-field ‘rc’ is a GCC extension [-Wpedantic]
+     unsigned char rc : 5;      /* reception report count */
+     ^
+./include/srtp_priv.h:225:5: warning: type of bit-field ‘p’ is a GCC extension [-Wpedantic]
+     unsigned char p : 1;       /* padding flag           */
+     ^
+./include/srtp_priv.h:226:5: warning: type of bit-field ‘version’ is a GCC extension [-Wpedantic]
+     unsigned char version : 2; /* protocol version       */
+     ^
+./include/srtp_priv.h:227:5: warning: type of bit-field ‘pt’ is a GCC extension [-Wpedantic]
+     unsigned char pt : 8;      /* payload type           */
+     ^
+test/rtpw.c: In function ‘main’:
+test/rtpw.c:476:7: warning: pointer targets in passing argument 1 of ‘base64_string_to_octet_string’ differ in signedness [-Wpointer-sign]
+       len = base64_string_to_octet_string(key, &pad, input_key, expected_len);
+       ^
+In file included from test/rtpw.c:90:0:
+test/util.h:51:5: note: expected ‘char *’ but argument is of type ‘unsigned char *’
+ int base64_string_to_octet_string(char *raw, int *pad, char *base64, int len);
+     ^
+test/rtpw.c:483:7: warning: pointer targets in passing argument 1 of ‘hex_string_to_octet_string’ differ in signedness [-Wpointer-sign]
+       len = hex_string_to_octet_string(key, input_key, expected_len);
+       ^
+In file included from test/rtpw.c:90:0:
+test/util.h:49:5: note: expected ‘char *’ but argument is of type ‘unsigned char *’
+ int hex_string_to_octet_string(char *raw, char *hex, int len);
+     ^
+test/rtpw.c:516:1: warning: C++ style comments are not allowed in ISO C90 [enabled by default]
+ //    srtp_crypto_policy_set_null_cipher_hmac_null(&policy.rtp);
+ ^
+test/rtpw.c:516:1: warning: (this will be reported only once per input file) [enabled by default]
+test/rtpw.c: In function ‘usage’:
+test/rtpw.c:669:3: warning: string length ‘628’ is greater than the length ‘509’ ISO C90 compilers are required to support [-Woverlength-strings]
+   "       -w <wordsfile> use <wordsfile> for input, rather than %s\n",
+   ^
+In file included from test/rtp.h:63:0,
+                 from test/rtp.c:46:
+./include/srtp_priv.h:48:1: warning: C++ style comments are not allowed in ISO C90 [enabled by default]
+ // Leave this as the top level import. Ensures the existence of defines
+ ^
+./include/srtp_priv.h:48:1: warning: (this will be reported only once per input file) [enabled by default]
+In file included from ./include/srtp_priv.h:51:0,
+                 from test/rtp.h:63,
+                 from test/rtp.c:46:
+./include/srtp.h:322:1: warning: C++ style comments are not allowed in ISO C90 [enabled by default]
+ //added by bruce for choose SM4 mode
+ ^
+./include/srtp.h:322:1: warning: (this will be reported only once per input file) [enabled by default]
+In file included from crypto/include/datatypes.h:50:0,
+                 from crypto/include/rdbx.h:50,
+                 from ./include/srtp_priv.h:52,
+                 from test/rtp.h:63,
+                 from test/rtp.c:46:
+crypto/include/integers.h:140:8: warning: C++ style comments are not allowed in ISO C90 [enabled by default]
+ #endif // WORDS_BIGENDIAN
+        ^
+crypto/include/integers.h:140:8: warning: (this will be reported only once per input file) [enabled by default]
+In file included from crypto/include/err.h:51:0,
+                 from crypto/include/rdbx.h:51,
+                 from ./include/srtp_priv.h:52,
+                 from test/rtp.h:63,
+                 from test/rtp.c:46:
+./include/srtp.h:322:1: warning: C++ style comments are not allowed in ISO C90 [enabled by default]
+ //added by bruce for choose SM4 mode
+ ^
+./include/srtp.h:322:1: warning: (this will be reported only once per input file) [enabled by default]
+In file included from ./include/srtp_priv.h:54:0,
+                 from test/rtp.h:63,
+                 from test/rtp.c:46:
+crypto/include/integers.h:140:8: warning: C++ style comments are not allowed in ISO C90 [enabled by default]
+ #endif // WORDS_BIGENDIAN
+        ^
+crypto/include/integers.h:140:8: warning: (this will be reported only once per input file) [enabled by default]
+In file included from test/rtp.h:63:0,
+                 from test/rtp.c:46:
+./include/srtp_priv.h:182:5: warning: type of bit-field ‘cc’ is a GCC extension [-Wpedantic]
+     unsigned char cc : 4;      /* CSRC count             */
+     ^
+./include/srtp_priv.h:183:5: warning: type of bit-field ‘x’ is a GCC extension [-Wpedantic]
+     unsigned char x : 1;       /* header extension flag  */
+     ^
+./include/srtp_priv.h:184:5: warning: type of bit-field ‘p’ is a GCC extension [-Wpedantic]
+     unsigned char p : 1;       /* padding flag           */
+     ^
+./include/srtp_priv.h:185:5: warning: type of bit-field ‘version’ is a GCC extension [-Wpedantic]
+     unsigned char version : 2; /* protocol version       */
+     ^
+./include/srtp_priv.h:186:5: warning: type of bit-field ‘pt’ is a GCC extension [-Wpedantic]
+     unsigned char pt : 7;      /* payload type           */
+     ^
+./include/srtp_priv.h:187:5: warning: type of bit-field ‘m’ is a GCC extension [-Wpedantic]
+     unsigned char m : 1;       /* marker bit             */
+     ^
+./include/srtp_priv.h:224:5: warning: type of bit-field ‘rc’ is a GCC extension [-Wpedantic]
+     unsigned char rc : 5;      /* reception report count */
+     ^
+./include/srtp_priv.h:225:5: warning: type of bit-field ‘p’ is a GCC extension [-Wpedantic]
+     unsigned char p : 1;       /* padding flag           */
+     ^
+./include/srtp_priv.h:226:5: warning: type of bit-field ‘version’ is a GCC extension [-Wpedantic]
+     unsigned char version : 2; /* protocol version       */
+     ^
+./include/srtp_priv.h:227:5: warning: type of bit-field ‘pt’ is a GCC extension [-Wpedantic]
+     unsigned char pt : 8;      /* payload type           */
+     ^
+In file included from crypto/include/datatypes.h:50:0,
+                 from crypto/math/datatypes.c:54:
+crypto/include/integers.h:140:8: warning: C++ style comments are not allowed in ISO C90 [enabled by default]
+ #endif // WORDS_BIGENDIAN
+        ^
+crypto/include/integers.h:140:8: warning: (this will be reported only once per input file) [enabled by default]
+In file included from test/dtls_srtp_driver.c:47:0:
+./include/srtp_priv.h:48:1: warning: C++ style comments are not allowed in ISO C90 [enabled by default]
+ // Leave this as the top level import. Ensures the existence of defines
+ ^
+./include/srtp_priv.h:48:1: warning: (this will be reported only once per input file) [enabled by default]
+In file included from ./include/srtp_priv.h:51:0,
+                 from test/dtls_srtp_driver.c:47:
+./include/srtp.h:322:1: warning: C++ style comments are not allowed in ISO C90 [enabled by default]
+ //added by bruce for choose SM4 mode
+ ^
+./include/srtp.h:322:1: warning: (this will be reported only once per input file) [enabled by default]
+In file included from crypto/include/datatypes.h:50:0,
+                 from crypto/include/rdbx.h:50,
+                 from ./include/srtp_priv.h:52,
+                 from test/dtls_srtp_driver.c:47:
+crypto/include/integers.h:140:8: warning: C++ style comments are not allowed in ISO C90 [enabled by default]
+ #endif // WORDS_BIGENDIAN
+        ^
+crypto/include/integers.h:140:8: warning: (this will be reported only once per input file) [enabled by default]
+In file included from crypto/include/err.h:51:0,
+                 from crypto/include/rdbx.h:51,
+                 from ./include/srtp_priv.h:52,
+                 from test/dtls_srtp_driver.c:47:
+./include/srtp.h:322:1: warning: C++ style comments are not allowed in ISO C90 [enabled by default]
+ //added by bruce for choose SM4 mode
+ ^
+./include/srtp.h:322:1: warning: (this will be reported only once per input file) [enabled by default]
+In file included from ./include/srtp_priv.h:54:0,
+                 from test/dtls_srtp_driver.c:47:
+crypto/include/integers.h:140:8: warning: C++ style comments are not allowed in ISO C90 [enabled by default]
+ #endif // WORDS_BIGENDIAN
+        ^
+crypto/include/integers.h:140:8: warning: (this will be reported only once per input file) [enabled by default]
+In file included from test/dtls_srtp_driver.c:47:0:
+./include/srtp_priv.h:182:5: warning: type of bit-field ‘cc’ is a GCC extension [-Wpedantic]
+     unsigned char cc : 4;      /* CSRC count             */
+     ^
+./include/srtp_priv.h:183:5: warning: type of bit-field ‘x’ is a GCC extension [-Wpedantic]
+     unsigned char x : 1;       /* header extension flag  */
+     ^
+./include/srtp_priv.h:184:5: warning: type of bit-field ‘p’ is a GCC extension [-Wpedantic]
+     unsigned char p : 1;       /* padding flag           */
+     ^
+./include/srtp_priv.h:185:5: warning: type of bit-field ‘version’ is a GCC extension [-Wpedantic]
+     unsigned char version : 2; /* protocol version       */
+     ^
+./include/srtp_priv.h:186:5: warning: type of bit-field ‘pt’ is a GCC extension [-Wpedantic]
+     unsigned char pt : 7;      /* payload type           */
+     ^
+./include/srtp_priv.h:187:5: warning: type of bit-field ‘m’ is a GCC extension [-Wpedantic]
+     unsigned char m : 1;       /* marker bit             */
+     ^
+./include/srtp_priv.h:224:5: warning: type of bit-field ‘rc’ is a GCC extension [-Wpedantic]
+     unsigned char rc : 5;      /* reception report count */
+     ^
+./include/srtp_priv.h:225:5: warning: type of bit-field ‘p’ is a GCC extension [-Wpedantic]
+     unsigned char p : 1;       /* padding flag           */
+     ^
+./include/srtp_priv.h:226:5: warning: type of bit-field ‘version’ is a GCC extension [-Wpedantic]
+     unsigned char version : 2; /* protocol version       */
+     ^
+./include/srtp_priv.h:227:5: warning: type of bit-field ‘pt’ is a GCC extension [-Wpedantic]
+     unsigned char pt : 8;      /* payload type           */
+     ^
+test/dtls_srtp_driver.c: In function ‘test_dtls_srtp’:
+test/dtls_srtp_driver.c:182:1: warning: C++ style comments are not allowed in ISO C90 [enabled by default]
+ //  profile = srtp_profile_aes128_cm_sha1_80;
+ ^
+test/dtls_srtp_driver.c:182:1: warning: (this will be reported only once per input file) [enabled by default]
+test/dtls_srtp_driver.c:134:25: warning: unused variable ‘salt_len’ [-Wunused-variable]
+   unsigned int key_len, salt_len;
+                         ^
+test/dtls_srtp_driver.c:133:11: warning: unused variable ‘salt’ [-Wunused-variable]
+   uint8_t salt[SRTP_MAX_KEY_LEN];
+           ^
+In file included from test/test_srtp.c:49:0:
+test/cutest.h:81:26: warning: anonymous variadic macros were introduced in C99 [-Wvariadic-macros]
+ #define TEST_CHECK_(cond,...)  test_check__((cond), __FILE__, __LINE__, __VA_ARGS__)
+                          ^
+test/test_srtp.c:54:27: warning: C++ style comments are not allowed in ISO C90 [enabled by default]
+ #include "../srtp/srtp.c" // Get access to static functions
+                           ^
+test/test_srtp.c:54:27: warning: (this will be reported only once per input file) [enabled by default]
+In file included from test/test_srtp.c:54:0:
+test/../srtp/srtp.c:45:1: warning: C++ style comments are not allowed in ISO C90 [enabled by default]
+ // Leave this as the top level import. Ensures the existence of defines
+ ^
+test/../srtp/srtp.c:45:1: warning: (this will be reported only once per input file) [enabled by default]
+In file included from test/../srtp/srtp.c:48:0,
+                 from test/test_srtp.c:54:
+./include/srtp_priv.h:48:1: warning: C++ style comments are not allowed in ISO C90 [enabled by default]
+ // Leave this as the top level import. Ensures the existence of defines
+ ^
+./include/srtp_priv.h:48:1: warning: (this will be reported only once per input file) [enabled by default]
+In file included from ./include/srtp_priv.h:51:0,
+                 from test/../srtp/srtp.c:48,
+                 from test/test_srtp.c:54:
+./include/srtp.h:322:1: warning: C++ style comments are not allowed in ISO C90 [enabled by default]
+ //added by bruce for choose SM4 mode
+ ^
+./include/srtp.h:322:1: warning: (this will be reported only once per input file) [enabled by default]
+In file included from crypto/include/datatypes.h:50:0,
+                 from crypto/include/rdbx.h:50,
+                 from ./include/srtp_priv.h:52,
+                 from test/../srtp/srtp.c:48,
+                 from test/test_srtp.c:54:
+crypto/include/integers.h:140:8: warning: C++ style comments are not allowed in ISO C90 [enabled by default]
+ #endif // WORDS_BIGENDIAN
+        ^
+crypto/include/integers.h:140:8: warning: (this will be reported only once per input file) [enabled by default]
+In file included from crypto/include/err.h:51:0,
+                 from crypto/include/rdbx.h:51,
+                 from ./include/srtp_priv.h:52,
+                 from test/../srtp/srtp.c:48,
+                 from test/test_srtp.c:54:
+./include/srtp.h:322:1: warning: C++ style comments are not allowed in ISO C90 [enabled by default]
+ //added by bruce for choose SM4 mode
+ ^
+./include/srtp.h:322:1: warning: (this will be reported only once per input file) [enabled by default]
+In file included from ./include/srtp_priv.h:54:0,
+                 from test/../srtp/srtp.c:48,
+                 from test/test_srtp.c:54:
+crypto/include/integers.h:140:8: warning: C++ style comments are not allowed in ISO C90 [enabled by default]
+ #endif // WORDS_BIGENDIAN
+        ^
+crypto/include/integers.h:140:8: warning: (this will be reported only once per input file) [enabled by default]
+In file included from test/../srtp/srtp.c:48:0,
+                 from test/test_srtp.c:54:
+./include/srtp_priv.h:182:5: warning: type of bit-field ‘cc’ is a GCC extension [-Wpedantic]
+     unsigned char cc : 4;      /* CSRC count             */
+     ^
+./include/srtp_priv.h:183:5: warning: type of bit-field ‘x’ is a GCC extension [-Wpedantic]
+     unsigned char x : 1;       /* header extension flag  */
+     ^
+./include/srtp_priv.h:184:5: warning: type of bit-field ‘p’ is a GCC extension [-Wpedantic]
+     unsigned char p : 1;       /* padding flag           */
+     ^
+./include/srtp_priv.h:185:5: warning: type of bit-field ‘version’ is a GCC extension [-Wpedantic]
+     unsigned char version : 2; /* protocol version       */
+     ^
+./include/srtp_priv.h:186:5: warning: type of bit-field ‘pt’ is a GCC extension [-Wpedantic]
+     unsigned char pt : 7;      /* payload type           */
+     ^
+./include/srtp_priv.h:187:5: warning: type of bit-field ‘m’ is a GCC extension [-Wpedantic]
+     unsigned char m : 1;       /* marker bit             */
+     ^
+./include/srtp_priv.h:224:5: warning: type of bit-field ‘rc’ is a GCC extension [-Wpedantic]
+     unsigned char rc : 5;      /* reception report count */
+     ^
+./include/srtp_priv.h:225:5: warning: type of bit-field ‘p’ is a GCC extension [-Wpedantic]
+     unsigned char p : 1;       /* padding flag           */
+     ^
+./include/srtp_priv.h:226:5: warning: type of bit-field ‘version’ is a GCC extension [-Wpedantic]
+     unsigned char version : 2; /* protocol version       */
+     ^
+./include/srtp_priv.h:227:5: warning: type of bit-field ‘pt’ is a GCC extension [-Wpedantic]
+     unsigned char pt : 8;      /* payload type           */
+     ^
+In file included from test/../srtp/srtp.c:51:0,
+                 from test/test_srtp.c:54:
+./include/ekt.h:65:1: warning: C++ style comments are not allowed in ISO C90 [enabled by default]
+ // left in commented out as reminder to not include private headers
+ ^
+./include/ekt.h:65:1: warning: (this will be reported only once per input file) [enabled by default]
+In file included from test/test_srtp.c:54:0:
+test/../srtp/srtp.c: In function ‘srtp_validate_rtp_header’:
+test/../srtp/srtp.c:87:5: warning: ISO C90 forbids mixed declarations and code [-Wpedantic]
+     srtp_hdr_t *hdr = (srtp_hdr_t *)rtp_hdr;
+     ^
+test/../srtp/srtp.c: In function ‘srtp_kdf_init’:
+test/../srtp/srtp.c:742:5: warning: ISO C90 forbids mixed declarations and code [-Wpedantic]
+     srtp_err_status_t stat;
+     ^
+test/../srtp/srtp.c: In function ‘srtp_stream_init_keys’:
+test/../srtp/srtp.c:935:45: warning: use of C99 long long integer constant [-Wlong-long]
+     srtp_key_limit_set(session_keys->limit, 0xffffffffffffLL);
+                                             ^
+test/test_srtp.c: In function ‘srtp_calc_aead_iv_srtcp_distinct_iv_per_sequence_number’:
+test/test_srtp.c:156:5: warning: ISO C90 forbids mixed declarations and code [-Wpedantic]
+     uint32_t sequence_num[SAMPLE_COUNT];
+     ^
+test/test_srtp.c:162:5: warning: ISO C90 forbids mixed declarations and code [-Wpedantic]
+     v128_t final_iv[SAMPLE_COUNT];
+     ^
+test/test_srtp.c:173:5: warning: ISO C90 forbids mixed declarations and code [-Wpedantic]
+     size_t i = 0;
+     ^

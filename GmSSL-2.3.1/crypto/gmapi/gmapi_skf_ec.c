@@ -360,9 +360,18 @@ ECDSA_SIG *ECDSA_SIG_new_from_ECCSIGNATUREBLOB(const ECCSIGNATUREBLOB *blob)
 
 int ECDSA_SIG_set_ECCSIGNATUREBLOB(ECDSA_SIG *sig, const ECCSIGNATUREBLOB *blob)
 {
-	OPENSSL_assert(sig->r);		//changed by bruce, for test, 0921
-	OPENSSL_assert(sig->s);
+//	int ret = 0;			//added by bruce, 0926
+//	OPENSSL_assert(sig->r);		//changed by bruce, for test, 0921
+//	OPENSSL_assert(sig->s);
+//	OPENSSL_assert(sig);	//added by bruce, 0926
 
+#if 1
+//	OPENSSL_assert(blob->r);
+//	OPENSSL_assert(blob->s);
+	sig->r = BN_new();
+	sig->s = BN_new();
+	OPENSSL_assert(sig->r);
+	OPENSSL_assert(sig->s);
 	if (!(sig->r = BN_bin2bn(blob->r, sizeof(blob->r), sig->r))) {
 		GMAPIerr(GMAPI_F_ECDSA_SIG_SET_ECCSIGNATUREBLOB, ERR_R_BN_LIB);
 		return 0;
@@ -372,7 +381,45 @@ int ECDSA_SIG_set_ECCSIGNATUREBLOB(ECDSA_SIG *sig, const ECCSIGNATUREBLOB *blob)
 		GMAPIerr(GMAPI_F_ECDSA_SIG_SET_ECCSIGNATUREBLOB, ERR_R_BN_LIB);
 		return 0;
 	}
+	printf("333, BN_num_bytes(r) =%d, BN_num_bytes(s)= %d \n", BN_num_bytes(sig->r), BN_num_bytes(sig->s));
+#else
 
+	BIGNUM *r = NULL;
+	BIGNUM *s = NULL;
+	printf("111\n");
+	/* ECCSIGNATUREBLOB ==> ECDSA_SIG */
+	if (!(r = BN_bin2bn(blob->r, 41, NULL))) {
+		GMAPIerr(GMAPI_F_ECDSA_SIG_SET_ECCSIGNATURE, ERR_R_BN_LIB);
+		goto end;
+	}
+	printf("222\n");
+	if (!(s = BN_bin2bn(blob->s, 32, NULL))) {
+		GMAPIerr(GMAPI_F_ECDSA_SIG_SET_ECCSIGNATURE, ERR_R_BN_LIB);
+		goto end;
+	}
+	/* when using `sm2p256v1`, we need to check (s, r) length correct */
+	printf("333, BN_num_bytes(r) =%d, BN_num_bytes(s)= %d \n", BN_num_bytes(r), BN_num_bytes(s));
+	if (BN_num_bytes(r) != 256/8 || BN_num_bytes(s) != 256/8) {
+		GMAPIerr(GMAPI_F_ECDSA_SIG_SET_ECCSIGNATURE,
+			GMAPI_R_INVALID_SM2_SIGNATURE);
+		goto end;
+	}
+	printf("444\n");
+	if (!ECDSA_SIG_set0(sig, r, s)) {
+		GMAPIerr(GMAPI_F_ECDSA_SIG_SET_ECCSIGNATURE,
+			ERR_R_EC_LIB);
+		goto end;
+	}
+	printf("555\n");
+	r = NULL;
+	s = NULL;
+	ret = 1;
+
+end:
+	BN_free(r);
+	BN_free(s);
+	return ret;
+#endif
 	return 1;
 }
 

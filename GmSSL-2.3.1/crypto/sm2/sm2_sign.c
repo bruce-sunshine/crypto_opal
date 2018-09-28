@@ -474,6 +474,7 @@ int SM2_sign_setup(EC_KEY *ec_key, BN_CTX *ctx_in, BIGNUM **kp, BIGNUM **xp)
 ECDSA_SIG *SM2_do_sign_ex_old(const unsigned char *dgst, int dgstlen,	//changed by bruce, SM2_do_sign_ex --> SM2_do_sign_ex_old, 0919
 	const BIGNUM *kp, const BIGNUM *xp, EC_KEY *ec_key)
 {
+	printf("using SM2_do_sign_ex_old\n");
 	return sm2_do_sign(dgst, dgstlen, kp, xp, ec_key);
 }
 
@@ -485,7 +486,7 @@ ECDSA_SIG *SM2_do_sign(const unsigned char *dgst, int dgstlen, EC_KEY *ec_key)
 		return SM2_do_sign_ex_old(dgst, dgstlen, NULL, NULL, ec_key);
 	}
 	else
-		return SM2_do_sign_ex(dgst, dgstlen, NULL, NULL, ec_key);
+		return SM2_do_sign_ex_old(dgst, dgstlen, NULL, NULL, ec_key);
 }
 
 int SM2_do_verify(const unsigned char *dgst, int dgstlen,
@@ -512,7 +513,7 @@ int SM2_sign_ex(int type, const unsigned char *dgst, int dgstlen,
 	}
 	else
 	{
-		if (!(s = SM2_do_sign_ex(dgst, dgstlen, k, x, ec_key))) {
+		if (!(s = SM2_do_sign_ex_old(dgst, dgstlen, k, x, ec_key))) {	//changed by bruce, because of bug of ECDSA_SIG_new_from_ECCSIGNATUREBLOB, 0927
 			*siglen = 0;
 			return 0;
 		}
@@ -750,7 +751,7 @@ int SM2_do_verify_bruce(const unsigned char *dgst, int dgstlen,
 ECDSA_SIG *SM2_do_sign_ex(const unsigned char *dgst, int dgstlen,
 	const BIGNUM *kp, const BIGNUM *xp, EC_KEY *ec_key)
 {
-
+	printf("using SM2_do_sign_ex\n");
 	DEVHANDLE hd;
 	HAPPLICATION app;
 	char *name_list;
@@ -847,12 +848,10 @@ int SM2_do_verify_bruce(const unsigned char *dgst, int dgstlen,
 	HAPPLICATION app;
 	char *name_list;
 	ULONG name_list_size;
-	DEVINFO DevInfo;
 	ULONG skf_rv;
 	ULONG UserRetryCount = PIN_MAX_RETRY_TIMES;
 	ECCPUBLICKEYBLOB pubKey;
 	ECCSIGNATUREBLOB sigref;
-	ECDSA_SIG *ret = NULL;
 	skf_rv = SKF_EnumDev(TRUE, 0, &name_list_size);
 	if (skf_rv != SAR_OK)
 	{
@@ -930,7 +929,7 @@ int SM2_do_verify_bruce(const unsigned char *dgst, int dgstlen,
 	SKF_CloseApplication(app);
 	SKF_DisConnectDev(hd);
 	printf("close sm2 ukey skf verify device\n");
-
+	return 1;
 }
 
 #endif
