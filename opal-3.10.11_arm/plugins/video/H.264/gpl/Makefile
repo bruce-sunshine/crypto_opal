@@ -47,7 +47,7 @@ TARGET_PATH = $(TARGETDIR)/$(TARGET)
 CC	 	=arm-arago-linux-gnueabi-gcc
 CXX	 	=arm-arago-linux-gnueabi-g++
 CFLAGS  =-I/usr/local/include   -I.. -I$(PLUGINDIR) -I$(OPALDIR)/include -DGPL_HELPER_APP -DPLUGINCODEC_TRACING
-LDFLAGS =-L/home/lee/gaoshaobo/gaoshaobo/test_zrtp/libzrtp/trunk -L/home/lee/gaoshaobo/gaoshaobo/test_zrtp/libzrtp/trunk/third_party/bnlib -L/usr/local/lib -lx264  
+LDFLAGS =-L/usr/local/srtp2_arm/lib -L/usr/local/lib -lx264  
 
 
 vpath	%.o   $(OBJDIR)

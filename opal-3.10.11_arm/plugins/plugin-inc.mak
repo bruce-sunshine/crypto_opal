@@ -30,8 +30,8 @@ libdir        := ${exec_prefix}/lib
 
 CC            := arm-arago-linux-gnueabi-gcc
 CXX           := arm-arago-linux-gnueabi-g++
-CFLAGS        +=  -DPTRACING=1 -D_REENTRANT -fno-exceptions -I/usr/local/include -I/usr/local/ssl/include   -fPIC   -I/usr/local/include -I$(PLUGINDIR)/../include -I$(PLUGINDIR)
-LDFLAGS       += -L/home/lee/gaoshaobo/gaoshaobo/test_zrtp/libzrtp/trunk -L/home/lee/gaoshaobo/gaoshaobo/test_zrtp/libzrtp/trunk/third_party/bnlib -shared -Wl,-soname,$(SONAME)
+CFLAGS        +=  -DPTRACING=1 -D_REENTRANT -fno-exceptions -I/usr/local/include -I/usr/local/Gmssl_arm/include   -fPIC   -I/usr/local/include -I$(PLUGINDIR)/../include -I$(PLUGINDIR)
+LDFLAGS       += -L/usr/local/srtp2_arm/lib -shared -Wl,-soname,$(SONAME)
 PLUGINEXT     :=so
 
 ifneq ($(DEBUG),)

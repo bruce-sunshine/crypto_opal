@@ -3339,7 +3339,7 @@ void srtp_crypto_policy_set_sdt_skf_sm4_ecb(srtp_crypto_policy_t *p)
     p->auth_type = SRTP_NULL_AUTH;
     p->auth_key_len = 0;
     p->auth_tag_len = 0;
-    p->sec_serv = sec_serv_none;
+    p->sec_serv = sec_serv_conf;
 }
 
 void srtp_crypto_policy_set_sdt_skf_sm4_cbc(srtp_crypto_policy_t *p)
@@ -3353,7 +3353,7 @@ void srtp_crypto_policy_set_sdt_skf_sm4_cbc(srtp_crypto_policy_t *p)
     p->auth_type = SRTP_NULL_AUTH;
     p->auth_key_len = 0;
     p->auth_tag_len = 0;
-    p->sec_serv = sec_serv_none;
+    p->sec_serv = sec_serv_conf;
 }
 
 
@@ -4620,6 +4620,15 @@ srtp_crypto_policy_set_from_profile_for_rtcp(srtp_crypto_policy_t *policy,
     case srtp_profile_sdt_sm4_ofb:					//added by lee, for sdt sm4
     	srtp_crypto_policy_set_sdt_sm4_ofb(policy);
     	break;
+
+    case srtp_profile_sdt_skf_sm4_ecb:					//added by lee, for sdt sm4
+     	srtp_crypto_policy_set_sdt_skf_sm4_ecb(policy);
+     	break;
+
+     case srtp_profile_sdt_skf_sm4_cbc:					//added by lee, for sdt sm4
+     	srtp_crypto_policy_set_sdt_skf_sm4_cbc(policy);
+     	break;
+
     /* the following profiles are not (yet) supported */
 
     case srtp_profile_null_sha1_32:

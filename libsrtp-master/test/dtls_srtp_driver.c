@@ -45,7 +45,7 @@
 #include <stdio.h>    /* for printf()          */
 #include "getopt_s.h" /* for local getopt()    */
 #include "srtp_priv.h"
-
+#include "../crypto/include/skf.h"
 srtp_err_status_t 
 test_dtls_srtp(void);
 
@@ -180,7 +180,7 @@ test_dtls_srtp(void) {
    * set keys to known values for testing
    */
 //  profile = srtp_profile_aes128_cm_sha1_80;
-  profile = srtp_profile_sdt_sm4_ecb;
+  profile = srtp_profile_sdt_skf_sm4_ecb;
   key_len = srtp_profile_get_master_key_length(profile);
 //  salt_len = srtp_profile_get_master_salt_length(profile);
   memset(key, 0xff, key_len);

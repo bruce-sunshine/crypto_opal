@@ -64,7 +64,7 @@ RELEASE_LIB_FILENAME_SHARED_MAJ = @RELEASE_LIB_FILENAME_SHARED_MAJ@
 RELEASE_LIB_FILENAME_SHARED_MIN = @RELEASE_LIB_FILENAME_SHARED_MIN@
 RELEASE_LIB_FILENAME_SHARED_PAT = libopal.so.3.10.11
 RELEASE_CFLAGS                  = 
-RELEASE_LIBS                    = -L/usr/local/ssl/lib -L/usr/local/lib -lpt  
+RELEASE_LIBS                    = -L/usr/local/lib -L/usr/local/Gmssl_arm/lib -lpt_s -lpthread -lrt -lssl -lcrypto -lexpat -lresolv -ldl  
 RELEASE_OPAL_OBJDIR	        = ${OPALDIR}/lib_linux_arm/obj
 RELEASE_OPAL_DEPDIR	        = ${OPALDIR}/lib_linux_arm/obj
 
@@ -76,15 +76,15 @@ DEBUG_LIB_FILENAME_SHARED_MAJ   = @DEBUG_LIB_FILENAME_SHARED_MAJ@
 DEBUG_LIB_FILENAME_SHARED_MIN   = @DEBUG_LIB_FILENAME_SHARED_MIN@
 DEBUG_LIB_FILENAME_SHARED_PAT   = libopal_d.so.3.10.11
 DEBUG_CFLAGS                    = -g3 -ggdb -O0 -D_DEBUG
-DEBUG_LIBS                      = -L/usr/local/ssl/lib -L/usr/local/lib -lpt_d  
+DEBUG_LIBS                      = -L/usr/local/lib -L/usr/local/Gmssl_arm/lib -lpt_d_s -lpthread -lrt -lssl -lcrypto -lexpat -lresolv -ldl  
 DEBUG_OPAL_OBJDIR	        = ${OPALDIR}/lib_linux_arm/obj_d
 DEBUG_OPAL_DEPDIR	        = ${OPALDIR}/lib_linux_arm/obj_d
 
 # Compile and linker flags
-CFLAGS           :=  -Wall -Wextra -Wstrict-aliasing -Wfloat-equal -Wno-comment -Wno-unused -Winit-self -Wno-missing-field-initializers -DPTRACING=1 -D_REENTRANT -fno-exceptions -I/usr/local/include -I/usr/local/ssl/include   -fPIC  -I$(OPAL_INCDIR) $(CFLAGS)
-CXXFLAGS         := -I.include/rtp/zrtp_bruce -Wall -Wextra -Wstrict-aliasing -Wfloat-equal -Wno-comment -Wno-unused -Winit-self -Wno-missing-field-initializers -DPTRACING=1 -D_REENTRANT -fno-exceptions -I/usr/local/include -I/usr/local/ssl/include   -felide-constructors -Wreorder -fPIC  -I$(OPAL_INCDIR) $(CXXFLAGS)
-LDFLAGS          := -L/home/lee/gaoshaobo/gaoshaobo/test_zrtp/libzrtp/trunk -L/home/lee/gaoshaobo/gaoshaobo/test_zrtp/libzrtp/trunk/third_party/bnlib -DPTRACING=1 -D_REENTRANT -fno-exceptions -I/usr/local/include -I/usr/local/ssl/include  
-LIBS             += -lbn -lzrtp -ldl
+CFLAGS           :=  -Wall -Wextra -Wstrict-aliasing -Wfloat-equal -Wno-comment -Wno-unused -Winit-self -Wno-missing-field-initializers -DPTRACING=1 -D_REENTRANT -fno-exceptions -I/usr/local/include -I/usr/local/Gmssl_arm/include   -fPIC  -I$(OPAL_INCDIR) $(CFLAGS)
+CXXFLAGS         := -I/usr/local/srtp2_arm/include -Wall -Wextra -Wstrict-aliasing -Wfloat-equal -Wno-comment -Wno-unused -Winit-self -Wno-missing-field-initializers -DPTRACING=1 -D_REENTRANT -fno-exceptions -I/usr/local/include -I/usr/local/Gmssl_arm/include   -felide-constructors -Wreorder -fPIC  -I$(OPAL_INCDIR) $(CXXFLAGS)
+LDFLAGS          := -L/usr/local/srtp2_arm/lib -DPTRACING=1 -D_REENTRANT -fno-exceptions -I/usr/local/include -I/usr/local/Gmssl_arm/include  
+LIBS             += -lsrtp2 -ldl
 LDSOOPTS          = -shared -Wl,-soname,$(LIB_FILENAME_SHARED_PAT)
 
 HAVE_RANLIB      := no

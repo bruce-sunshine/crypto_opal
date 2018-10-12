@@ -884,6 +884,11 @@ void srtp_crypto_policy_set_sdt_sm4_ecb(srtp_crypto_policy_t *p);
 void srtp_crypto_policy_set_sdt_sm4_cbc(srtp_crypto_policy_t *p);
 
 void srtp_crypto_policy_set_sdt_sm4_ofb(srtp_crypto_policy_t *p);
+
+void srtp_crypto_policy_set_sdt_skf_sm4_ecb(srtp_crypto_policy_t *p);
+
+void srtp_crypto_policy_set_sdt_skf_sm4_cbc(srtp_crypto_policy_t *p);
+
 //added by bruce, for sdt sm4
 
 void srtp_crypto_policy_set_aes_cm_256_hmac_sha1_80(srtp_crypto_policy_t *p);

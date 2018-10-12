@@ -66,6 +66,7 @@ const unsigned SecondsFrom1900to1970 = (70*365+17)*24*60*60U;
 #if gaoshaobo
 char *defKey = "c1eec3717da76195bb878578790af71c4ee9f859e197a414a78d5abc7451";	//gaoshaobo for srtp
 char inputKey[96];								//gaoshaobo for srtp
+unsigned char pKey_audio[16] = {0x01,0x23,0x45,0x67,0x89,0xab,0xcd,0xef,0xfe,0xdc,0xba,0x98,0x76,0x54,0x32,0x10};
 #endif
 								
 #define RTP_VIDEO_RX_BUFFER_SIZE 0x100000 // 1Mb
@@ -659,8 +660,9 @@ static PTimeInterval GetDefaultOutOfOrderWaitTime()
 /***********gaoshaobo for srtp********/
 
 PBoolean RTP_Session::inited = PFalse;
-unsigned char* RTP_Session::key = (unsigned char*)defKey;
-
+//unsigned char* RTP_Session::key_audio = (unsigned char*)pKey_audio;
+int RTP_Session::audio_srtp = 0;
+extern int srtp_use_audio;
 /***********gaoshaobo for srtp********/
 #endif
 
@@ -686,8 +688,8 @@ RTP_Session::RTP_Session(const Params & params)
   , failed(false)
 
 #if gaoshaobo
-  , created(false) //gaoshaobo for srtp
-  , createdIn(false)//gaoshaobo for srtp
+  , createdOut_audio(false) //gaoshaobo for srtp
+  , createdIn_audio(false)//gaoshaobo for srtp
 #endif 
 {
   PAssert(params.id > 0, PInvalidParameter);
@@ -732,14 +734,25 @@ RTP_Session::RTP_Session(const Params & params)
 #if gaoshaobo
 ///////////////gaoshaobo for srtp/////////////
 
-  if (!RTP_Session::inited) {
+  if(srtp_use_audio)
+  {
+	  RTP_Session::audio_srtp = srtp_use_audio;
+  }
+  else
+  {
+	  RTP_Session::audio_srtp = 0;
+  }
+
+  if (!RTP_Session::inited && RTP_Session::audio_srtp)
+  {
     srtp_err_status_t err = srtp_init();
+	if (err)
+	{
+		printf("error: srtp init failed with error code %d\n", err);
+		exit(1);
+	}
     RTP_Session::inited = PTrue;
-    if(err)
-    {
-    printf("\n\n\n\n*********\n\n\n\nsrtp_init failed\n\n\n\n*************\n\n\n\n");
-    exit(1);
-    }
+    printf("srtp audio init ok \n");
   }
 
 ////////////////////////////////////////////////
@@ -794,21 +807,22 @@ RTP_Session::~RTP_Session()
 #if gaoshaobo
   ///////////////gaoshaobo for srtp/////////////
 
-  if(created)
+  if(createdOut_audio)
   {
-  	created = PFalse;
-  	srtp_dealloc(ctxOut);
+	createdOut_audio = PFalse;
+  	srtp_dealloc(ctxOut_audio);
   }
-  if(createdIn)
+  if(createdIn_audio)
   {
-  	createdIn = PFalse;
-  	srtp_dealloc(ctxIn);
+	createdIn_audio = PFalse;
+  	srtp_dealloc(ctxIn_audio);
   }
-    if (inited) {
-      srtp_shutdown();
-      inited = PFalse;
-    }
 
+  if (inited)
+  {
+	  srtp_shutdown();
+	  inited = PFalse;
+  }
   ////////////////////////////////////////////////
 #endif
 
@@ -1090,71 +1104,73 @@ void RTP_Session::AddReceiverReport(RTP_ControlFrame::ReceiverReport & receiver)
 
 RTP_Session::SendReceiveStatus RTP_Session::OnSendData(RTP_DataFrame & frame)
 {
-	if(!RTP_Session::audio_zrtp)		//added by lee, for zrtp
-	return EncodingLock(*this)->OnSendData(frame);
 #if gaoshaobo
 	/************gaoshaobo for srtp*********************/
-
-	srtp_err_status_t err;
-	SendReceiveStatus stat = EncodingLock(*this)->OnSendData(frame);
-	if (stat != e_ProcessPacket)
+	if(!RTP_Session::audio_srtp)		//added by lee, for zrtp
+		return EncodingLock(*this)->OnSendData(frame);
+	if(RTP_Session::audio_srtp)
 	{
-	    return stat;
-	}
-	if(!created&&inited)
-	{
-		memset(&policyOut, 0, sizeof(srtp_policy_t));
-		srtp_crypto_policy_set_rtp_default(&policyOut.rtp);
-		srtp_crypto_policy_set_rtcp_default(&policyOut.rtcp);
-		policyOut.ssrc.type = ssrc_specific;
-		policyOut.ssrc.value = frame.GetSyncSource();
-		policyOut.key = (unsigned char*)inputKey;
-		policyOut.ekt = NULL;
-		policyOut.next = NULL;
-		policyOut.window_size = 300;
-		policyOut.allow_repeat_tx = 0;
-		policyOut.rtp.sec_serv =(srtp_sec_serv_t)( sec_serv_none | sec_serv_conf_and_auth);
-		policyOut.rtcp.sec_serv = sec_serv_none;
-
-		int iKeyLen = policyOut.rtp.cipher_key_len*2;
-		int keyLen = hex_string_to_octet_string(inputKey, defKey, iKeyLen);
-		if(keyLen < iKeyLen)
+		srtp_err_status_t err;
+		SendReceiveStatus stat = EncodingLock(*this)->OnSendData(frame);
+		if (stat != e_ProcessPacket)
 		{
-			return e_IgnorePacket;
+			return stat;
 		}
+		if(!createdOut_audio && inited)
+		{
+			memset(&policyOut_audio, 0, sizeof(srtp_policy_t));
+		//	srtp_crypto_policy_set_sdt_skf_sm4_ecb(&policyOut_audio.rtp);
+			srtp_crypto_policy_set_rtp_default(&policyOut_audio.rtp);
 
-		err = srtp_create(&ctxOut, &policyOut);
-		if(err != srtp_err_status_ok)
-		{
-			printf("\n\n\n\n*****************\n\n"
-					"\n\nsrtp created failed %d\n\n\n\n\n\n\n\n", err);
-		}else
-		{
-			printf("\n\nsrtp created ok Out\n");
-			created = PTrue;
-		}
-	}
-		if(created)
-		{
-			  int len = frame.GetHeaderSize() + frame.GetPayloadSize();
-			  frame.SetPayloadSize(len + 144);
-			  err = ::srtp_protect(ctxOut, frame.GetPointer(), &len);
-			  if (err != srtp_err_status_ok)
-			  {
-				  printf("\n\n\n\n*****************\n\n"
-				  								"\n\nsrtp protected failed Out\n\n\n\n\n\n\n\n");
-			    return RTP_Session::e_IgnorePacket;
-			  }
-			  frame.SetPayloadSize(len - frame.GetHeaderSize());
-		}
+			policyOut_audio.ssrc.type = ssrc_specific;
+			policyOut_audio.ssrc.value = frame.GetSyncSource();
+//			policyOut_audio.key = (unsigned char*)pKey_audio;
+			policyOut_audio.key = (unsigned char*)inputKey;
+			policyOut_audio.ekt = NULL;
+			policyOut_audio.next = NULL;
+			policyOut_audio.window_size = 128;
+			policyOut_audio.allow_repeat_tx = 0;
+			policyOut_audio.rtp.sec_serv =(srtp_sec_serv_t)(sec_serv_none | sec_serv_conf_and_auth);
+//			policyOut_audio.rtcp.sec_serv = sec_serv_none;
 
+			int iKeyLen = policyOut_audio.rtp.cipher_key_len*2;
+			int keyLen = hex_string_to_octet_string(inputKey, defKey, iKeyLen);
+			if(keyLen < iKeyLen)
+			{
+				return e_IgnorePacket;
+			}
+
+			err = srtp_create(&ctxOut_audio, &policyOut_audio);
+			if(err != srtp_err_status_ok)
+			{
+				printf("\nsrtp created audio Out failed %d\n", err);
+			}else
+			{
+				printf("\n\nsrtp created audio Out ok \n");
+				createdOut_audio = PTrue;
+			}
+		}
+		if(createdOut_audio)
+		{
+			int len = frame.GetHeaderSize() + frame.GetPayloadSize();
+//			printf("len = %d\n", len);
+			frame.SetPayloadSize(len + 144);
+			err = ::srtp_protect(ctxOut_audio, frame.GetPointer(), &len);
+			if (err != srtp_err_status_ok)
+			{
+				printf("\nsrtp protected audio failed Out, err = \n", err);
+				return RTP_Session::e_IgnorePacket;
+			}
+			frame.SetPayloadSize(len - frame.GetHeaderSize());
+		}
 		return e_ProcessPacket;
-
+	}
 	/************gaoshaobo for srtp*********************/
 #endif
 
 #if bruce
-
+		if(!RTP_Session::audio_zrtp)		//added by lee, for zrtp
+			return EncodingLock(*this)->OnSendData(frame);
 		if(RTP_Session::audio_zrtp)
 		{
 			SendReceiveStatus stat = EncodingLock(*this)->OnSendData(frame);
@@ -1324,58 +1340,57 @@ RTP_Session::SendReceiveStatus RTP_Session::OnReceiveData(RTP_DataFrame & frame)
 
 #if gaoshaobo
 	/************gaoshaobo for srtp*********************/
-
-	srtp_err_status_t err ;
-	if(!createdIn&&inited)
+	if(RTP_Session::audio_srtp)
 	{
-		memset(&policyIn, 0, sizeof(policyIn));
-		srtp_crypto_policy_set_rtp_default(&policyIn.rtp);
-		srtp_crypto_policy_set_rtcp_default(&policyIn.rtcp);
-		policyIn.ssrc.type = ssrc_specific;
-		policyIn.ssrc.value = frame.GetSyncSource();
-		policyIn.key = (unsigned char*)inputKey;//key;
-		policyIn.ekt = NULL;
-		policyIn.next = NULL;
-		policyIn.window_size = 300;
-		policyIn.allow_repeat_tx = 0;
-		policyIn.rtp.sec_serv = (srtp_sec_serv_t)( sec_serv_none | sec_serv_conf_and_auth);
-		policyIn.rtcp.sec_serv = sec_serv_none;
-
-
-		int iKeyLen = policyIn.rtp.cipher_key_len*2;
-		int keyLen = hex_string_to_octet_string(inputKey, defKey, iKeyLen);
-		if(keyLen < iKeyLen)
+		srtp_err_status_t err ;
+		if(!createdIn_audio && inited)
 		{
-			return e_IgnorePacket;
+			memset(&policyIn_audio, 0, sizeof(srtp_policy_t));
+		//	srtp_crypto_policy_set_sdt_skf_sm4_ecb(&policyIn_audio.rtp);
+			srtp_crypto_policy_set_rtp_default(&policyIn_audio.rtp);
+			policyIn_audio.ssrc.type = ssrc_specific;
+			policyIn_audio.ssrc.value = frame.GetSyncSource();
+//			policyIn_audio.key = (unsigned char*)pKey_audio;//key;
+			policyIn_audio.key = (unsigned char*)inputKey;//key;
+			policyIn_audio.ekt = NULL;
+			policyIn_audio.next = NULL;
+			policyIn_audio.window_size = 128;
+			policyIn_audio.allow_repeat_tx = 0;
+			policyIn_audio.rtp.sec_serv = (srtp_sec_serv_t)(sec_serv_none | sec_serv_conf_and_auth);
+			//		policyIn_audio.rtcp.sec_serv = sec_serv_none;
+
+			int iKeyLen = policyIn_audio.rtp.cipher_key_len*2;
+			int keyLen = hex_string_to_octet_string(inputKey, defKey, iKeyLen);
+			if(keyLen < iKeyLen)
+			{
+				return e_IgnorePacket;
+			}
+
+			err = srtp_create(&ctxIn_audio, &policyIn_audio);
+			if(err != srtp_err_status_ok)
+			{
+				printf("\nsrtp created audio In failed %d\n", err);
+			}else
+			{
+				printf("\nsrtp created audio In ok \n\n");
+				createdIn_audio = PTrue;
+			}
 		}
 
-		err = srtp_create(&ctxIn, &policyIn);
-		if(err != srtp_err_status_ok)
+		if(createdIn_audio)
 		{
-			printf("\n\n\n\n*****************\n\n"
-					"\n\nsrtp created failed %d\n\n\n\n\n\n\n\n", err);
-		}else
-		{
-			printf("\nsrtp created ok IN\n\n");
-			createdIn = PTrue;
+			int len = frame.GetHeaderSize() + frame.GetPayloadSize();
+
+			err = ::srtp_unprotect(ctxIn_audio, frame.GetPointer(), &len);
+
+			if (err != srtp_err_status_ok)
+			{
+				printf("\nsrtp unprotected audio failed IN %d, frame len : %d\n", err, len);
+				return RTP_Session::e_IgnorePacket;
+			}
+			frame.SetPayloadSize(len - frame.GetHeaderSize());
 		}
 	}
-
-	if(createdIn)
-	{
-		  int len = frame.GetHeaderSize() + frame.GetPayloadSize();
-
-		  err = ::srtp_unprotect(ctxIn, frame.GetPointer(), &len);
-
-		  if (err != srtp_err_status_ok)
-		  {
-			  printf("\n\n\n\n*****************\n\n"
-			  				  								"\n\nsrtp unprotected failed IN %d, frame len : %d\n\n\n\n\n\n\n\n", err, len);
-			  return RTP_Session::e_IgnorePacket;
-		  }
-		  frame.SetPayloadSize(len - frame.GetHeaderSize());
-	}
-
 	/************gaoshaobo for srtp*********************/
 #endif
 
@@ -2175,7 +2190,7 @@ RTP_UDP::RTP_UDP(const Params & params)
 //  zrtp_recv_thread=NULL;
 #endif
 }
-
+#if bruce
 void* RTP_UDP::zrtp_audio_stop(void*)
 {
 	pthread_detach(pthread_self());
@@ -2202,7 +2217,7 @@ void* RTP_UDP::zrtp_audio_stop(void*)
     	}
 
 }
-
+#endif
 RTP_UDP::~RTP_UDP()
 {
 
@@ -2723,6 +2738,7 @@ PBoolean RTP_UDP::SetRemoteSocketInfo(PIPSocket::Address address, WORD port, PBo
     WriteDataOrControlPDU(dummy, sizeof(dummy), false);
     PTRACE(2, "RTP_UDP\tSession " << sessionID << ", sending empty datagrams to open local Port Restricted NAT");
   }
+
 #if bruce
    if(isAudio && !remoteTransmitAddress.IsValid())
       {

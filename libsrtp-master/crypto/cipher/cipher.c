@@ -189,7 +189,7 @@ static srtp_err_status_t srtp_cipher_rand (void *dest, uint32_t len)
 }
  
 #define SELF_TEST_BUF_OCTETS 128
-#define NUM_RAND_TESTS       128
+#define NUM_RAND_TESTS       4	//128-->8 for save ukey srtp_init time, changed by bruce, 0928
 #define MAX_KEY_LEN          64
 /*
  * srtp_cipher_type_test(ct, test_data) tests a cipher of type ct against

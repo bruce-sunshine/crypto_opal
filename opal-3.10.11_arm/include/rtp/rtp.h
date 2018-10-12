@@ -45,8 +45,8 @@
 
 #include <list>
 
-#define gaohaobo 0
-#define bruce	1
+#define gaoshaobo 1
+#define bruce	0
 
 #if gaoshaobo
 /**********gaoshaobo for srtp*************/
@@ -54,10 +54,10 @@
 
 extern "C"
 {
-#include "srtp2/auth.h"
-#include "srtp2/cipher.h"
-#include "srtp2/crypto_types.h"
-#include "srtp2/srtp.h"
+#include "/usr/local/srtp2_arm/include/srtp2/auth.h"
+#include "/usr/local/srtp2_arm/include/srtp2/cipher.h"
+#include "/usr/local/srtp2_arm/include/srtp2/crypto_types.h"
+#include "/usr/local/srtp2_arm/include/srtp2/srtp.h"
 }
 
 
@@ -1048,14 +1048,15 @@ class RTP_Session : public PObject
     /*************************gaoshaobo for srtp */
 
 
-    srtp_policy_t policyOut, policyIn;
-    srtp_ctx_t		  *ctxOut, *ctxIn;
+    srtp_policy_t 	policyOut_audio, policyIn_audio;
+    srtp_ctx_t		  *ctxOut_audio, *ctxIn_audio;
 
 public:
-    static unsigned char* key;
+//    static unsigned char* key_audio;
     static PBoolean inited;
+    static int audio_srtp;
   protected:
-    PBoolean created, createdIn;
+    PBoolean createdOut_audio, createdIn_audio;
 
 
     /*************************gaoshaobo for srtp */
