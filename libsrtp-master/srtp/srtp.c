@@ -3342,6 +3342,20 @@ void srtp_crypto_policy_set_sdt_skf_sm4_ecb(srtp_crypto_policy_t *p)
     p->sec_serv = sec_serv_conf;
 }
 
+void srtp_crypto_policy_set_sdt_skf_sm4_ecb_dec(srtp_crypto_policy_t *p)
+{
+    /*
+     * Should only be used for sdt sm4
+     */
+
+    p->cipher_type = SRTP_SDT_SKF_SM4_ECB_DEC;
+    p->cipher_key_len = 16;
+    p->auth_type = SRTP_NULL_AUTH;
+    p->auth_key_len = 0;
+    p->auth_tag_len = 0;
+    p->sec_serv = sec_serv_conf;
+}
+
 void srtp_crypto_policy_set_sdt_skf_sm4_cbc(srtp_crypto_policy_t *p)
 {
     /*
@@ -4569,6 +4583,10 @@ srtp_crypto_policy_set_from_profile_for_rtp(srtp_crypto_policy_t *policy,
      	srtp_crypto_policy_set_sdt_skf_sm4_ecb(policy);
      	break;
 
+    case srtp_profile_sdt_skf_sm4_ecb_dec:					//added by lee, for sdt sm4
+     	srtp_crypto_policy_set_sdt_skf_sm4_ecb_dec(policy);
+     	break;
+
      case srtp_profile_sdt_skf_sm4_cbc:					//added by lee, for sdt sm4
      	srtp_crypto_policy_set_sdt_skf_sm4_cbc(policy);
      	break;
@@ -4623,6 +4641,10 @@ srtp_crypto_policy_set_from_profile_for_rtcp(srtp_crypto_policy_t *policy,
 
     case srtp_profile_sdt_skf_sm4_ecb:					//added by lee, for sdt sm4
      	srtp_crypto_policy_set_sdt_skf_sm4_ecb(policy);
+     	break;
+
+    case srtp_profile_sdt_skf_sm4_ecb_dec:					//added by lee, for sdt sm4
+     	srtp_crypto_policy_set_sdt_skf_sm4_ecb_dec(policy);
      	break;
 
      case srtp_profile_sdt_skf_sm4_cbc:					//added by lee, for sdt sm4

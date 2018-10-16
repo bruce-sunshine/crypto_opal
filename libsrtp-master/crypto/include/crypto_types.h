@@ -123,4 +123,6 @@
 
 #define SRTP_SDT_SKF_SM4_CBC		12
 
+#define SRTP_SDT_SKF_SM4_ECB_DEC	13
+
 #endif  /* SRTP_CRYPTO_TYPES_H */

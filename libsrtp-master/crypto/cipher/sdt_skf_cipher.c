@@ -62,6 +62,7 @@
 extern srtp_debug_module_t srtp_mod_cipher;
 
 extern const srtp_cipher_type_t srtp_sdt_skf_SM4_ECB_cipher;
+extern const srtp_cipher_type_t srtp_sdt_skf_SM4_ECB_DEC_cipher;
 extern const srtp_cipher_type_t srtp_sdt_skf_SM4_CBC_cipher;
 
 
@@ -105,6 +106,7 @@ static srtp_err_status_t srtp_sdt_skf_cipher_sm4_ecb_alloc (srtp_cipher_t **c, i
 
     //added huashen ukey init //
 	ULONG skf_rv;
+#if 0
 	char *name_list;
 	ULONG name_list_size;
 	skf_rv = SKF_EnumDev(TRUE, 0, &name_list_size);
@@ -125,12 +127,21 @@ static srtp_err_status_t srtp_sdt_skf_cipher_sm4_ecb_alloc (srtp_cipher_t **c, i
 		printf("name list, malloc error\n");
 		return srtp_err_status_alloc_fail;
 	}
-
+#endif
+	ULONG name_list_size;
+	skf_rv = SKF_EnumDev(TRUE, 0, &name_list_size);
+	printf("ecb name_list_size = %d\n", name_list_size);
+	if (skf_rv != SAR_OK)
+	{
+		printf("SKF_EnumDev error, error = 0x%02x\n", skf_rv);
+		return srtp_err_status_alloc_fail;
+	}
+	char name_list[] = "SJW07A_SDT_enc";
 	skf_rv = SKF_EnumDev(TRUE, name_list, &name_list_size);
 	if (skf_rv != SAR_OK)
 	{
 		free (name_list);
-		printf("SKF_EnumDev_2 error\n");
+		printf("SKF_EnumDev enc error\n");
 		return srtp_err_status_alloc_fail;
 	}
 
@@ -138,13 +149,102 @@ static srtp_err_status_t srtp_sdt_skf_cipher_sm4_ecb_alloc (srtp_cipher_t **c, i
 	free(name_list);
 	if(skf_rv != SAR_OK)
 	{
-		printf("SKF_ConnectDev error\n");
+		printf("SKF_ConnectDev enc error\n");
+		return srtp_err_status_alloc_fail;
+	}
+	printf("SDT_SKF ukey enc init ok");
+//	printf("SDT_SKF ukey init ok, choose SM4 mode is %d OK\n", SMS4_ECB);
+    return srtp_err_status_ok;
+}
+
+static srtp_err_status_t srtp_sdt_skf_cipher_sm4_ecb_dec_alloc (srtp_cipher_t **c, int key_len, int tlen)
+{
+
+    srtp_sdt_skf_sm4_ctx_t* sdt_skf_ctx;
+    debug_print(srtp_mod_cipher,
+                "allocating cipher with key length %d", key_len);
+
+
+    if (key_len != SRTP_SDT_SM4_KEY_LEN) {
+        return srtp_err_status_bad_param;
+    }
+
+    /* allocate memory a cipher of type null_cipher */
+    *c = (srtp_cipher_t *)srtp_crypto_alloc(sizeof(srtp_cipher_t));
+    if (*c == NULL) {
+        return srtp_err_status_alloc_fail;
+    }
+    memset(*c, 0x0, sizeof(srtp_cipher_t));
+
+    sdt_skf_ctx = (srtp_sdt_skf_sm4_ctx_t *)srtp_crypto_alloc(sizeof(srtp_sdt_skf_sm4_ctx_t));
+    if (sdt_skf_ctx == NULL)
+    {
+    	srtp_crypto_free(*c);
+        return srtp_err_status_alloc_fail;
+    }
+    memset(sdt_skf_ctx, 0x0, sizeof(srtp_sdt_skf_sm4_ctx_t));
+    sdt_skf_ctx->mode = SMS4_ECB;
+
+    (*c)->state = sdt_skf_ctx;
+    /* set pointers */
+    (*c)->algorithm = SRTP_SDT_SKF_SM4_ECB_DEC;
+    (*c)->type = &srtp_sdt_skf_SM4_ECB_DEC_cipher;
+//    (*c)->state = (void *) 0x1; /* The null cipher does not maintain state */
+
+    /* set key size */
+    (*c)->key_len = key_len;
+
+    //added huashen ukey init //
+	ULONG skf_rv;
+#if 0
+	char *name_list;
+	ULONG name_list_size;
+	skf_rv = SKF_EnumDev(TRUE, 0, &name_list_size);
+	printf("ecb name_list_size = %d\n", name_list_size);
+	if (skf_rv != SAR_OK)
+	{
+		printf("SKF_EnumDev error, error = 0x%02x\n", skf_rv);
+		return srtp_err_status_alloc_fail;
+	}
+	if (name_list_size == 0)
+	{
+		printf("SKF get name_list_size = 0\n");
+		return srtp_err_status_alloc_fail;
+	}
+	name_list = (char *)malloc (name_list_size);
+	if(name_list == NULL)
+	{
+		printf("name list, malloc error\n");
+		return srtp_err_status_alloc_fail;
+	}
+#endif
+	ULONG name_list_size;
+	skf_rv = SKF_EnumDev(TRUE, 0, &name_list_size);
+	printf("ecb name_list_size = %d\n", name_list_size);
+	if (skf_rv != SAR_OK)
+	{
+		printf("SKF_EnumDev error, error = 0x%02x\n", skf_rv);
+		return srtp_err_status_alloc_fail;
+	}
+	char name_list[] = "SJW07A_SDT_dec";
+	skf_rv = SKF_EnumDev(TRUE, name_list, &name_list_size);
+	if (skf_rv != SAR_OK)
+	{
+		free (name_list);
+		printf("SKF_EnumDev dec error\n");
 		return srtp_err_status_alloc_fail;
 	}
 
+	skf_rv = SKF_ConnectDev(name_list, &(sdt_skf_ctx->hd));
+	free(name_list);
+	if(skf_rv != SAR_OK)
+	{
+		printf("SKF_ConnectDev dec error\n");
+		return srtp_err_status_alloc_fail;
+	}
+	printf("SDT_SKF ukey dec init ok");
 //	printf("SDT_SKF ukey init ok, choose SM4 mode is %d OK\n", SMS4_ECB);
     return srtp_err_status_ok;
-
 }
 
 
@@ -479,6 +579,7 @@ static srtp_err_status_t srtp_sdt_skf_cipher_decrypt (void *cv,
 }
 
 static const char srtp_sdt_skf_cipher_sm4_ecb_description[] = "sdt ukey cipher sm4_ecb";
+static const char srtp_sdt_skf_cipher_sm4_ecb_dec_description[] = "sdt ukey cipher sm4_ecb_dec";
 static const char srtp_sdt_skf_cipher_sm4_cbc_description[] = "sdt ukey cipher sm4_cbc";
 
 static const uint8_t srtp_sdt_skf_sm4_test_case_0_key[SRTP_SDT_SM4_KEY_LEN] =  {0x01,0x23,0x45,0x67,0x89,0xab,0xcd,0xef,0xfe,0xdc,0xba,0x98,0x76,0x54,0x32,0x10};
@@ -539,6 +640,20 @@ const srtp_cipher_type_t srtp_sdt_skf_SM4_ECB_cipher = {
     srtp_sdt_skf_cipher_sm4_ecb_description,
     &srtp_sdt_cipher_sm4_ecb_test_0,
     SRTP_SDT_SKF_SM4_ECB
+};
+
+const srtp_cipher_type_t srtp_sdt_skf_SM4_ECB_DEC_cipher = {
+	srtp_sdt_skf_cipher_sm4_ecb_dec_alloc,
+    srtp_sdt_skf_cipher_dealloc,
+    srtp_sdt_skf_cipher_init,
+    0,                     /* set_aad */
+    srtp_sdt_skf_cipher_encrypt,
+    srtp_sdt_skf_cipher_decrypt,
+    srtp_sdt_skf_cipher_set_iv,
+    0,                     /* get_tag */
+    srtp_sdt_skf_cipher_sm4_ecb_description,
+    &srtp_sdt_cipher_sm4_ecb_test_0,
+    SRTP_SDT_SKF_SM4_ECB_DEC
 };
 
 const srtp_cipher_type_t srtp_sdt_skf_SM4_CBC_cipher = {

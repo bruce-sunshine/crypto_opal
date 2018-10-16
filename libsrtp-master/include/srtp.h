@@ -887,6 +887,8 @@ void srtp_crypto_policy_set_sdt_sm4_ofb(srtp_crypto_policy_t *p);
 
 void srtp_crypto_policy_set_sdt_skf_sm4_ecb(srtp_crypto_policy_t *p);
 
+void srtp_crypto_policy_set_sdt_skf_sm4_ecb_dec(srtp_crypto_policy_t *p);
+
 void srtp_crypto_policy_set_sdt_skf_sm4_cbc(srtp_crypto_policy_t *p);
 
 //added by bruce, for sdt sm4
@@ -1210,7 +1212,8 @@ typedef enum {
     srtp_profile_sdt_sm4_cbc =10,
     srtp_profile_sdt_sm4_ofb =11,
     srtp_profile_sdt_skf_sm4_ecb =12,
-    srtp_profile_sdt_skf_sm4_cbc =13
+    srtp_profile_sdt_skf_sm4_cbc = 13,
+    srtp_profile_sdt_skf_sm4_ecb_dec = 14
 } srtp_profile_t;
 
 /**
