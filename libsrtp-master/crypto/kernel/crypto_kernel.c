@@ -176,6 +176,7 @@ srtp_err_status_t srtp_crypto_kernel_init ()
 //    }
 
     //for huashen UKEY
+#if 1
         status = srtp_crypto_kernel_load_cipher_type(&srtp_sdt_skf_SM4_ECB_cipher, SRTP_SDT_SKF_SM4_ECB);
         if (status) {
             return status;
@@ -190,6 +191,7 @@ srtp_err_status_t srtp_crypto_kernel_init ()
         if (status) {
             return status;
         }
+#endif
     //added by bruce, for sdt sm4 cipher
 
     status = srtp_crypto_kernel_load_cipher_type(&srtp_null_cipher, SRTP_NULL_CIPHER);

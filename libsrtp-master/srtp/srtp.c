@@ -2318,7 +2318,10 @@ srtp_err_status_t srtp_protect_mki(srtp_ctx_t *ctx,
         }
     }
     if (status)
+    {
+    	printf("srtp_protect_mki, 111\n");
         return srtp_err_status_cipher_fail;
+    }
 
 /* shift est, put into network byte order */
 #ifdef NO_64BIT_MATH
@@ -2338,7 +2341,10 @@ srtp_err_status_t srtp_protect_mki(srtp_ctx_t *ctx,
             status = srtp_cipher_output(session_keys->rtp_cipher, auth_tag,
                                         &prefix_len);
             if (status)
+            {
+            	printf("srtp_protect_mki, 222\n");
                 return srtp_err_status_cipher_fail;
+            }
             debug_print(mod_srtp, "keystream prefix: %s",
                         srtp_octet_string_hex_string(auth_tag, prefix_len));
         }
@@ -2360,7 +2366,10 @@ srtp_err_status_t srtp_protect_mki(srtp_ctx_t *ctx,
             srtp_cipher_encrypt(session_keys->rtp_cipher, (uint8_t *)enc_start,
                                 (unsigned int *)&enc_octet_len);
         if (status)
+        {
+        	printf("srtp_protect_mki, 333\n");
             return srtp_err_status_cipher_fail;
+        }
     }
 
     /*
@@ -2569,8 +2578,10 @@ srtp_err_status_t srtp_unprotect_mki(srtp_ctx_t *ctx,
         }
     }
     if (status)
+    {
+    	printf("srtp_unprotect_mki, 111\n");
         return srtp_err_status_cipher_fail;
-
+    }
 /* shift est, put into network byte order */
 #ifdef NO_64BIT_MATH
     est = be64_to_cpu(
@@ -2634,7 +2645,10 @@ srtp_err_status_t srtp_unprotect_mki(srtp_ctx_t *ctx,
             debug_print(mod_srtp, "keystream prefix: %s",
                         srtp_octet_string_hex_string(tmp_tag, prefix_len));
             if (status)
+            {
+            	printf("srtp_unprotect_mki, 222\n");
                 return srtp_err_status_cipher_fail;
+            }
         }
 
         /* initialize auth func context */
@@ -2692,7 +2706,10 @@ srtp_err_status_t srtp_unprotect_mki(srtp_ctx_t *ctx,
         status = srtp_cipher_decrypt(session_keys->rtp_cipher,
                                      (uint8_t *)enc_start, &enc_octet_len);
         if (status)
+        {
+        	printf("srtp_unprotect_mki, 333\n");
             return srtp_err_status_cipher_fail;
+        }
     }
 
     /*

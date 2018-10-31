@@ -107,16 +107,17 @@ srtp_err_status_t srtp_cipher_encrypt (srtp_cipher_t *c, uint8_t *buffer, uint32
     if (!c || !c->type || !c->state) {
 	return (srtp_err_status_bad_param);
     }
-
+//    printf("srtp_cipher_encrypt, 123\n");
     return (((c)->type)->encrypt(((c)->state), buffer, num_octets_to_output));
 }
 
 srtp_err_status_t srtp_cipher_decrypt (srtp_cipher_t *c, uint8_t *buffer, uint32_t *num_octets_to_output)
 {
+
     if (!c || !c->type || !c->state) {
 	return (srtp_err_status_bad_param);
     }
-
+//    printf("srtp_cipher_decrypt, 321\n");
     return (((c)->type)->decrypt(((c)->state), buffer, num_octets_to_output));
 }
 

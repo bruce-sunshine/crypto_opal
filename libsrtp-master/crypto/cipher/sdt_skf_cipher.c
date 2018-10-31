@@ -47,7 +47,8 @@
 #ifdef HAVE_CONFIG_H
     #include <config.h>
 #endif
-
+#include <stdio.h>
+#include <stdlib.h>
 #include "datatypes.h"
 #include "sdt_skf_cipher.h"
 #include "err.h"                /* for srtp_debug */
@@ -64,7 +65,6 @@ extern srtp_debug_module_t srtp_mod_cipher;
 extern const srtp_cipher_type_t srtp_sdt_skf_SM4_ECB_cipher;
 extern const srtp_cipher_type_t srtp_sdt_skf_SM4_ECB_DEC_cipher;
 extern const srtp_cipher_type_t srtp_sdt_skf_SM4_CBC_cipher;
-
 
 
 static srtp_err_status_t srtp_sdt_skf_cipher_sm4_ecb_alloc (srtp_cipher_t **c, int key_len, int tlen)
@@ -130,13 +130,14 @@ static srtp_err_status_t srtp_sdt_skf_cipher_sm4_ecb_alloc (srtp_cipher_t **c, i
 #endif
 	ULONG name_list_size;
 	skf_rv = SKF_EnumDev(TRUE, 0, &name_list_size);
-	printf("ecb name_list_size = %d\n", name_list_size);
+//	printf("ecb name_list_size = %d\n", name_list_size);
 	if (skf_rv != SAR_OK)
 	{
 		printf("SKF_EnumDev error, error = 0x%02x\n", skf_rv);
 		return srtp_err_status_alloc_fail;
 	}
-	char name_list[] = "SJW07A_SDT_enc";
+	char name_list[100];
+
 	skf_rv = SKF_EnumDev(TRUE, name_list, &name_list_size);
 	if (skf_rv != SAR_OK)
 	{
@@ -145,14 +146,16 @@ static srtp_err_status_t srtp_sdt_skf_cipher_sm4_ecb_alloc (srtp_cipher_t **c, i
 		return srtp_err_status_alloc_fail;
 	}
 
+//	printf("ecb name_list = %s\n", name_list);
+
 	skf_rv = SKF_ConnectDev(name_list, &(sdt_skf_ctx->hd));
-	free(name_list);
+//	free(name_list);
 	if(skf_rv != SAR_OK)
 	{
 		printf("SKF_ConnectDev enc error\n");
 		return srtp_err_status_alloc_fail;
 	}
-	printf("SDT_SKF ukey enc init ok");
+	printf("SDT_SKF ukey enc init ok\n");
 //	printf("SDT_SKF ukey init ok, choose SM4 mode is %d OK\n", SMS4_ECB);
     return srtp_err_status_ok;
 }
@@ -220,13 +223,13 @@ static srtp_err_status_t srtp_sdt_skf_cipher_sm4_ecb_dec_alloc (srtp_cipher_t **
 #endif
 	ULONG name_list_size;
 	skf_rv = SKF_EnumDev(TRUE, 0, &name_list_size);
-	printf("ecb name_list_size = %d\n", name_list_size);
+//	printf("ecb_dec name_list_size = %d\n", name_list_size);
 	if (skf_rv != SAR_OK)
 	{
 		printf("SKF_EnumDev error, error = 0x%02x\n", skf_rv);
 		return srtp_err_status_alloc_fail;
 	}
-	char name_list[] = "SJW07A_SDT_dec";
+	char name_list[100];
 	skf_rv = SKF_EnumDev(TRUE, name_list, &name_list_size);
 	if (skf_rv != SAR_OK)
 	{
@@ -234,15 +237,39 @@ static srtp_err_status_t srtp_sdt_skf_cipher_sm4_ecb_dec_alloc (srtp_cipher_t **
 		printf("SKF_EnumDev dec error\n");
 		return srtp_err_status_alloc_fail;
 	}
+	int ukeynum_first = 0;
+	char name_first[30];
+	char name_prefix[30];
 
+	memset(name_first, 0, sizeof(name_first));
+	memcpy(name_first, name_list, strlen(name_list));
+	memset(name_prefix, 0, sizeof(name_prefix));
+	memcpy(name_prefix, name_list, 15);
+	ukeynum_first = atoi(name_list + 15);
+//	printf("ecb_dec name_first = %s\n", name_first);
+//	printf("ecb_dec name_prefix = %s\n", name_prefix);
+//	printf("ecb_dec ukeynum_first = %d\n", ukeynum_first);
+
+	++ukeynum_first;
+	memset(name_list, 0 , sizeof(name_list));
+	memcpy(name_list, name_prefix, strlen(name_prefix));
+	char str[10];
+	sprintf(str, "%d", ukeynum_first);
+	strcat(name_list, str);
+
+//	char name[] = "hs-1d99-0001-2-4";
+//	memset(name_list, 0 , sizeof(name_list));
+//	memcpy(name_list, name, strlen(name));
+
+//	printf("ecb_dec name_list = %s\n", name_list);
 	skf_rv = SKF_ConnectDev(name_list, &(sdt_skf_ctx->hd));
-	free(name_list);
+//	free(name_list);
 	if(skf_rv != SAR_OK)
 	{
 		printf("SKF_ConnectDev dec error\n");
 		return srtp_err_status_alloc_fail;
 	}
-	printf("SDT_SKF ukey dec init ok");
+	printf("SDT_SKF ukey dec init ok\n");
 //	printf("SDT_SKF ukey init ok, choose SM4 mode is %d OK\n", SMS4_ECB);
     return srtp_err_status_ok;
 }
@@ -437,6 +464,9 @@ static srtp_err_status_t srtp_sdt_skf_cipher_init (void *cv, const uint8_t *key)
 #endif
 //	printf("sdt skf sm4 init key success\n");
 
+	sdt_skf_ctx->encrypt_count = 0;
+	sdt_skf_ctx->decrypt_count = 0;
+
     return srtp_err_status_ok;
 }
 
@@ -471,7 +501,7 @@ static srtp_err_status_t srtp_sdt_skf_cipher_set_iv (void *cv, uint8_t *iv, srtp
 
     return srtp_err_status_ok;
 }
-unsigned long int encrypt_count = 0;
+//unsigned long int encrypt_count = 0;
 static srtp_err_status_t srtp_sdt_skf_cipher_encrypt (void *cv,
                                             unsigned char *buf, unsigned int *bytes_to_encr)
 {
@@ -487,7 +517,10 @@ static srtp_err_status_t srtp_sdt_skf_cipher_encrypt (void *cv,
 
 //	printf("to be encrypt len=%d\n", *bytes_to_encr);
 	if(*bytes_to_encr % 16 !=0)
+	{
+		printf("enc_len = %d, encrypt len error\n", *bytes_to_encr);
 		return srtp_err_status_bad_param;
+	}
 
 	ULONG ulAlgID;
 	switch(sdt_skf_ctx->mode)
@@ -515,15 +548,16 @@ static srtp_err_status_t srtp_sdt_skf_cipher_encrypt (void *cv,
 	memcpy(buf, pbTempData, ulTempDataLen);
 	*bytes_to_encr = ulTempDataLen;
 
-	if(encrypt_count == 65535)
-		encrypt_count = 0;
-	++encrypt_count;
-	if(encrypt_count % 500 == 0)
-		printf("skf sm4 encrypt %ld packets success\n", encrypt_count);
+	if(sdt_skf_ctx->encrypt_count == 65535)
+		sdt_skf_ctx->encrypt_count = 0;
+	++(sdt_skf_ctx->encrypt_count);
+	if(sdt_skf_ctx->encrypt_count % 5000 == 0)
+		printf("skf sm4 encrypt %ld packets success\n", sdt_skf_ctx->encrypt_count);
+
 //	printf("skf sm4 encrypt success\n");
     return srtp_err_status_ok;
 }
-unsigned long int decrypt_count = 0;
+//unsigned long int decrypt_count = 0;
 static srtp_err_status_t srtp_sdt_skf_cipher_decrypt (void *cv,
                                             unsigned char *buf, unsigned int *bytes_to_encr)
 {
@@ -539,7 +573,10 @@ static srtp_err_status_t srtp_sdt_skf_cipher_decrypt (void *cv,
 
 //	printf("to be decrypt len=%d\n", *bytes_to_encr);
 	if(*bytes_to_encr % 16 !=0)
+	{
+		printf("dec_len = %d, decrypt length error\n", *bytes_to_encr);
 		return srtp_err_status_bad_param;
+	}
 
 	ULONG ulAlgID;
 	switch(sdt_skf_ctx->mode)
@@ -569,11 +606,11 @@ static srtp_err_status_t srtp_sdt_skf_cipher_decrypt (void *cv,
 	memcpy(buf, pbOutData, ulOutDataLen);
 	*bytes_to_encr = ulOutDataLen;
 
-	if(decrypt_count == 65535)
-		decrypt_count = 0;
-	++decrypt_count;
-	if(decrypt_count % 500 == 0)
-		printf("skf sm4 decrypt %ld packets success\n", decrypt_count);
+	if(sdt_skf_ctx->decrypt_count == 65535)
+		sdt_skf_ctx->decrypt_count = 0;
+	++(sdt_skf_ctx->decrypt_count);
+	if(sdt_skf_ctx->decrypt_count % 5000 == 0)
+		printf("skf sm4 decrypt %ld packets success\n", sdt_skf_ctx->decrypt_count);
 //	printf("skf sm4 decrypt success\n");
     return srtp_err_status_ok;
 }

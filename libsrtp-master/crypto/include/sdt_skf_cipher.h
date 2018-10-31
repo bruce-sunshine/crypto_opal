@@ -80,6 +80,8 @@ typedef struct {
 	BLOCKCIPHERPARAM Param_in;
 	BLOCKCIPHERPARAM Param_out;
 	sdt_sm4_mode mode;
+	unsigned long int encrypt_count;
+	unsigned long int decrypt_count;
 } srtp_sdt_skf_sm4_ctx_t;
 
 #endif /* NULL_CIPHER_H */
