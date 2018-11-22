@@ -1,0 +1,82 @@
+libzrtp_a-aescrypt.o: third_party/bgaes/aescrypt.c \
+ third_party/bgaes/aesopt.h third_party/bgaes/aes.h \
+ /usr/local/dvrrdk/DVRRDK_04.00.00.03/ti_tools/cgt_a8/arago/linux-devkit/bin/../arm-arago-linux-gnueabi/usr/include/stdlib.h \
+ /usr/local/dvrrdk/DVRRDK_04.00.00.03/ti_tools/cgt_a8/arago/linux-devkit/bin/../arm-arago-linux-gnueabi/usr/include/features.h \
+ /usr/local/dvrrdk/DVRRDK_04.00.00.03/ti_tools/cgt_a8/arago/linux-devkit/bin/../arm-arago-linux-gnueabi/usr/include/bits/predefs.h \
+ /usr/local/dvrrdk/DVRRDK_04.00.00.03/ti_tools/cgt_a8/arago/linux-devkit/bin/../arm-arago-linux-gnueabi/usr/include/sys/cdefs.h \
+ /usr/local/dvrrdk/DVRRDK_04.00.00.03/ti_tools/cgt_a8/arago/linux-devkit/bin/../arm-arago-linux-gnueabi/usr/include/bits/wordsize.h \
+ /usr/local/dvrrdk/DVRRDK_04.00.00.03/ti_tools/cgt_a8/arago/linux-devkit/bin/../arm-arago-linux-gnueabi/usr/include/gnu/stubs.h \
+ /usr/local/dvrrdk/DVRRDK_04.00.00.03/ti_tools/cgt_a8/arago/linux-devkit/bin/../lib/gcc/arm-arago-linux-gnueabi/4.5.3/include/stddef.h \
+ third_party/bgaes/brg_types.h third_party/bgaes/bg2zrtp.h \
+ include/zrtp_config.h include/zrtp_config_user.h \
+ /usr/local/dvrrdk/DVRRDK_04.00.00.03/ti_tools/cgt_a8/arago/linux-devkit/bin/../arm-arago-linux-gnueabi/usr/include/linux/version.h \
+ include/zrtp_config_unix.h \
+ /usr/local/dvrrdk/DVRRDK_04.00.00.03/ti_tools/cgt_a8/arago/linux-devkit/bin/../arm-arago-linux-gnueabi/usr/include/asm/types.h \
+ /usr/local/dvrrdk/DVRRDK_04.00.00.03/ti_tools/cgt_a8/arago/linux-devkit/bin/../arm-arago-linux-gnueabi/usr/include/asm-generic/int-ll64.h \
+ /usr/local/dvrrdk/DVRRDK_04.00.00.03/ti_tools/cgt_a8/arago/linux-devkit/bin/../arm-arago-linux-gnueabi/usr/include/asm/bitsperlong.h \
+ /usr/local/dvrrdk/DVRRDK_04.00.00.03/ti_tools/cgt_a8/arago/linux-devkit/bin/../arm-arago-linux-gnueabi/usr/include/asm-generic/bitsperlong.h \
+ /usr/local/dvrrdk/DVRRDK_04.00.00.03/ti_tools/cgt_a8/arago/linux-devkit/bin/../lib/gcc/arm-arago-linux-gnueabi/4.5.3/include/stdint.h \
+ /usr/local/dvrrdk/DVRRDK_04.00.00.03/ti_tools/cgt_a8/arago/linux-devkit/bin/../arm-arago-linux-gnueabi/usr/include/stdint.h \
+ /usr/local/dvrrdk/DVRRDK_04.00.00.03/ti_tools/cgt_a8/arago/linux-devkit/bin/../arm-arago-linux-gnueabi/usr/include/bits/wchar.h \
+ /usr/local/dvrrdk/DVRRDK_04.00.00.03/ti_tools/cgt_a8/arago/linux-devkit/bin/../arm-arago-linux-gnueabi/usr/include/inttypes.h \
+ /usr/local/dvrrdk/DVRRDK_04.00.00.03/ti_tools/cgt_a8/arago/linux-devkit/bin/../arm-arago-linux-gnueabi/usr/include/sys/types.h \
+ /usr/local/dvrrdk/DVRRDK_04.00.00.03/ti_tools/cgt_a8/arago/linux-devkit/bin/../arm-arago-linux-gnueabi/usr/include/bits/types.h \
+ /usr/local/dvrrdk/DVRRDK_04.00.00.03/ti_tools/cgt_a8/arago/linux-devkit/bin/../arm-arago-linux-gnueabi/usr/include/bits/typesizes.h \
+ /usr/local/dvrrdk/DVRRDK_04.00.00.03/ti_tools/cgt_a8/arago/linux-devkit/bin/../arm-arago-linux-gnueabi/usr/include/time.h \
+ third_party/bgaes/aestab.h
+
+third_party/bgaes/aesopt.h:
+
+third_party/bgaes/aes.h:
+
+/usr/local/dvrrdk/DVRRDK_04.00.00.03/ti_tools/cgt_a8/arago/linux-devkit/bin/../arm-arago-linux-gnueabi/usr/include/stdlib.h:
+
+/usr/local/dvrrdk/DVRRDK_04.00.00.03/ti_tools/cgt_a8/arago/linux-devkit/bin/../arm-arago-linux-gnueabi/usr/include/features.h:
+
+/usr/local/dvrrdk/DVRRDK_04.00.00.03/ti_tools/cgt_a8/arago/linux-devkit/bin/../arm-arago-linux-gnueabi/usr/include/bits/predefs.h:
+
+/usr/local/dvrrdk/DVRRDK_04.00.00.03/ti_tools/cgt_a8/arago/linux-devkit/bin/../arm-arago-linux-gnueabi/usr/include/sys/cdefs.h:
+
+/usr/local/dvrrdk/DVRRDK_04.00.00.03/ti_tools/cgt_a8/arago/linux-devkit/bin/../arm-arago-linux-gnueabi/usr/include/bits/wordsize.h:
+
+/usr/local/dvrrdk/DVRRDK_04.00.00.03/ti_tools/cgt_a8/arago/linux-devkit/bin/../arm-arago-linux-gnueabi/usr/include/gnu/stubs.h:
+
+/usr/local/dvrrdk/DVRRDK_04.00.00.03/ti_tools/cgt_a8/arago/linux-devkit/bin/../lib/gcc/arm-arago-linux-gnueabi/4.5.3/include/stddef.h:
+
+third_party/bgaes/brg_types.h:
+
+third_party/bgaes/bg2zrtp.h:
+
+include/zrtp_config.h:
+
+include/zrtp_config_user.h:
+
+/usr/local/dvrrdk/DVRRDK_04.00.00.03/ti_tools/cgt_a8/arago/linux-devkit/bin/../arm-arago-linux-gnueabi/usr/include/linux/version.h:
+
+include/zrtp_config_unix.h:
+
+/usr/local/dvrrdk/DVRRDK_04.00.00.03/ti_tools/cgt_a8/arago/linux-devkit/bin/../arm-arago-linux-gnueabi/usr/include/asm/types.h:
+
+/usr/local/dvrrdk/DVRRDK_04.00.00.03/ti_tools/cgt_a8/arago/linux-devkit/bin/../arm-arago-linux-gnueabi/usr/include/asm-generic/int-ll64.h:
+
+/usr/local/dvrrdk/DVRRDK_04.00.00.03/ti_tools/cgt_a8/arago/linux-devkit/bin/../arm-arago-linux-gnueabi/usr/include/asm/bitsperlong.h:
+
+/usr/local/dvrrdk/DVRRDK_04.00.00.03/ti_tools/cgt_a8/arago/linux-devkit/bin/../arm-arago-linux-gnueabi/usr/include/asm-generic/bitsperlong.h:
+
+/usr/local/dvrrdk/DVRRDK_04.00.00.03/ti_tools/cgt_a8/arago/linux-devkit/bin/../lib/gcc/arm-arago-linux-gnueabi/4.5.3/include/stdint.h:
+
+/usr/local/dvrrdk/DVRRDK_04.00.00.03/ti_tools/cgt_a8/arago/linux-devkit/bin/../arm-arago-linux-gnueabi/usr/include/stdint.h:
+
+/usr/local/dvrrdk/DVRRDK_04.00.00.03/ti_tools/cgt_a8/arago/linux-devkit/bin/../arm-arago-linux-gnueabi/usr/include/bits/wchar.h:
+
+/usr/local/dvrrdk/DVRRDK_04.00.00.03/ti_tools/cgt_a8/arago/linux-devkit/bin/../arm-arago-linux-gnueabi/usr/include/inttypes.h:
+
+/usr/local/dvrrdk/DVRRDK_04.00.00.03/ti_tools/cgt_a8/arago/linux-devkit/bin/../arm-arago-linux-gnueabi/usr/include/sys/types.h:
+
+/usr/local/dvrrdk/DVRRDK_04.00.00.03/ti_tools/cgt_a8/arago/linux-devkit/bin/../arm-arago-linux-gnueabi/usr/include/bits/types.h:
+
+/usr/local/dvrrdk/DVRRDK_04.00.00.03/ti_tools/cgt_a8/arago/linux-devkit/bin/../arm-arago-linux-gnueabi/usr/include/bits/typesizes.h:
+
+/usr/local/dvrrdk/DVRRDK_04.00.00.03/ti_tools/cgt_a8/arago/linux-devkit/bin/../arm-arago-linux-gnueabi/usr/include/time.h:
+
+third_party/bgaes/aestab.h:

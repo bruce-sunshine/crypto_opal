@@ -1,0 +1,9 @@
+
+1) Confirm that project builds on on linux, illumos, freebsd, and mac osx
+and passes all test.
+
+2) the test for libzrtp fail to build on mac OS X, fix that.
+
+3) learn codebase well enough to build a zrtp fuzzer.
+
+4) Run through clang static analyzer, splint and coverity.

@@ -2215,6 +2215,7 @@ srtp_err_status_t srtp_protect_mki(srtp_ctx_t *ctx,
         if (hdr->x == 1) {
             xtn_hdr = (srtp_hdr_xtnd_t *)enc_start;
             enc_start += (ntohs(xtn_hdr->length) + 1);
+//            printf("bruce, enc, input len =%d, xtn_hdr length = %d\n", *pkt_octet_len, (ntohs(xtn_hdr->length) + 1));
         }
         /* note: the passed size is without the auth tag */
         if (!((uint8_t *)enc_start <= (uint8_t *)hdr + *pkt_octet_len))
@@ -2372,12 +2373,7 @@ srtp_err_status_t srtp_protect_mki(srtp_ctx_t *ctx,
         }
 
     }
-#if 1	//added by bruce, for sm3 hash check, increase encrypt len
-    if(session_keys->rtp_cipher->type->id == SRTP_SDT_SKF_SM4_ECB || session_keys->rtp_cipher->type->id == SRTP_SDT_SKF_SM4_ECB_DEC)
-      {
-      	*pkt_octet_len += 32;
-      }
-#endif
+
     /*
      *  if we're authenticating, run authentication function and put result
      *  into the auth_tag
@@ -2414,6 +2410,12 @@ srtp_err_status_t srtp_protect_mki(srtp_ctx_t *ctx,
         *pkt_octet_len += mki_size;
     }
 
+#if 0	//added by bruce, for sm3 hash check, increase encrypt len
+    if(session_keys->rtp_cipher->type->id == SRTP_SDT_SKF_SM4_ECB || session_keys->rtp_cipher->type->id == SRTP_SDT_SKF_SM4_ECB_DEC)
+      {
+      	*pkt_octet_len += 32;
+      }
+#endif
 
     return srtp_err_status_ok;
 }
@@ -2610,6 +2612,7 @@ srtp_err_status_t srtp_unprotect_mki(srtp_ctx_t *ctx,
         if (hdr->x == 1) {
             xtn_hdr = (srtp_hdr_xtnd_t *)enc_start;
             enc_start += (ntohs(xtn_hdr->length) + 1);
+//            printf("bruce, dec, input len = %d, xtn_hdr length = %d\n", *pkt_octet_len, (ntohs(xtn_hdr->length) + 1));
         }
         if (!((uint8_t *)enc_start <=
               (uint8_t *)hdr + (*pkt_octet_len - tag_len - mki_size)))
@@ -2719,12 +2722,7 @@ srtp_err_status_t srtp_unprotect_mki(srtp_ctx_t *ctx,
         }
     }
 
-#if 1	//added by bruce, for sm3 hash check, decrease decrypt len
-    if(session_keys->rtp_cipher->type->id == SRTP_SDT_SKF_SM4_ECB || session_keys->rtp_cipher->type->id == SRTP_SDT_SKF_SM4_ECB_DEC)
-      {
-      	*pkt_octet_len -= 32;
-      }
-#endif
+
 
     /*
      * verify that stream is for received traffic - this check will
@@ -2789,6 +2787,13 @@ srtp_err_status_t srtp_unprotect_mki(srtp_ctx_t *ctx,
 
     /* decrease the packet length by the mki size */
     *pkt_octet_len -= mki_size;
+
+#if 0	//added by bruce, for sm3 hash check, decrease decrypt len
+    if(session_keys->rtp_cipher->type->id == SRTP_SDT_SKF_SM4_ECB || session_keys->rtp_cipher->type->id == SRTP_SDT_SKF_SM4_ECB_DEC)
+      {
+      	*pkt_octet_len -= 32;
+      }
+#endif
 
     return srtp_err_status_ok;
 }

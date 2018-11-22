@@ -1,0 +1,3 @@
+libzrtp_a-zrtp_legal.o: src/zrtp_legal.c include/zrtp_legal.h
+
+include/zrtp_legal.h:

@@ -182,10 +182,10 @@ srtp_err_status_t srtp_crypto_kernel_init ()
             return status;
         }
 
-        status = srtp_crypto_kernel_load_cipher_type(&srtp_sdt_skf_SM4_ECB_DEC_cipher, SRTP_SDT_SKF_SM4_ECB_DEC);
-        if (status) {
-            return status;
-        }
+//        status = srtp_crypto_kernel_load_cipher_type(&srtp_sdt_skf_SM4_ECB_DEC_cipher, SRTP_SDT_SKF_SM4_ECB_DEC);
+//       if (status) {
+//            return status;
+//        }
 
 //        status = srtp_crypto_kernel_load_cipher_type(&srtp_sdt_skf_SM4_CBC_cipher, SRTP_SDT_SKF_SM4_CBC);
 //        if (status) {
