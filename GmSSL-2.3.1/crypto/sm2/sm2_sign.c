@@ -471,7 +471,7 @@ int SM2_sign_setup(EC_KEY *ec_key, BN_CTX *ctx_in, BIGNUM **kp, BIGNUM **xp)
 	return sm2_sign_setup(ec_key, ctx_in, kp, xp);
 }
 
-ECDSA_SIG *SM2_do_sign_ex_old(const unsigned char *dgst, int dgstlen,	//changed by bruce, SM2_do_sign_ex --> SM2_do_sign_ex_old, 0919
+ECDSA_SIG *SM2_do_sign_ex(const unsigned char *dgst, int dgstlen,
 	const BIGNUM *kp, const BIGNUM *xp, EC_KEY *ec_key)
 {
 	printf("using SM2_do_sign_ex_old\n");
@@ -483,10 +483,10 @@ ECDSA_SIG *SM2_do_sign(const unsigned char *dgst, int dgstlen, EC_KEY *ec_key)
 	ENGINE *sdt_engine = ENGINE_by_id("sdt_skf_engine");		//added by bruce, for add sm2 hw api
 	if(sdt_engine == NULL)
 	{
-		return SM2_do_sign_ex_old(dgst, dgstlen, NULL, NULL, ec_key);
+		return SM2_do_sign_ex(dgst, dgstlen, NULL, NULL, ec_key);
 	}
 	else
-		return SM2_do_sign_ex_old(dgst, dgstlen, NULL, NULL, ec_key);
+		return SM2_do_sign_ex(dgst, dgstlen, NULL, NULL, ec_key);
 }
 
 int SM2_do_verify(const unsigned char *dgst, int dgstlen,
@@ -506,14 +506,14 @@ int SM2_sign_ex(int type, const unsigned char *dgst, int dgstlen,
 	ENGINE *sdt_engine = ENGINE_by_id("sdt_skf_engine");		//added by bruce, for add sm2 hw api
 	if(sdt_engine == NULL)
 	{
-		if (!(s = SM2_do_sign_ex_old(dgst, dgstlen, k, x, ec_key))) {
+		if (!(s = SM2_do_sign_ex(dgst, dgstlen, k, x, ec_key))) {
 			*siglen = 0;
 			return 0;
 		}
 	}
 	else
 	{
-		if (!(s = SM2_do_sign_ex_old(dgst, dgstlen, k, x, ec_key))) {	//changed by bruce, because of bug of ECDSA_SIG_new_from_ECCSIGNATUREBLOB, 0927
+		if (!(s = SM2_do_sign_ex(dgst, dgstlen, k, x, ec_key))) {	//changed by bruce, because of bug of ECDSA_SIG_new_from_ECCSIGNATUREBLOB, 0927
 			*siglen = 0;
 			return 0;
 		}
@@ -555,7 +555,7 @@ int SM2_verify(int type, const unsigned char *dgst, int dgstlen,		//note, bruce,
 	if(sdt_engine == NULL)
 		ret = SM2_do_verify(dgst, dgstlen, s, ec_key);
 	else
-		ret = SM2_do_verify_bruce(dgst, dgstlen, s, ec_key);
+		ret = SM2_do_verify(dgst, dgstlen, s, ec_key);
 err:
 	if (derlen > 0) {
 		OPENSSL_cleanse(der, derlen);
@@ -568,7 +568,7 @@ err:
 ////////////////////////////////////////////////////added by bruce , for sanweixinan JMK SM2 sign and verify//////////////////////
 #if 0
 typedef void*	SGD_HANDLE;
-ECDSA_SIG *SM2_do_sign_ex(const unsigned char *dgst, int dgstlen,
+ECDSA_SIG *SM2_do_sign_ex_sdt_sdf(const unsigned char *dgst, int dgstlen,
 	const BIGNUM *kp, const BIGNUM *xp, EC_KEY *ec_key)
 {
 
@@ -627,7 +627,7 @@ ECDSA_SIG *SM2_do_sign_ex(const unsigned char *dgst, int dgstlen,
 	return ret;
 }
 
-int SM2_do_verify_bruce(const unsigned char *dgst, int dgstlen,
+int SM2_do_verify_sdt_sdf(const unsigned char *dgst, int dgstlen,
 	const ECDSA_SIG *sig, EC_KEY *ec_key)
 {
 //	return sm2_do_verify(dgst, dgstlen, sig, ec_key);
@@ -748,7 +748,7 @@ int SM2_do_verify_bruce(const unsigned char *dgst, int dgstlen,
 
 #else
 ////////////////////////////////////////////////////added by bruce , for huashen ukey SM2 sign and verify//////////////////////
-ECDSA_SIG *SM2_do_sign_ex(const unsigned char *dgst, int dgstlen,
+ECDSA_SIG *SM2_do_sign_ex_sdt_skf(const unsigned char *dgst, int dgstlen,
 	const BIGNUM *kp, const BIGNUM *xp, EC_KEY *ec_key)
 {
 	printf("using SM2_do_sign_ex\n");
@@ -841,7 +841,7 @@ ECDSA_SIG *SM2_do_sign_ex(const unsigned char *dgst, int dgstlen,
 }
 
 
-int SM2_do_verify_bruce(const unsigned char *dgst, int dgstlen,
+int SM2_do_verify_bruce_sdt_skf(const unsigned char *dgst, int dgstlen,
 	const ECDSA_SIG *sig, EC_KEY *ec_key)
 {
 	DEVHANDLE hd;

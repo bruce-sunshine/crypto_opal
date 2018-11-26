@@ -77,6 +77,8 @@ extern srtp_cipher_type_t srtp_sdt_SM4_CBC_cipher;
 extern srtp_cipher_type_t srtp_sdt_SM4_OFB_cipher;
 extern srtp_cipher_type_t srtp_sdt_skf_SM4_ECB_cipher;
 extern srtp_cipher_type_t srtp_sdt_skf_SM4_ECB_DEC_cipher;
+extern srtp_cipher_type_t srtp_sdt_skf_SM4_ECB_AUDIO_ENC_cipher;
+extern srtp_cipher_type_t srtp_sdt_skf_SM4_ECB_AUDIO_DEC_cipher;
 extern srtp_cipher_type_t srtp_sdt_skf_SM4_CBC_cipher;
 extern srtp_cipher_type_t srtp_aes_icm_128;
 extern srtp_cipher_type_t srtp_aes_icm_256;
@@ -186,6 +188,16 @@ srtp_err_status_t srtp_crypto_kernel_init ()
         if (status) {
             return status;
         }
+
+//        status = srtp_crypto_kernel_load_cipher_type(&srtp_sdt_skf_SM4_ECB_AUDIO_ENC_cipher, SRTP_SDT_SKF_SM4_ECB_AUDIO_ENC);
+//        if (status) {
+//            return status;
+//        }
+//
+//        status = srtp_crypto_kernel_load_cipher_type(&srtp_sdt_skf_SM4_ECB_AUDIO_DEC_cipher, SRTP_SDT_SKF_SM4_ECB_AUDIO_DEC);
+//        if (status) {
+//            return status;
+//        }
 
 //        status = srtp_crypto_kernel_load_cipher_type(&srtp_sdt_skf_SM4_CBC_cipher, SRTP_SDT_SKF_SM4_CBC);
 //        if (status) {

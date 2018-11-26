@@ -24,7 +24,7 @@
 //#include "../crypto/sm2/sm2_lcl.h"
 #include "../crypto/ec/ec_lcl.h"
 #include <openssl/gmapi.h>
-
+#include <pthread.h>
 
 #define INIT_APP_NAME             "SJW07A_SDT"
 #define INIT_USER_PIN   		  "12345678"
@@ -42,7 +42,7 @@
 static const char *engine_sdt_skf_id = "sdt_skf";
 static const char *engine_sdt_skf_name = "sdt_skf engine by bruce";
 
-
+pthread_mutex_t mutex;
 DEVHANDLE hd;
 
 static int sdt_skf_engine_init(ENGINE *e)
@@ -57,7 +57,6 @@ static int sdt_skf_engine_init(ENGINE *e)
 
 	char *name_list;
 	ULONG name_list_size;
-	DEVHANDLE dev_hdl;
 	DEVINFO DevInfo;
 	ULONG skf_rv;
 	skf_rv = SKF_EnumDev(TRUE, 0, &name_list_size);
@@ -87,14 +86,13 @@ static int sdt_skf_engine_init(ENGINE *e)
 		return 0;
 	}
 
-	skf_rv = SKF_ConnectDev(name_list, &dev_hdl);
+	skf_rv = SKF_ConnectDev(name_list, &hd);
 	free(name_list);
 	if(skf_rv != SAR_OK)
 	{
 		printf("SKF_ConnectDev error\n");
 		return 0;
 	}
-	hd = dev_hdl;
 
 	skf_rv = SKF_GetDevInfo(hd,&DevInfo);
 	if(skf_rv != SAR_OK)
@@ -309,48 +307,50 @@ const EC_KEY_METHOD *EC_KEY_GmSSL_SDT_SDF(void)
 /*----------------------------------- sm3, begin ---------------------------------------*/
 
 typedef struct sdt_skf_sm3_st {
-	HAPPLICATION app;
+//	HAPPLICATION app;
 	HANDLE phHash;
 } SDT_SKF_SM3_CTX;
 
 static int sdt_skf_sm3_init(EVP_MD_CTX *ctx)
 {
 	ULONG skf_rv;
-	ULONG UserRetryCount = PIN_MAX_RETRY_TIMES;
+//	ULONG UserRetryCount = PIN_MAX_RETRY_TIMES;
 
 	if (!ctx || !EVP_MD_CTX_md_data(ctx))
 	{
 		return 0;
 	}
-
+	pthread_mutex_init(&mutex, NULL);
 	SDT_SKF_SM3_CTX* sm3_ctx = (SDT_SKF_SM3_CTX *)EVP_MD_CTX_md_data(ctx);
 
-	printf("sdt_skf_sm3_init,flags=0x%0x\n", EVP_MD_CTX_test_flags(ctx, 0xffff));
+//	printf("sdt_skf_sm3_init,flags=0x%08x\n", EVP_MD_CTX_test_flags(ctx, 0xffff));
 
-	skf_rv=SKF_OpenApplication(hd, INIT_APP_NAME, &(sm3_ctx->app));
-	if(skf_rv != SAR_OK)
-	{
-		printf("SKF_OpenApplication(%s) error(0x%X)\r\n", INIT_APP_NAME, skf_rv);
-		return 0;
-	}
-
-	skf_rv = SKF_VerifyPIN(sm3_ctx->app, 1, INIT_USER_PIN, &UserRetryCount);	//1, user pin; 2, admin pin
- 	if (skf_rv != SAR_OK)
-	{
-		printf("SKF_VerifyPIN error(0x%X),UserRetryCount=%d\r\n", skf_rv, UserRetryCount);
-		SKF_CloseApplication(sm3_ctx->app);
-		return 0;
-	}
- 	printf("VerifyPIN ok\n");
+//	skf_rv=SKF_OpenApplication(hd, INIT_APP_NAME, &(sm3_ctx->app));
+//	if(skf_rv != SAR_OK)
+//	{
+//		printf("SKF_OpenApplication(%s) error(0x%X)\r\n", INIT_APP_NAME, skf_rv);
+//		return 0;
+//	}
+//
+//	skf_rv = SKF_VerifyPIN(sm3_ctx->app, 1, INIT_USER_PIN, &UserRetryCount);	//1, user pin; 2, admin pin
+// 	if (skf_rv != SAR_OK)
+//	{
+//		printf("SKF_VerifyPIN error(0x%X),UserRetryCount=%d\r\n", skf_rv, UserRetryCount);
+//		SKF_CloseApplication(sm3_ctx->app);
+//		return 0;
+//	}
+// 	printf("VerifyPIN ok\n");
 
  	skf_rv = SKF_DigestInit(hd, SGD_SM3, NULL, NULL, 0, &(sm3_ctx->phHash));
 	if(skf_rv != SAR_OK)
 	{
-		printf("SM3_HASH init error(%d).\n",skf_rv);
-		SKF_CloseApplication(sm3_ctx->app);
+		printf("SM3_HASH init error(0x%08x).\n",skf_rv);
+		SKF_CloseHandle(sm3_ctx->phHash);
+//		SKF_CloseApplication(sm3_ctx->app);
 		return 0;
 	}
-
+//	printf("hash init ok, phHash=0x%0x, ctx address=0x%0x\n",
+//			sm3_ctx->phHash, ctx);
 	return 1;
 }
 
@@ -362,13 +362,20 @@ static int sdt_skf_sm3_update(EVP_MD_CTX *ctx, const void *in, size_t inlen)
 	}
 
 	SDT_SKF_SM3_CTX* sm3_ctx = (SDT_SKF_SM3_CTX *)EVP_MD_CTX_md_data(ctx);
-	printf("sdt_skf_sm3_update,flags=0x%0x\n", EVP_MD_CTX_test_flags(ctx, 0xffff));
+//	printf("sdt_skf_sm3_update,flags=0x%08x\n", EVP_MD_CTX_test_flags(ctx, 0xffff));
 
+//	printf("hash update ok, phHash=0x%0x, ctx address=0x%0x, inlen = %d\n",
+//			sm3_ctx->phHash, ctx, inlen);
+
+
+	pthread_mutex_lock(&mutex);
 	skf_rv = SKF_DigestUpdate(sm3_ctx->phHash, (BYTE*)in, inlen);
+	pthread_mutex_unlock(&mutex);
 	if(skf_rv != SAR_OK)
 	{
-		printf("SM3_HASH  update error(%d).\n",skf_rv);
-		SKF_CloseApplication(sm3_ctx->app);
+		printf("SM3_HASH update error(0x%08x).\n",skf_rv);
+		SKF_CloseHandle(sm3_ctx->phHash);
+//		SKF_CloseApplication(sm3_ctx->app);
 		return 0;
 	}
 
@@ -384,13 +391,18 @@ static int sdt_skf_sm3_final(EVP_MD_CTX *ctx, unsigned char *md)
 
 	SDT_SKF_SM3_CTX* sm3_ctx = (SDT_SKF_SM3_CTX *)EVP_MD_CTX_md_data(ctx);
 	unsigned int nOutlen;
-	printf("sdt_skf_sm3_final,flags=0x%0x\n", EVP_MD_CTX_test_flags(ctx, 0xffff));
+//	printf("sdt_skf_sm3_final,flags=0x%08x\n", EVP_MD_CTX_test_flags(ctx, 0xffff));
 
-	skf_rv = SKF_DigestFinal(sm3_ctx->phHash, md, &nOutlen);
+//	printf("hash final ok, phHash=0x%0x, ctx address=0x%0x\n",
+//			sm3_ctx->phHash, ctx);
+	unsigned char OutData[SM3_DIGEST_LENGTH];
+	memset(OutData, 0, sizeof(OutData));
+	skf_rv = SKF_DigestFinal(sm3_ctx->phHash, OutData, &nOutlen);
 	if(skf_rv != SAR_OK)
 	{
-		printf("SM3_HASH final error(%d).\n",skf_rv);
-		SKF_CloseApplication(sm3_ctx->app);
+		printf("SM3_HASH final error(%0x%08x).\n",skf_rv);
+		SKF_CloseHandle(sm3_ctx->phHash);
+//		SKF_CloseApplication(sm3_ctx->app);
 		return 0;
 	}
 	if(nOutlen != SM3_DIGEST_LENGTH)
@@ -398,8 +410,14 @@ static int sdt_skf_sm3_final(EVP_MD_CTX *ctx, unsigned char *md)
 		printf("hash update len do not match SM3_DIGEST_LENGTH\n");
 		return 0;
 	}
-
-	SKF_CloseApplication(sm3_ctx->app);
+	memcpy(md, OutData, nOutlen);
+	skf_rv = SKF_CloseHandle(sm3_ctx->phHash);
+	if(skf_rv != SAR_OK)
+	{
+		printf("SKF_CloseHandle sm3 final error(%0x%08x).\n",skf_rv);
+		return 0;
+	}
+//	SKF_CloseApplication(sm3_ctx->app);
 	return 1;
 }
 
@@ -408,7 +426,7 @@ static const EVP_MD sdt_skf_sm3_md = {
 		NID_sm3,
 		NID_sm2sign_with_sm3,
 		SM3_DIGEST_LENGTH,
-		EVP_MD_FLAG_ONESHOT,
+		0,
 		sdt_skf_sm3_init,
 		sdt_skf_sm3_update,
 		sdt_skf_sm3_final,
@@ -446,7 +464,7 @@ static int sdt_skf_sm3_engine_digest(ENGINE *e, const EVP_MD **digest, const int
 /*----------------------------------- sm4, begin ---------------------------------------*/
 #if 1
 typedef struct {
-	HAPPLICATION app;
+//	HAPPLICATION app;
 	HANDLE hKeyHandle;
 	int mode;
 	int enc;
@@ -458,34 +476,34 @@ static int sdt_skf_sms4_init_key(EVP_CIPHER_CTX *ctx, const unsigned char *key,
 	const unsigned char *iv, int enc)
 {
 	int i, skf_rv;
-	BYTE sdt_skf_key[32];
-	ULONG UserRetryCount = PIN_MAX_RETRY_TIMES;
+	BYTE sdt_skf_key[16];
+//	ULONG UserRetryCount = PIN_MAX_RETRY_TIMES;
 	ULONG ulAlgID;
 //	unsigned char sdt_skf_key[SMS4_KEY_LENGTH] = {0x40,0xbb,0x12,0xdd,0x6a,0x82,0x73,0x86,0x7f,0x35,0x29,0xd3,0x54,0xb4,0xa0,0x26};
 	EVP_SDT_SKF_SMS4_KEY *sm4_ctx = EVP_C_DATA(EVP_SDT_SKF_SMS4_KEY, ctx);
 	sm4_ctx->enc = enc;
 	sm4_ctx->mode = EVP_CIPHER_CTX_num(ctx);
-	printf("mode = %d\n", sm4_ctx->mode);
+//	printf("mode = %d\n", sm4_ctx->mode);
 	if(sm4_ctx->mode == 1)
 		ulAlgID = SGD_SMS4_ECB;
 	else
 		ulAlgID = SGD_SMS4_CBC;
 
-	skf_rv=SKF_OpenApplication(hd, INIT_APP_NAME, &(sm4_ctx->app));
-	if(skf_rv != SAR_OK)
-	{
-		printf("sm4, SKF_OpenApplication(%s) error(0x%X)\r\n", INIT_APP_NAME, skf_rv);
-		return 0;
-	}
-
-	skf_rv = SKF_VerifyPIN(sm4_ctx->app, 1, INIT_USER_PIN, &UserRetryCount);	//1, user pin; 2, admin pin
- 	if (skf_rv != SAR_OK)
-	{
-		printf("sm4, SKF_VerifyPIN error(0x%X),UserRetryCount=%d\r\n", skf_rv, UserRetryCount);
-		SKF_CloseApplication(sm4_ctx->app);
-		return 0;
-	}
- 	printf("sm4, VerifyPIN ok\n");
+//	skf_rv=SKF_OpenApplication(hd, INIT_APP_NAME, &(sm4_ctx->app));
+//	if(skf_rv != SAR_OK)
+//	{
+//		printf("sm4, SKF_OpenApplication(%s) error(0x%X)\r\n", INIT_APP_NAME, skf_rv);
+//		return 0;
+//	}
+//
+//	skf_rv = SKF_VerifyPIN(sm4_ctx->app, 1, INIT_USER_PIN, &UserRetryCount);	//1, user pin; 2, admin pin
+// 	if (skf_rv != SAR_OK)
+//	{
+//		printf("sm4, SKF_VerifyPIN error(0x%X),UserRetryCount=%d\r\n", skf_rv, UserRetryCount);
+//		SKF_CloseApplication(sm4_ctx->app);
+//		return 0;
+//	}
+// 	printf("sm4, VerifyPIN ok\n");
 
   	OPENSSL_buf2hexstr(key, SMS4_KEY_LENGTH);
 
@@ -506,7 +524,7 @@ static int sdt_skf_sms4_init_key(EVP_CIPHER_CTX *ctx, const unsigned char *key,
 	}
 
 	memset(&(sm4_ctx->Param), 0, sizeof(BLOCKCIPHERPARAM));
-	sm4_ctx->Param.IVLen = 32;
+	sm4_ctx->Param.IVLen = 16;
 	sm4_ctx->Param.PaddingType = 0;
 	memcpy(sm4_ctx->Param.IV, iv, sm4_ctx->Param.IVLen);
 
@@ -516,7 +534,6 @@ static int sdt_skf_sms4_init_key(EVP_CIPHER_CTX *ctx, const unsigned char *key,
 		printf("skf, SKF_EncryptInit error, errorcode=[0x%08x]\n", skf_rv);
 		return 0;
 	}
-
 	printf("sdt skf sm4 init key success\n");
 	return 1;
 }
@@ -528,8 +545,11 @@ static int sdt_skf_sms4_ecb_cipher(EVP_CIPHER_CTX *ctx, unsigned char *out,
 	unsigned int  outDataLen;
 	EVP_SDT_SKF_SMS4_KEY *sm4_ctx = (EVP_SDT_SKF_SMS4_KEY *)ctx->cipher_data;
 
-	printf("sm4_ecb input len = %d\n", len);
-
+//	printf("sm4_ecb input len = %d\n", len);
+	if(len % 16 != 0)
+	{
+		printf("ecb mode input len is not align of 16 bytes, len = %d\n", len);
+	}
 	if(sm4_ctx->enc)
 	{
 		skf_rv = SKF_EncryptUpdate(sm4_ctx->hKeyHandle, (unsigned char *)in, len, out, &outDataLen);
@@ -538,7 +558,7 @@ static int sdt_skf_sms4_ecb_cipher(EVP_CIPHER_CTX *ctx, unsigned char *out,
 			printf("encrypt error，error[0x%08x]\n", skf_rv);
 			return 0;
 		}
-		printf("skf encrypt success\n");
+//		printf("skf encrypt success\n");
 	}
 	else
 	{
@@ -548,7 +568,7 @@ static int sdt_skf_sms4_ecb_cipher(EVP_CIPHER_CTX *ctx, unsigned char *out,
 			printf("encrypt/decypt error，error[0x%08x]\n", skf_rv);
 			return 0;
 		}
-		printf("skf decrypt success\n");
+//		printf("skf decrypt success\n");
 	}
 
 	return 1;
@@ -561,8 +581,11 @@ static int sdt_skf_sms4_cbc_cipher(EVP_CIPHER_CTX *ctx, unsigned char *out,
 	unsigned int  outDataLen;
 	EVP_SDT_SKF_SMS4_KEY *sm4_ctx = (EVP_SDT_SKF_SMS4_KEY *)ctx->cipher_data;
 
-	printf("sm4_cbc input len = %d\n", len);
-
+//	printf("sm4_cbc input len = %d\n", len);
+	if(len % 16 != 0)
+	{
+		printf("cbc mode input len is not align of 16 bytes, len = %d\n", len);
+	}
 	if(sm4_ctx->enc)
 	{
 		skf_rv = SKF_EncryptUpdate(sm4_ctx->hKeyHandle, (unsigned char *)in, len, out, &outDataLen);
@@ -571,7 +594,7 @@ static int sdt_skf_sms4_cbc_cipher(EVP_CIPHER_CTX *ctx, unsigned char *out,
 			printf("encrypt error，error[0x%08x]\n", skf_rv);
 			return 0;
 		}
-		printf("skf encrypt success\n");
+//		printf("skf encrypt success\n");
 	}
 	else
 	{
@@ -581,7 +604,7 @@ static int sdt_skf_sms4_cbc_cipher(EVP_CIPHER_CTX *ctx, unsigned char *out,
 			printf("decypt error，error[0x%08x]\n", skf_rv);
 			return 0;
 		}
-		printf("skf decrypt success\n");
+//		printf("skf decrypt success\n");
 	}
 
 	return 1;
@@ -590,12 +613,18 @@ static int sdt_skf_sms4_cbc_cipher(EVP_CIPHER_CTX *ctx, unsigned char *out,
 
 static int sdt_skf_sms4_cleanup(EVP_CIPHER_CTX *ctx)
 {
-	int rv;
+	int skf_rv;
 	EVP_SDT_SKF_SMS4_KEY *sm4_ctx = (EVP_SDT_SKF_SMS4_KEY *)ctx->cipher_data;
 
-	SKF_CloseApplication(sm4_ctx->app);
+	skf_rv = SKF_CloseHandle(sm4_ctx->hKeyHandle);
+	if(skf_rv != SAR_OK)
+	{
+		printf("SKF_CloseHandle sm4 error，error[0x%08x]\n", skf_rv);
+		return 0;
+	}
+//	SKF_CloseApplication(sm4_ctx->app);
 
-	printf("sdt_skf_sms4 cleanup\n");
+//	printf("sdt_skf_sms4 cleanup\n");
 	return 1;
 }
 

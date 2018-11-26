@@ -260,7 +260,7 @@ static SSL_CIPHER ssl3_ciphers[] = {
      },
     {
      1,
-     GMTLS_TXT_SM2_WITH_SMS4_SM3,
+     GMTLS_TXT_SM2_WITH_SMS4_SM3,	//note, absolutely use sm2 in key generate/exchange, added by bruce
      GMTLS_CK_SM2_WITH_SMS4_SM3,
      SSL_kSM2,
      SSL_aSM2,

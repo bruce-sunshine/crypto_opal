@@ -1069,10 +1069,15 @@ int tls1_mac(SSL *ssl, SSL3_RECORD *rec, unsigned char *md, int send)
             return -1;
         }
     } else {
-        if (EVP_DigestSignUpdate(mac_ctx, header, sizeof(header)) <= 0		//note, bruce, SSL_do_handshake, use this
+        if ( EVP_DigestInit_ex(mac_ctx,EVP_sm3(), NULL) <= 0                 //added by bruce, for hardware, 1123
+            || EVP_DigestSignUpdate(mac_ctx, header, sizeof(header)) <= 0
             || EVP_DigestSignUpdate(mac_ctx, rec->input, rec->length) <= 0
             || EVP_DigestSignFinal(mac_ctx, md, &md_size) <= 0) {
             EVP_MD_CTX_free(hmac);
+//        if (EVP_DigestSignUpdate(mac_ctx, header, sizeof(header)) <= 0		//note, bruce, SSL_do_handshake, use this
+//            || EVP_DigestSignUpdate(mac_ctx, rec->input, rec->length) <= 0
+//            || EVP_DigestSignFinal(mac_ctx, md, &md_size) <= 0) {
+//            EVP_MD_CTX_free(hmac);
             return -1;
         }
         if (!send && !SSL_USE_ETM(ssl) && FIPS_mode())
