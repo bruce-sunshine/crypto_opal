@@ -593,7 +593,7 @@ int ossl_statem_client_construct_message(SSL *s)
             return gmtls_construct_client_key_exchange(s);
         else
 #endif
-            return tls_construct_client_key_exchange(s);
+            return tls_construct_client_key_exchange(s);		//using this to exchange key, added by bruce
 
     case TLS_ST_CW_CERT_VRFY:
         return tls_construct_client_verify(s);
@@ -1855,7 +1855,7 @@ MSG_PROCESS_RETURN tls_process_server_key_exchange(SSL *s, PACKET *pkt)
             SSLerr(SSL_F_TLS_PROCESS_SERVER_KEY_EXCHANGE, ERR_R_EVP_LIB);
             goto err;
         }
-        if (EVP_VerifyFinal(md_ctx, PACKET_data(&signature),
+        if (EVP_VerifyFinal(md_ctx, PACKET_data(&signature),				//note, error occur here, added by bruce, 1130
                             PACKET_remaining(&signature), pkey) <= 0) {
             /* bad signature */
             EVP_MD_CTX_free(md_ctx);
@@ -2423,7 +2423,7 @@ static int tls_construct_cke_dhe(SSL *s, unsigned char **p, int *len, int *al)
 #endif
 }
 
-static int tls_construct_cke_ecdhe(SSL *s, unsigned char **p, int *len, int *al)
+static int tls_construct_cke_ecdhe(SSL *s, unsigned char **p, int *len, int *al)	//note, bruce
 {
 #ifndef OPENSSL_NO_EC
     unsigned char *encodedPoint = NULL;
@@ -2627,7 +2627,144 @@ static int tls_construct_cke_srp(SSL *s, unsigned char **p, int *len, int *al)
 #endif
 }
 
-int tls_construct_client_key_exchange(SSL *s)
+		//added by bruce, for TLS1.2 use SM2-WITH-SMS4-SM3 cipher, 1128
+#if 1
+static unsigned char *tls_new_cert_packet(X509 *x, int *l)
+{
+	unsigned char *ret = NULL;
+	unsigned char *p;
+	int n;
+
+	if ((n = i2d_X509(x, NULL)) <= 0) {
+		SSLerr(SSL_F_GMTLS_NEW_CERT_PACKET, ERR_R_X509_LIB);
+		return NULL;
+	}
+	if (!(ret = OPENSSL_malloc(n + 3))) {
+		SSLerr(SSL_F_GMTLS_NEW_CERT_PACKET, ERR_R_X509_LIB);
+		return 0;
+	}
+
+	p = &(ret[3]);
+	if ((n = i2d_X509(x, &p)) <= 0) {
+		SSLerr(SSL_F_GMTLS_NEW_CERT_PACKET, ERR_R_X509_LIB);
+		goto end;
+	}
+
+	p = ret;
+	l2n3(n, p);
+	*l = n;
+
+end:
+	return ret;
+}
+
+int tls_construct_ske_sm2(SSL *s, unsigned char **p, int *l, int *al)
+{
+	int ret = 0;
+	EVP_PKEY *pkey;
+	X509 *x509;
+	unsigned char *buf = NULL;
+	int n;
+	EVP_MD_CTX *md_ctx = NULL;
+	char *id = NULL;
+	unsigned char z[EVP_MAX_MD_SIZE];
+	size_t zlen;
+	unsigned char *d;
+	unsigned int siglen;
+
+	*al = SSL_AD_INTERNAL_ERROR;
+
+	/* prepare sign key */
+	if (!(pkey = s->cert->pkeys[SSL_PKEY_SM2].privatekey)) {
+		SSLerr(SSL_F_GMTLS_CONSTRUCT_SKE_SM2, ERR_R_INTERNAL_ERROR);
+		return 0;
+	}
+
+	/* prepare encrypt cert buffer */
+	if (!(x509 = s->cert->pkeys[SSL_PKEY_SM2_ENC].x509)) {
+		SSLerr(SSL_F_GMTLS_CONSTRUCT_SKE_SM2, ERR_R_INTERNAL_ERROR);
+		return 0;
+	}
+	if (!(buf = tls_new_cert_packet(x509, &n))) {
+		SSLerr(SSL_F_GMTLS_CONSTRUCT_SKE_SM2, ERR_R_INTERNAL_ERROR);
+		return 0;
+	}
+
+	/* mallco ctx */
+	if (!(md_ctx = EVP_MD_CTX_new())) {
+		SSLerr(SSL_F_GMTLS_CONSTRUCT_SKE_SM2, ERR_R_MALLOC_FAILURE);
+		goto end;
+	}
+
+	/* sign digest of {client_random, server_random, enc_cert} */
+	if (EVP_SignInit_ex(md_ctx, EVP_sm3(), NULL) <= 0) {
+		SSLerr(SSL_F_GMTLS_CONSTRUCT_SKE_SM2, ERR_R_EVP_LIB);
+		goto end;
+	}
+	if (!(id = X509_NAME_oneline(X509_get_subject_name(x509), NULL, 0))) {
+		SSLerr(SSL_F_GMTLS_CONSTRUCT_SKE_SM2, ERR_R_EVP_LIB);
+		goto end;
+	}
+	zlen = sizeof(z);
+	if (!SM2_compute_id_digest(EVP_sm3(), id, strlen(id), z, &zlen,
+		EVP_PKEY_get0_EC_KEY(pkey))) {
+		SSLerr(SSL_F_GMTLS_CONSTRUCT_SKE_SM2, ERR_R_SM2_LIB);
+		goto end;
+	}
+
+#ifdef GMTLS_DEBUG
+	{
+        int i;
+        printf("Z=");
+        for (i = 0; i< zlen; i++)
+            printf("%02X",z[i]);
+        printf("\n");
+
+        printf("C=");
+        for (i = 0; i < n; i++)
+            printf("%02X",buf[i]);
+        printf("\n");
+    }
+#endif
+
+	if (EVP_SignUpdate(md_ctx, z, zlen) <= 0
+		|| EVP_SignUpdate(md_ctx, &(s->s3->client_random[0]),
+			SSL3_RANDOM_SIZE) <= 0
+		|| EVP_SignUpdate(md_ctx, &(s->s3->server_random[0]),
+			SSL3_RANDOM_SIZE) <= 0
+		|| EVP_SignUpdate(md_ctx, buf, n) <= 0) {
+		SSLerr(SSL_F_GMTLS_CONSTRUCT_SKE_SM2, ERR_R_EVP_LIB);
+		goto end;
+	}
+
+	/* generate signature */
+	if (EVP_PKEY_size(pkey) < 0) {
+		SSLerr(SSL_F_GMTLS_CONSTRUCT_SKE_SM2, ERR_R_EVP_LIB);
+		goto end;
+	}
+	d = *p;
+	siglen = EVP_PKEY_size(pkey);
+	if (EVP_SignFinal(md_ctx, &(d[2]), &siglen, pkey) <= 0) {
+		SSLerr(SSL_F_GMTLS_CONSTRUCT_SKE_SM2, ERR_R_EVP_LIB);
+		goto end;
+	}
+        s2n(siglen, d);
+
+	*p += 2 + siglen;
+	*l += 2 + siglen;
+	*al = -1;
+	ret = 1;
+
+end:
+	OPENSSL_free(buf);
+	EVP_MD_CTX_free(md_ctx);
+	OPENSSL_free(id);
+	return ret;
+}
+#endif
+
+
+int tls_construct_client_key_exchange(SSL *s)		//use this, added by bruce
 {
     unsigned char *p;
     int len;
@@ -2661,6 +2798,13 @@ int tls_construct_client_key_exchange(SSL *s)
     } else if (alg_k & SSL_kSRP) {
         if (!tls_construct_cke_srp(s, &p, &len, &al))
             goto err;
+    }
+#if 1
+      else if (alg_k & SSL_kSM2) {							//added by bruce, for TLS1.2 use SM2-WITH-SMS4-SM3 cipher, 1128
+  		if (!tls_construct_ske_sm2(s, &p, &len, &al)) {
+  			goto err;
+  		}
+#endif
     } else {
         ssl3_send_alert(s, SSL3_AL_FATAL, SSL_AD_HANDSHAKE_FAILURE);
         SSLerr(SSL_F_TLS_CONSTRUCT_CLIENT_KEY_EXCHANGE, ERR_R_INTERNAL_ERROR);

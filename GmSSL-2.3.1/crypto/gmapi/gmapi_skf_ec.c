@@ -365,9 +365,10 @@ int ECDSA_SIG_set_ECCSIGNATUREBLOB(ECDSA_SIG *sig, const ECCSIGNATUREBLOB *blob)
 //	OPENSSL_assert(sig->s);
 //	OPENSSL_assert(sig);	//added by bruce, 0926
 
-#if 1
+#if 0
 //	OPENSSL_assert(blob->r);
 //	OPENSSL_assert(blob->s);
+
 	sig->r = BN_new();
 	sig->s = BN_new();
 	OPENSSL_assert(sig->r);
@@ -382,49 +383,63 @@ int ECDSA_SIG_set_ECCSIGNATUREBLOB(ECDSA_SIG *sig, const ECCSIGNATUREBLOB *blob)
 		return 0;
 	}
 	printf("333, BN_num_bytes(r) =%d, BN_num_bytes(s)= %d \n", BN_num_bytes(sig->r), BN_num_bytes(sig->s));
+	return 1;
 #else
-
+	int ret = 0;
 	BIGNUM *r = NULL;
 	BIGNUM *s = NULL;
-	printf("111\n");
+
+
 	/* ECCSIGNATUREBLOB ==> ECDSA_SIG */
-	if (!(r = BN_bin2bn(blob->r, 41, NULL))) {
+	ECCSignature ref;
+	memset(&ref, 0, sizeof(ECCSignature));
+	memcpy(ref.r, blob->r + 32 , 32);
+	memcpy(ref.s, blob->s + 32 , 32);
+
+
+	/* check arguments */
+	if (!sig || !(&ref)) {
+		GMAPIerr(GMAPI_F_ECDSA_SIG_SET_ECCSIGNATURE,
+			ERR_R_PASSED_NULL_PARAMETER);
+		return 0;
+	}
+	if (!(r = BN_bin2bn(ref.r, 32, NULL))) {
 		GMAPIerr(GMAPI_F_ECDSA_SIG_SET_ECCSIGNATURE, ERR_R_BN_LIB);
 		goto end;
 	}
-	printf("222\n");
-	if (!(s = BN_bin2bn(blob->s, 32, NULL))) {
+
+	if (!(s = BN_bin2bn(ref.s, 32, NULL))) {
 		GMAPIerr(GMAPI_F_ECDSA_SIG_SET_ECCSIGNATURE, ERR_R_BN_LIB);
 		goto end;
 	}
 	/* when using `sm2p256v1`, we need to check (s, r) length correct */
-	printf("333, BN_num_bytes(r) =%d, BN_num_bytes(s)= %d \n", BN_num_bytes(r), BN_num_bytes(s));
+	printf("BN_num_bytes(r) =%d, BN_num_bytes(s)= %d \n", BN_num_bytes(r), BN_num_bytes(s));
 	if (BN_num_bytes(r) != 256/8 || BN_num_bytes(s) != 256/8) {
 		GMAPIerr(GMAPI_F_ECDSA_SIG_SET_ECCSIGNATURE,
 			GMAPI_R_INVALID_SM2_SIGNATURE);
 		goto end;
 	}
-	printf("444\n");
+
 	if (!ECDSA_SIG_set0(sig, r, s)) {
 		GMAPIerr(GMAPI_F_ECDSA_SIG_SET_ECCSIGNATURE,
 			ERR_R_EC_LIB);
 		goto end;
 	}
-	printf("555\n");
+
 	r = NULL;
 	s = NULL;
 	ret = 1;
-
 end:
 	BN_free(r);
 	BN_free(s);
 	return ret;
 #endif
-	return 1;
+
 }
 
 int ECDSA_SIG_get_ECCSIGNATUREBLOB(const ECDSA_SIG *sig, ECCSIGNATUREBLOB *blob)
 {
+#if 0
 	if ((BN_num_bytes(sig->r) > sizeof(blob->r)) || (BN_num_bytes(sig->s) > sizeof(blob->s))) {
 		GMAPIerr(GMAPI_F_ECDSA_SIG_GET_ECCSIGNATUREBLOB, GMAPI_R_INVALID_BIGNUM_LENGTH);
 		return 0;
@@ -441,6 +456,55 @@ int ECDSA_SIG_get_ECCSIGNATUREBLOB(const ECDSA_SIG *sig, ECCSIGNATUREBLOB *blob)
 	}
 
 	return 1;
+
+#else
+
+	/* (r, s) are pointed to (sig->r, sig->s), so dont free (r, s) */
+	const BIGNUM *r = NULL;
+	const BIGNUM *s = NULL;
+
+	ECCSignature ref;
+//	memset(&ref, 0, sizeof(ECCSignature));
+//	memcpy(ref.r, blob->r + 32 , 32);
+//	memcpy(ref.s, blob->s + 32 , 32);
+
+
+	/* check arguments */
+	if (!sig || !(&ref)) {
+		GMAPIerr(GMAPI_F_ECDSA_SIG_GET_ECCSIGNATURE,
+			ERR_R_PASSED_NULL_PARAMETER);
+		return 0;
+	}
+
+	/* check ECDSA_SIG
+	 * `ECDSA_SIG_get0() return void
+	 */
+	ECDSA_SIG_get0(sig, &r, &s);
+
+	if (BN_num_bytes(r) > ECCref_MAX_LEN ||
+		BN_num_bytes(s) > ECCref_MAX_LEN) {
+		GMAPIerr(GMAPI_F_ECDSA_SIG_GET_ECCSIGNATURE,
+			GMAPI_R_NOT_CONVERTABLE);
+		return 0;
+	}
+
+	/* ECDSA_SIG ==> ECCSignature */
+	memset(&ref, 0, sizeof(ECCSignature));
+
+	if (!BN_bn2bin(r, ref.r + ECCref_MAX_LEN - BN_num_bytes(r))) {
+		GMAPIerr(GMAPI_F_ECDSA_SIG_GET_ECCSIGNATURE, ERR_R_BN_LIB);
+		return 0;
+	}
+	if (!BN_bn2bin(s, ref.s + ECCref_MAX_LEN - BN_num_bytes(s))) {
+		GMAPIerr(GMAPI_F_ECDSA_SIG_GET_ECCSIGNATURE, ERR_R_BN_LIB);
+		return 0;
+	}
+
+	memcpy(blob->r + 32, ref.r, 32);
+	memcpy(blob->s + 32, ref.s, 32);
+
+	return 1;
+#endif
 }
 
 int ECCPRIVATEKEYBLOB_set_private_key(ECCPRIVATEKEYBLOB *blob,

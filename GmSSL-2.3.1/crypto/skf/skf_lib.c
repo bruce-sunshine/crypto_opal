@@ -1849,37 +1849,37 @@ ULONG DEVAPI SKF_ECCExportSessionKey(
 	return SAR_OK;
 }
 
-ULONG DEVAPI SKF_ECCDecrypt(
-	HCONTAINER hContainer,
-	ECCCIPHERBLOB *pCipherText,
-	BYTE *pbPlainText,
-	ULONG *pulPlainTextLen)
-{
-	ULONG rv;
-
-	if (!skf_method) {
-		SKFerr(SKF_F_SKF_ECCDECRYPT,
-			SKF_R_SKF_METHOD_NOT_INITIALIZED);
-		return SAR_NOTINITIALIZEERR;
-	}
-
-	if (!skf_method->ECCDecrypt) {
-		SKFerr(SKF_F_SKF_ECCDECRYPT,
-			SKF_R_FUNCTION_NOT_SUPPORTED);
-		return SAR_NOTSUPPORTYETERR;
-	}
-
-	if ((rv = skf_method->ECCDecrypt(
-		hContainer,
-		pCipherText,
-		pbPlainText,
-		pulPlainTextLen)) != SAR_OK) {
-		SKFerr(SKF_F_SKF_ECCDECRYPT, skf_get_error_reason(rv));
-		return rv;
-	}
-
-	return SAR_OK;
-}
+//ULONG DEVAPI SKF_ECCDecrypt(			//changed by bruce, 1110
+//	HCONTAINER hContainer,
+//	ECCCIPHERBLOB *pCipherText,
+//	BYTE *pbPlainText,
+//	ULONG *pulPlainTextLen)
+//{
+//	ULONG rv;
+//
+//	if (!skf_method) {
+//		SKFerr(SKF_F_SKF_ECCDECRYPT,
+//			SKF_R_SKF_METHOD_NOT_INITIALIZED);
+//		return SAR_NOTINITIALIZEERR;
+//	}
+//
+//	if (!skf_method->ECCDecrypt) {
+//		SKFerr(SKF_F_SKF_ECCDECRYPT,
+//			SKF_R_FUNCTION_NOT_SUPPORTED);
+//		return SAR_NOTSUPPORTYETERR;
+//	}
+//
+//	if ((rv = skf_method->ECCDecrypt(
+//		hContainer,
+//		pCipherText,
+//		pbPlainText,
+//		pulPlainTextLen)) != SAR_OK) {
+//		SKFerr(SKF_F_SKF_ECCDECRYPT, skf_get_error_reason(rv));
+//		return rv;
+//	}
+//
+//	return SAR_OK;
+//}
 
 ULONG DEVAPI SKF_ExtECCEncrypt(
 	DEVHANDLE hDev,

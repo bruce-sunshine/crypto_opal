@@ -260,13 +260,14 @@ static SSL_CIPHER ssl3_ciphers[] = {
      },
     {
      1,
-     GMTLS_TXT_SM2_WITH_SMS4_SM3,	//note, absolutely use sm2 in key generate/exchange, added by bruce
+     GMTLS_TXT_SM2_WITH_SMS4_SM3,				//note, absolutely use sm2 in key generate/exchange, added by bruce
      GMTLS_CK_SM2_WITH_SMS4_SM3,
      SSL_kSM2,
      SSL_aSM2,
      SSL_SMS4,
      SSL_SM3,
-     GMTLS_VERSION, GMTLS_VERSION,
+//     GMTLS_VERSION, GMTLS_VERSION,
+     GMTLS_VERSION, TLS1_2_VERSION,	 	 	 	//added by bruce, GMTLS_VERSION-->TLS1_2_VERSION, for TLS1.2 test, 1127
      DTLS1_BAD_VER, DTLS1_2_VERSION,
      SSL_HIGH,
      SSL_HANDSHAKE_MAC_DEFAULT | TLS1_PRF,
@@ -4396,7 +4397,7 @@ EVP_PKEY *ssl_generate_pkey_curve(int id)
 #endif
 
 /* Derive premaster or master secret for ECDH/DH */
-int ssl_derive(SSL *s, EVP_PKEY *privkey, EVP_PKEY *pubkey)
+int ssl_derive(SSL *s, EVP_PKEY *privkey, EVP_PKEY *pubkey)	//note here, compute session key
 {
     int rv = 0;
     unsigned char *pms = NULL;
@@ -4422,12 +4423,12 @@ int ssl_derive(SSL *s, EVP_PKEY *privkey, EVP_PKEY *pubkey)
     if (pms == NULL)
         goto err;
 
-    if (EVP_PKEY_derive(pctx, pms, &pmslen) <= 0)
+    if (EVP_PKEY_derive(pctx, pms, &pmslen) <= 0)					//note, call EVP_PKEY_derive, added by bruce
         goto err;
 
     if (s->server) {
         /* For server generate master secret and discard premaster */
-        rv = ssl_generate_master_secret(s, pms, pmslen, 1);
+        rv = ssl_generate_master_secret(s, pms, pmslen, 1);				//note, here, significant, generate master key
         pms = NULL;
     } else {
         /* For client just save premaster secret */

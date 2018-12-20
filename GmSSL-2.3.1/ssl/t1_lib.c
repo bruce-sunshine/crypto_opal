@@ -117,7 +117,7 @@ SSL3_ENC_METHOD const TLSv1_1_enc_data = {
     ssl3_handshake_write
 };
 
-SSL3_ENC_METHOD const TLSv1_2_enc_data = {
+SSL3_ENC_METHOD const TLSv1_2_enc_data = {		//use tls1.2 method, added by bruce
     tls1_enc,
     tls1_mac,
     tls1_setup_key_block,

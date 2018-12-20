@@ -1503,7 +1503,7 @@ static int ecp_nistz256_window_have_precompute_mult(const EC_GROUP *group)
     return HAVEPRECOMP(group, nistz256);
 }
 
-const EC_METHOD *EC_GFp_nistz256_method(void)
+const EC_METHOD *EC_GFp_nistz256_method(void)		//note, use this EC method, added by bruce
 {
     static const EC_METHOD ret = {
         EC_FLAGS_DEFAULT_OCT,

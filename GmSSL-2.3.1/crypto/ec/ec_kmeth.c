@@ -164,7 +164,7 @@ int ECDH_compute_key(void *out, size_t outlen, const EC_POINT *pub_key,
         ECerr(EC_F_ECDH_COMPUTE_KEY, EC_R_INVALID_OUTPUT_LENGTH);
         return 0;
     }
-    if (!eckey->meth->compute_key(&sec, &seclen, pub_key, eckey))
+    if (!eckey->meth->compute_key(&sec, &seclen, pub_key, eckey))		//call back ec_method compute_key func, added by bruce
         return 0;
     if (KDF != NULL) {
         KDF(sec, seclen, out, &outlen);

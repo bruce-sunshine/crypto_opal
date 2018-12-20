@@ -49,7 +49,7 @@ int ossl_ecdh_compute_key(unsigned char **psec, size_t *pseclen,
  *  - ECKAS-DH1
  *  - ECSVDP-DH
  */
-int ecdh_simple_compute_key(unsigned char **pout, size_t *poutlen,
+int ecdh_simple_compute_key(unsigned char **pout, size_t *poutlen,			//note, bruce
                             const EC_POINT *pub_key, const EC_KEY *ecdh)
 {
     BN_CTX *ctx;
@@ -67,7 +67,7 @@ int ecdh_simple_compute_key(unsigned char **pout, size_t *poutlen,
     x = BN_CTX_get(ctx);
     y = BN_CTX_get(ctx);
 
-    priv_key = EC_KEY_get0_private_key(ecdh);
+    priv_key = EC_KEY_get0_private_key(ecdh);		//note, need to get privkey
     if (priv_key == NULL) {
         ECerr(EC_F_ECDH_SIMPLE_COMPUTE_KEY, EC_R_NO_PRIVATE_VALUE);
         goto err;
@@ -94,7 +94,7 @@ int ecdh_simple_compute_key(unsigned char **pout, size_t *poutlen,
         goto err;
     }
 
-    if (EC_METHOD_get_field_type(EC_GROUP_method_of(group)) ==
+    if (EC_METHOD_get_field_type(EC_GROUP_method_of(group)) ==			//note, use this api
         NID_X9_62_prime_field) {
         if (!EC_POINT_get_affine_coordinates_GFp(group, tmp, x, y, ctx)) {
             ECerr(EC_F_ECDH_SIMPLE_COMPUTE_KEY, EC_R_POINT_ARITHMETIC_FAILURE);

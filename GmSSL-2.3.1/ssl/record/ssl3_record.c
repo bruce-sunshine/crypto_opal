@@ -244,7 +244,7 @@ int ssl3_get_record(SSL *s)
                                     s->msg_callback_arg);
 
                 /* Pull apart the header into the SSL3_RECORD */
-                rr[num_recs].type = *(p++);
+                rr[num_recs].type = *(p++);				//note here, bruce, 1127
                 ssl_major = *(p++);
                 ssl_minor = *(p++);
                 version = (ssl_major << 8) | ssl_minor;

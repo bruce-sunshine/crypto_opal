@@ -213,12 +213,12 @@ void ossl_statem_set_hello_verify_done(SSL *s)
     s->statem.hand_state = TLS_ST_SR_CLNT_HELLO;
 }
 
-int ossl_statem_connect(SSL *s)
+int ossl_statem_connect(SSL *s)		//note, bruce, ssl connect
 {
     return state_machine(s, 0);
 }
 
-int ossl_statem_accept(SSL *s)
+int ossl_statem_accept(SSL *s)		//note, bruce, ssl accept
 {
     return state_machine(s, 1);
 }
@@ -263,7 +263,7 @@ static info_cb get_callback(SSL *s)
  *   1: Success
  * <=0: NBIO or error
  */
-static int state_machine(SSL *s, int server)
+static int state_machine(SSL *s, int server)		//note, bruce
 {
     BUF_MEM *buf = NULL;
     unsigned long Time = (unsigned long)time(NULL);
@@ -540,7 +540,7 @@ static int grow_init_buf(SSL *s, size_t size) {
  * control returns to the calling application. When this function is recalled we
  * will resume in the same state where we left off.
  */
-static SUB_STATE_RETURN read_state_machine(SSL *s)
+static SUB_STATE_RETURN read_state_machine(SSL *s)	//note, bruce
 {
     OSSL_STATEM *st = &s->statem;
     int ret, mt;
@@ -753,7 +753,7 @@ static void init_write_state_machine(SSL *s)
  * message has been completed. As for WRITE_STATE_PRE_WORK this could also
  * result in an NBIO event.
  */
-static SUB_STATE_RETURN write_state_machine(SSL *s)
+static SUB_STATE_RETURN write_state_machine(SSL *s)		//note, bruce, ssl protocol, 1218
 {
     OSSL_STATEM *st = &s->statem;
     int ret;

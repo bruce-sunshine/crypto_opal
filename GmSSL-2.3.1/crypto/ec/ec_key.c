@@ -209,7 +209,7 @@ int ec_key_simple_generate_key(EC_KEY *eckey)
         goto err;
 
     if (eckey->priv_key == NULL) {
-        priv_key = BN_new();
+        priv_key = BN_new();		//note, priv_key use BN_new to generate
         if (priv_key == NULL)
             goto err;
     } else

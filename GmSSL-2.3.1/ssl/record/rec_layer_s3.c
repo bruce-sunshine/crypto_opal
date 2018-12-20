@@ -1207,7 +1207,7 @@ int ssl3_read_bytes(SSL *s, int type, int *recvd_type, unsigned char *buf,
         unsigned char *dest = NULL;
         unsigned int *dest_len = NULL;
 
-        if (SSL3_RECORD_get_type(rr) == SSL3_RT_HANDSHAKE) {
+        if (SSL3_RECORD_get_type(rr) == SSL3_RT_HANDSHAKE) {		//note here, bruce, 1127
             dest_maxlen = sizeof s->rlayer.handshake_fragment;
             dest = s->rlayer.handshake_fragment;
             dest_len = &s->rlayer.handshake_fragment_len;
@@ -1377,7 +1377,7 @@ int ssl3_read_bytes(SSL *s, int type, int *recvd_type, unsigned char *buf,
             else if (alert_descr == SSL_AD_MISSING_SRP_USERNAME)
                 return (0);
 #endif
-        } else if (alert_level == SSL3_AL_FATAL) {
+        } else if (alert_level == SSL3_AL_FATAL) {		//note here, bruce, 1127
             char tmp[16];
 
             s->rwstate = SSL_NOTHING;

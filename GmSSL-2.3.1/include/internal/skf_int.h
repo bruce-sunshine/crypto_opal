@@ -345,11 +345,11 @@ typedef ULONG (*SKF_ExtECCEncrypt_FuncPtr)(
 	ULONG ulPlainTextLen,
 	ECCCIPHERBLOB *pCipherText);
 
-typedef ULONG (*SKF_ECCDecrypt_FuncPtr)(
-	HCONTAINER hContainer,
-	ECCCIPHERBLOB *pCipherText,
-	BYTE *pbPlainText,
-	ULONG *pulPlainTextLen);
+//typedef ULONG (*SKF_ECCDecrypt_FuncPtr)(
+//	HCONTAINER hContainer,
+//	ECCCIPHERBLOB *pCipherText,
+//	BYTE *pbPlainText,
+//	ULONG *pulPlainTextLen);
 
 typedef ULONG (*SKF_ExtECCDecrypt_FuncPtr)(
 	DEVHANDLE hDev,
@@ -567,7 +567,7 @@ typedef struct skf_method_st {
 	SKF_ECCExportSessionKey_FuncPtr ECCExportSessionKey;
 	SKF_ExtECCEncrypt_FuncPtr ExtECCEncrypt;
 	SKF_ExtECCDecrypt_FuncPtr ExtECCDecrypt;
-	SKF_ECCDecrypt_FuncPtr ECCDecrypt;
+//	SKF_ECCDecrypt_FuncPtr ECCDecrypt;
 	SKF_ExtECCSign_FuncPtr ExtECCSign;
 	SKF_ExtECCVerify_FuncPtr ExtECCVerify;
 	SKF_GenerateAgreementDataWithECC_FuncPtr GenerateAgreementDataWithECC;

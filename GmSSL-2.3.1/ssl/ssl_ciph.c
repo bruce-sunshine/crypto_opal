@@ -1553,6 +1553,7 @@ STACK_OF(SSL_CIPHER) *ssl_create_cipher_list(const SSL_METHOD *ssl_method, STACK
     for (curr = head; curr != NULL; curr = curr->next) {
         if (curr->active
             && (!FIPS_mode() || curr->cipher->algo_strength & SSL_FIPS)) {
+//        	printf("sk_SSL_CIPHER_push cipher: %s\n", curr->cipher->name);		//added by bruce, 1126
             if (!sk_SSL_CIPHER_push(cipherstack, curr->cipher)) {	//push GMTLS_TXT_ECDHE_SM2_WITH_SMS4_SM3 in cipher, added by bruce
                 OPENSSL_free(co_list);
                 sk_SSL_CIPHER_free(cipherstack);

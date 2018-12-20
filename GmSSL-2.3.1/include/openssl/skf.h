@@ -423,11 +423,11 @@ ULONG DEVAPI SKF_ECCSignData(
 	ECCSIGNATUREBLOB *pSignature);
 
 /* Extension */
-ULONG DEVAPI SKF_ECCDecrypt(
-	HCONTAINER hContainer,
-	ECCCIPHERBLOB *pCipherBlob,
-	BYTE *pbPlainText,
-	ULONG *pulPlainTextLen);
+//ULONG DEVAPI SKF_ECCDecrypt(
+//	HCONTAINER hContainer,
+//	ECCCIPHERBLOB *pCipherBlob,
+//	BYTE *pbPlainText,
+//	ULONG *pulPlainTextLen);
 
 ULONG DEVAPI SKF_ECCVerify(
 	DEVHANDLE hDev,

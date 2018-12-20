@@ -146,10 +146,11 @@ static int pkey_ec_sign(EVP_PKEY_CTX *ctx, unsigned char *sig, size_t *siglen,
         type = EVP_MD_type(dctx->md);
     else
         type = NID_sha1;
-
+    printf("pkey_ec_sign, dctx->ec_scheme = %d\n", dctx->ec_scheme);
 #ifndef OPENSSL_NO_SM2
     if (dctx->ec_scheme == NID_sm_scheme)
-        ret = SM2_sign(NID_undef, tbs, tbslen, sig, &sltmp, ec);
+    	       ret = SM2_sign(NID_undef, tbs, tbslen, sig, &sltmp, ec);
+    	//ret = ec->meth->sign(NID_undef, tbs, tbslen, sig, &sltmp, NULL, NULL, ec);    //changed by bruce, 1130
     else
 #endif
 
@@ -173,10 +174,11 @@ static int pkey_ec_verify(EVP_PKEY_CTX *ctx,
         type = EVP_MD_type(dctx->md);
     else
         type = NID_sha1;
-
+    printf("pkey_ec_verify, dctx->ec_scheme = %d\n", dctx->ec_scheme);
 #ifndef OPENSSL_NO_SM2
     if (dctx->ec_scheme == NID_sm_scheme)
-        ret = SM2_verify(NID_undef, tbs, tbslen, sig, siglen, ec);
+    	       ret = SM2_verify(NID_undef, tbs, tbslen, sig, siglen, ec);
+    	//ret = ec->meth->verify(NID_undef, tbs, tbslen, sig, siglen, ec);    //changed by bruce, 1130
     else
 #endif
 
@@ -191,7 +193,7 @@ static int pkey_ec_encrypt(EVP_PKEY_CTX *ctx, unsigned char *out, size_t *outlen
 {
     EC_PKEY_CTX *dctx = ctx->data;
     EC_KEY *ec_key = ctx->pkey->pkey.ec;
-
+    printf("pkey_ec_encrypt, dctx->ec_scheme = %d\n", dctx->ec_scheme);
     switch (dctx->ec_scheme) {
     case NID_sm_scheme:
         if (!SM2_encrypt(dctx->ec_encrypt_param, in, inlen, out, outlen, ec_key)) {
@@ -218,7 +220,7 @@ static int pkey_ec_decrypt(EVP_PKEY_CTX *ctx, unsigned char *out, size_t *outlen
 {
     EC_PKEY_CTX *dctx = ctx->data;
     EC_KEY *ec_key = ctx->pkey->pkey.ec;
-
+    printf("pkey_ec_decrypt, dctx->ec_scheme = %d\n", dctx->ec_scheme);
     switch (dctx->ec_scheme) {
     case  NID_sm_scheme:
         if (!SM2_decrypt(dctx->ec_encrypt_param, in, inlen, out, outlen, ec_key)) {
@@ -693,3 +695,6 @@ const EVP_PKEY_METHOD ec_pkey_meth = {
     pkey_ec_ctrl,
     pkey_ec_ctrl_str
 };
+
+
+
