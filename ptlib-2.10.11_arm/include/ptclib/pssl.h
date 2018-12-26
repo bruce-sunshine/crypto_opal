@@ -506,9 +506,10 @@ class PSSLChannel : public PIndirectChannel
       const PSSLPrivateKey & key
     );
 
-    void getsslInfo();	//added by bruce
+    void getsslInfo();			//added by bruce
 
-    enum VerifyMode {
+
+      enum VerifyMode {
       VerifyNone,
       VerifyPeer,
       VerifyPeerMandatory,

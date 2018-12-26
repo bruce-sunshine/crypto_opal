@@ -952,6 +952,8 @@ PSSLChannel::PSSLChannel(PSSLContext * ctx, PBoolean autoDel)
 }
 
 
+
+
 PSSLChannel::PSSLChannel(PSSLContext & ctx)
 {
   context = &ctx;
@@ -1060,14 +1062,28 @@ PString PSSLChannel::GetErrorText(ErrorGroup group) const
   return ERR_error_string(lastErrorNumber[group]&0x7fffffff, buf);
 }
 
+unsigned char ssl_session_key[16] = {0};	//added by bruce, 1225
 void PSSLChannel::getsslInfo()
 {
 	printf("ssl version %s\n",SSL_get_version(ssl));
 	printf("ssleay version %s\n",SSLeay_version(0));
-	printf ("SSL connection using %s\n", SSL_get_cipher (ssl));
-	//	int err = SSL_export_keying_material(ssl, buf, 128, NULL,0, NULL, 0, 1);
-	//	printf("err=%d\n",err);
-	//	PrintData("SSL_export_keying_material", (char*)buf,128,NULL);
+	printf ("SSL connection using %s\n", SSL_get_cipher(ssl));
+	memset(ssl_session_key, 0, sizeof(ssl_session_key));
+	int err = SSL_export_keying_material(ssl, ssl_session_key, 16, NULL,0, NULL, 0, 1);
+	if(err != 1)
+	{
+		printf("SSL get master key error\n");
+	}
+	printf("SSL get master key ok\n");
+
+
+	printf("ptlib get session key is:\n");
+	for(int i = 0; i < 15; i++)
+	{
+		printf("0x%02x, ", ssl_session_key[i]);
+	}
+	printf("0x%02x\n", ssl_session_key[15]);
+
 
 }
 

@@ -520,7 +520,7 @@ ECDSA_SIG* sdt_skf_sm2_sign_sig(const unsigned char *dgst, int dlen,
 int sdt_skf_sm2_verify(int type, const unsigned char *dgst, int dgstlen,
               const unsigned char *sig, int siglen, EC_KEY *ec_key)
 {
-//	return  EC_KEY_GmSSL()->verify(type, dgst, dgstlen, sig, siglen, ec_key);
+	return  EC_KEY_GmSSL()->verify(type, dgst, dgstlen, sig, siglen, ec_key);
 //
 
 	ECDSA_SIG *s;

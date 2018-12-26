@@ -67,6 +67,7 @@ const unsigned SecondsFrom1900to1970 = (70*365+17)*24*60*60U;
 char *defKey = "c1eec3717da76195bb878578790af71c4ee9f859e197a414a78d5abc7451";	//gaoshaobo for srtp
 char inputKey[96];								//gaoshaobo for srtp
 unsigned char pKey_audio[16] = {0x01,0x23,0x45,0x67,0x89,0xab,0xcd,0xef,0xfe,0xdc,0xba,0x98,0x76,0x54,0x32,0x10};
+extern unsigned char ssl_session_key[16];
 #endif
 								
 #define RTP_VIDEO_RX_BUFFER_SIZE 0x100000 // 1Mb
@@ -1149,7 +1150,15 @@ RTP_Session::SendReceiveStatus RTP_Session::OnSendData(RTP_DataFrame & frame)
 		//	srtp_crypto_policy_set_rtp_default(&policyOut_audio.rtp);
 			policyOut_audio.ssrc.type = ssrc_specific;
 			policyOut_audio.ssrc.value = frame.GetSyncSource();
-			policyOut_audio.key = (unsigned char*)pKey_audio;
+
+			if(strlen((char*)ssl_session_key) != 0)
+			{
+				policyOut_audio.key = (unsigned char*)ssl_session_key;
+				printf("srtp audio out use no default key\n");
+			}
+			else
+				policyOut_audio.key = (unsigned char*)pKey_audio;
+
 //			policyOut_audio.key = (unsigned char*)inputKey;
 			policyOut_audio.ekt = NULL;
 			policyOut_audio.next = NULL;
@@ -1384,7 +1393,15 @@ RTP_Session::SendReceiveStatus RTP_Session::OnReceiveData(RTP_DataFrame & frame)
 //			srtp_crypto_policy_set_rtp_default(&policyIn_audio.rtp);
 			policyIn_audio.ssrc.type = ssrc_specific;
 			policyIn_audio.ssrc.value = frame.GetSyncSource();
-			policyIn_audio.key = (unsigned char*)pKey_audio;//key;
+
+			if(strlen((char*)ssl_session_key) != 0)
+			{
+				policyIn_audio.key = (unsigned char*)ssl_session_key;
+				printf("srtp audio in use no default key\n");
+			}
+			else
+				policyIn_audio.key = (unsigned char*)pKey_audio;//key;
+
 //			policyIn_audio.key = (unsigned char*)inputKey;//key;
 			policyIn_audio.ekt = NULL;
 			policyIn_audio.next = NULL;

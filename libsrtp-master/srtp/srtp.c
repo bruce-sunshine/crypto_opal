@@ -68,7 +68,7 @@
 
 /* the debug module for srtp */
 srtp_debug_module_t mod_srtp = {
-    0,     /* debugging is off by default */
+    1,     /* debugging is off by default */
     "srtp" /* printable name for module */
 };
 
@@ -2803,7 +2803,8 @@ srtp_err_status_t srtp_init()
     srtp_err_status_t status;
 
     /* initialize crypto kernel */
-    status = srtp_crypto_kernel_init();		//note here, bruce
+
+    status = srtp_crypto_kernel_init();		//note here, changed for test, bruce 1224
     if (status)
         return status;
 

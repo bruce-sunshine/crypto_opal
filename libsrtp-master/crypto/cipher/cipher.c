@@ -54,7 +54,7 @@
 #include "alloc.h"              /* for crypto_alloc(), crypto_free()  */
 
 srtp_debug_module_t srtp_mod_cipher = {
-    0,               /* debugging is off by default */
+    1,               /* debugging is off by default */		//changed by bruce, 1221, for debug
     "cipher"         /* printable module name       */
 };
 

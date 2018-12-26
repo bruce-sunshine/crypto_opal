@@ -1608,6 +1608,7 @@ PBoolean OpalTransportTCPS::Connect()
     delete sslChannel;
     return PFalse;
   }
+  printf("ssl connect\n");
   sslChannel->getsslInfo();	//added by bruce
   return Open(sslChannel);
 }
@@ -1724,6 +1725,7 @@ OpalTransport * OpalListenerTCPS::Accept(const PTimeInterval & timeout)
     delete socket;
     return NULL;
   }
+  printf("ssl accept\n");
   ssl->getsslInfo();	//added by bruce
 
   if (transport->Open(ssl))
