@@ -4941,3 +4941,5 @@ PKCS12_unpack_p7encdata                 4781	1_1_0d	EXIST::FUNCTION:
 TS_CONF_set_signer_digest               4782	1_1_0d	EXIST::FUNCTION:TS
 SDF_ExternalDecrypt_ECC                 4783	1_1_0d	EXIST::FUNCTION:
 SDF_ExternalSign_ECC                 	4784	1_1_0d	EXIST::FUNCTION:
+SDT_Init_Devinfo			4785	1_1_0d	EXIST::FUNCTION:
+SDT_Set_AndroidPath			4786	1_1_0d	EXIST::FUNCTION:

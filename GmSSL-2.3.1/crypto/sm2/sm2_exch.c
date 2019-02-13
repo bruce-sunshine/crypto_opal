@@ -286,7 +286,7 @@ end:
 	return ret;
 }
 
-int SM2_KAP_compute_key(SM2_KAP_CTX *ctx, const unsigned char *remote_point,
+int SM2_KAP_compute_key(SM2_KAP_CTX *ctx, const unsigned char *remote_point,		//note, bruce, compute sm2 key
 	size_t remote_point_len, unsigned char *key, size_t keylen,
 	unsigned char *checksum, size_t *checksumlen)
 {

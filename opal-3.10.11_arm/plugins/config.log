@@ -119,122 +119,7 @@ configure:3890: $? = 0
 configure:3949: result: yes
 configure:4069: checking linkable PTLib
 configure:4098: arm-arago-linux-gnueabi-g++ -o conftest -I/usr/local/srtp2_arm/include -DPTRACING=1 -D_REENTRANT -fno-exceptions -I/usr/local/include -I/usr/local/Gmssl_arm/include   -felide-constructors -Wreorder  -L/usr/local/srtp2_arm/lib conftest.cpp -L/usr/local/lib -lpt   >&5
-/usr/local/dvrrdk/DVRRDK_04.00.00.03/ti_tools/cgt_a8/arago/linux-devkit/bin/../lib/gcc/arm-arago-linux-gnueabi/4.5.3/../../../../arm-arago-linux-gnueabi/bin/ld: warning: libssl.so.1.1, needed by /usr/local/lib/libpt.so, not found (try using -rpath or -rpath-link)
-/usr/local/dvrrdk/DVRRDK_04.00.00.03/ti_tools/cgt_a8/arago/linux-devkit/bin/../lib/gcc/arm-arago-linux-gnueabi/4.5.3/../../../../arm-arago-linux-gnueabi/bin/ld: warning: libcrypto.so.1.1, needed by /usr/local/lib/libpt.so, not found (try using -rpath or -rpath-link)
-/usr/local/lib/libpt.so: undefined reference to `BIO_ctrl@OPENSSL_1_1_0d'
-/usr/local/lib/libpt.so: undefined reference to `EC_KEY_get0_group@OPENSSL_1_1_0d'
-/usr/local/lib/libpt.so: undefined reference to `X509_NAME_oneline@OPENSSL_1_1_0d'
-/usr/local/lib/libpt.so: undefined reference to `BIO_set_data@OPENSSL_1_1_0d'
-/usr/local/lib/libpt.so: undefined reference to `BIO_meth_new@OPENSSL_1_1_0d'
-/usr/local/lib/libpt.so: undefined reference to `SSL_CTX_load_verify_locations@OPENSSL_1_1_0d'
-/usr/local/lib/libpt.so: undefined reference to `SSL_CTX_set_verify@OPENSSL_1_1_0d'
-/usr/local/lib/libpt.so: undefined reference to `SSL_CTX_new@OPENSSL_1_1_0d'
-/usr/local/lib/libpt.so: undefined reference to `SHA1_Init@OPENSSL_1_1_0d'
-/usr/local/lib/libpt.so: undefined reference to `X509_PUBKEY_get@OPENSSL_1_1_0d'
-/usr/local/lib/libpt.so: undefined reference to `ERR_put_error@OPENSSL_1_1_0d'
-/usr/local/lib/libpt.so: undefined reference to `X509_dup@OPENSSL_1_1_0d'
-/usr/local/lib/libpt.so: undefined reference to `SSL_get_version@OPENSSL_1_1_0d'
-/usr/local/lib/libpt.so: undefined reference to `BIO_set_flags@OPENSSL_1_1_0d'
-/usr/local/lib/libpt.so: undefined reference to `BN_bin2bn@OPENSSL_1_1_0d'
-/usr/local/lib/libpt.so: undefined reference to `BIO_meth_set_ctrl@OPENSSL_1_1_0d'
-/usr/local/lib/libpt.so: undefined reference to `OBJ_sn2nid@OPENSSL_1_1_0d'
-/usr/local/lib/libpt.so: undefined reference to `SSL_CTX_set_default_verify_paths@OPENSSL_1_1_0d'
-/usr/local/lib/libpt.so: undefined reference to `BIO_meth_set_create@OPENSSL_1_1_0d'
-/usr/local/lib/libpt.so: undefined reference to `X509_PUBKEY_new@OPENSSL_1_1_0d'
-/usr/local/lib/libpt.so: undefined reference to `BIO_meth_set_destroy@OPENSSL_1_1_0d'
-/usr/local/lib/libpt.so: undefined reference to `DH_set0_pqg@OPENSSL_1_1_0d'
-/usr/local/lib/libpt.so: undefined reference to `SSL_CTX_set_quiet_shutdown@OPENSSL_1_1_0d'
-/usr/local/lib/libpt.so: undefined reference to `SSL_shutdown@OPENSSL_1_1_0d'
-/usr/local/lib/libpt.so: undefined reference to `X509_set_version@OPENSSL_1_1_0d'
-/usr/local/lib/libpt.so: undefined reference to `SSL_connect@OPENSSL_1_1_0d'
-/usr/local/lib/libpt.so: undefined reference to `SSL_CIPHER_get_name@OPENSSL_1_1_0d'
-/usr/local/lib/libpt.so: undefined reference to `PEM_read_bio_DHparams@OPENSSL_1_1_0d'
-/usr/local/lib/libpt.so: undefined reference to `i2d_PrivateKey@OPENSSL_1_1_0d'
-/usr/local/lib/libpt.so: undefined reference to `SSL_get_current_cipher@OPENSSL_1_1_0d'
-/usr/local/lib/libpt.so: undefined reference to `SSL_get_error@OPENSSL_1_1_0d'
-/usr/local/lib/libpt.so: undefined reference to `EC_KEY_generate_key@OPENSSL_1_1_0d'
-/usr/local/lib/libpt.so: undefined reference to `OpenSSL_version@OPENSSL_1_1_0d'
-/usr/local/lib/libpt.so: undefined reference to `X509_NAME_free@OPENSSL_1_1_0d'
-/usr/local/lib/libpt.so: undefined reference to `CRYPTO_num_locks@OPENSSL_1_1_0d'
-/usr/local/lib/libpt.so: undefined reference to `PEM_write_bio_PrivateKey@OPENSSL_1_1_0d'
-/usr/local/lib/libpt.so: undefined reference to `i2d_PrivateKey_bio@OPENSSL_1_1_0d'
-/usr/local/lib/libpt.so: undefined reference to `SSL_write@OPENSSL_1_1_0d'
-/usr/local/lib/libpt.so: undefined reference to `SHA1_Update@OPENSSL_1_1_0d'
-/usr/local/lib/libpt.so: undefined reference to `SSL_read@OPENSSL_1_1_0d'
-/usr/local/lib/libpt.so: undefined reference to `SSL_CTX_use_certificate@OPENSSL_1_1_0d'
-/usr/local/lib/libpt.so: undefined reference to `RAND_seed@OPENSSL_1_1_0d'
-/usr/local/lib/libpt.so: undefined reference to `BIO_new@OPENSSL_1_1_0d'
-/usr/local/lib/libpt.so: undefined reference to `SSL_pending@OPENSSL_1_1_0d'
-/usr/local/lib/libpt.so: undefined reference to `SSL_use_certificate@OPENSSL_1_1_0d'
-/usr/local/lib/libpt.so: undefined reference to `X509_STORE_CTX_get_current_cert@OPENSSL_1_1_0d'
-/usr/local/lib/libpt.so: undefined reference to `d2i_DHparams@OPENSSL_1_1_0d'
-/usr/local/lib/libpt.so: undefined reference to `X509_getm_notAfter@OPENSSL_1_1_0d'
-/usr/local/lib/libpt.so: undefined reference to `DH_new@OPENSSL_1_1_0d'
-/usr/local/lib/libpt.so: undefined reference to `BIO_set_init@OPENSSL_1_1_0d'
-/usr/local/lib/libpt.so: undefined reference to `d2i_AutoPrivateKey@OPENSSL_1_1_0d'
-/usr/local/lib/libpt.so: undefined reference to `EVP_sm3@OPENSSL_1_1_0d'
-/usr/local/lib/libpt.so: undefined reference to `X509_set_subject_name@OPENSSL_1_1_0d'
-/usr/local/lib/libpt.so: undefined reference to `BIO_get_shutdown@OPENSSL_1_1_0d'
-/usr/local/lib/libpt.so: undefined reference to `EC_GROUP_set_asn1_flag@OPENSSL_1_1_0d'
-/usr/local/lib/libpt.so: undefined reference to `TLSv1_2_method@OPENSSL_1_1_0d'
-/usr/local/lib/libpt.so: undefined reference to `EC_KEY_new_by_curve_name@OPENSSL_1_1_0d'
-/usr/local/lib/libpt.so: undefined reference to `SSL_new@OPENSSL_1_1_0d'
-/usr/local/lib/libpt.so: undefined reference to `X509_get_subject_name@OPENSSL_1_1_0d'
-/usr/local/lib/libpt.so: undefined reference to `BIO_meth_set_write@OPENSSL_1_1_0d'
-/usr/local/lib/libpt.so: undefined reference to `BIO_get_init@OPENSSL_1_1_0d'
-/usr/local/lib/libpt.so: undefined reference to `X509_get_serialNumber@OPENSSL_1_1_0d'
-/usr/local/lib/libpt.so: undefined reference to `SSL_CTX_free@OPENSSL_1_1_0d'
-/usr/local/lib/libpt.so: undefined reference to `i2d_X509@OPENSSL_1_1_0d'
-/usr/local/lib/libpt.so: undefined reference to `SSL_set_bio@OPENSSL_1_1_0d'
-/usr/local/lib/libpt.so: undefined reference to `TLSv1_method@OPENSSL_1_1_0d'
-/usr/local/lib/libpt.so: undefined reference to `ASN1_INTEGER_set@OPENSSL_1_1_0d'
-/usr/local/lib/libpt.so: undefined reference to `BIO_meth_free@OPENSSL_1_1_0d'
-/usr/local/lib/libpt.so: undefined reference to `PEM_read_bio_PrivateKey@OPENSSL_1_1_0d'
-/usr/local/lib/libpt.so: undefined reference to `X509_PUBKEY_free@OPENSSL_1_1_0d'
-/usr/local/lib/libpt.so: undefined reference to `BIO_get_data@OPENSSL_1_1_0d'
-/usr/local/lib/libpt.so: undefined reference to `X509_new@OPENSSL_1_1_0d'
-/usr/local/lib/libpt.so: undefined reference to `i2d_X509_bio@OPENSSL_1_1_0d'
-/usr/local/lib/libpt.so: undefined reference to `OPENSSL_init_ssl@OPENSSL_1_1_0d'
-/usr/local/lib/libpt.so: undefined reference to `BIO_meth_set_puts@OPENSSL_1_1_0d'
-/usr/local/lib/libpt.so: undefined reference to `BIO_clear_flags@OPENSSL_1_1_0d'
-/usr/local/lib/libpt.so: undefined reference to `X509_NAME_new@OPENSSL_1_1_0d'
-/usr/local/lib/libpt.so: undefined reference to `OBJ_txt2nid@OPENSSL_1_1_0d'
-/usr/local/lib/libpt.so: undefined reference to `d2i_X509@OPENSSL_1_1_0d'
-/usr/local/lib/libpt.so: undefined reference to `EVP_PKEY_new@OPENSSL_1_1_0d'
-/usr/local/lib/libpt.so: undefined reference to `X509_set_issuer_name@OPENSSL_1_1_0d'
-/usr/local/lib/libpt.so: undefined reference to `d2i_X509_bio@OPENSSL_1_1_0d'
-/usr/local/lib/libpt.so: undefined reference to `SSL_CTX_set_cipher_list@OPENSSL_1_1_0d'
-/usr/local/lib/libpt.so: undefined reference to `ERR_peek_error@OPENSSL_1_1_0d'
-/usr/local/lib/libpt.so: undefined reference to `X509_PUBKEY_set@OPENSSL_1_1_0d'
-/usr/local/lib/libpt.so: undefined reference to `EVP_PKEY_assign@OPENSSL_1_1_0d'
-/usr/local/lib/libpt.so: undefined reference to `X509_gmtime_adj@OPENSSL_1_1_0d'
-/usr/local/lib/libpt.so: undefined reference to `BIO_s_file@OPENSSL_1_1_0d'
-/usr/local/lib/libpt.so: undefined reference to `X509_free@OPENSSL_1_1_0d'
-/usr/local/lib/libpt.so: undefined reference to `BIO_free@OPENSSL_1_1_0d'
-/usr/local/lib/libpt.so: undefined reference to `SSL_CTX_check_private_key@OPENSSL_1_1_0d'
-/usr/local/lib/libpt.so: undefined reference to `ASN1_d2i_bio@OPENSSL_1_1_0d'
-/usr/local/lib/libpt.so: undefined reference to `EVP_PKEY_free@OPENSSL_1_1_0d'
-/usr/local/lib/libpt.so: undefined reference to `PEM_read_bio_X509@OPENSSL_1_1_0d'
-/usr/local/lib/libpt.so: undefined reference to `X509_getm_notBefore@OPENSSL_1_1_0d'
-/usr/local/lib/libpt.so: undefined reference to `SSL_CTX_ctrl@OPENSSL_1_1_0d'
-/usr/local/lib/libpt.so: undefined reference to `SHA1_Final@OPENSSL_1_1_0d'
-/usr/local/lib/libpt.so: undefined reference to `SSL_CTX_use_PrivateKey@OPENSSL_1_1_0d'
-/usr/local/lib/libpt.so: undefined reference to `PEM_write_bio_X509@OPENSSL_1_1_0d'
-/usr/local/lib/libpt.so: undefined reference to `X509_set_pubkey@OPENSSL_1_1_0d'
-/usr/local/lib/libpt.so: undefined reference to `X509_sign@OPENSSL_1_1_0d'
-/usr/local/lib/libpt.so: undefined reference to `X509_STORE_CTX_get_error_depth@OPENSSL_1_1_0d'
-/usr/local/lib/libpt.so: undefined reference to `ERR_error_string@OPENSSL_1_1_0d'
-/usr/local/lib/libpt.so: undefined reference to `X509_NAME_add_entry_by_NID@OPENSSL_1_1_0d'
-/usr/local/lib/libpt.so: undefined reference to `SSL_CTX_set_session_id_context@OPENSSL_1_1_0d'
-/usr/local/lib/libpt.so: undefined reference to `DH_get0_pqg@OPENSSL_1_1_0d'
-/usr/local/lib/libpt.so: undefined reference to `SSL_accept@OPENSSL_1_1_0d'
-/usr/local/lib/libpt.so: undefined reference to `BIO_meth_set_gets@OPENSSL_1_1_0d'
-/usr/local/lib/libpt.so: undefined reference to `DH_free@OPENSSL_1_1_0d'
-/usr/local/lib/libpt.so: undefined reference to `d2i_PrivateKey_bio@OPENSSL_1_1_0d'
-/usr/local/lib/libpt.so: undefined reference to `SSL_set_verify@OPENSSL_1_1_0d'
-/usr/local/lib/libpt.so: undefined reference to `SSL_free@OPENSSL_1_1_0d'
-/usr/local/lib/libpt.so: undefined reference to `BIO_set_shutdown@OPENSSL_1_1_0d'
-/usr/local/lib/libpt.so: undefined reference to `BIO_meth_set_read@OPENSSL_1_1_0d'
+/usr/local/dvrrdk/DVRRDK_04.00.00.03/ti_tools/cgt_a8/arago/linux-devkit/bin/../lib/gcc/arm-arago-linux-gnueabi/4.5.3/../../../../arm-arago-linux-gnueabi/bin/ld: cannot find -lpt
 collect2: ld returned 1 exit status
 configure:4098: $? = 1
 configure: failed program was:
@@ -345,6 +230,7 @@ configure:4136: arm-arago-linux-gnueabi-g++ -o conftest -I/usr/local/srtp2_arm/i
 /usr/local/lib/libpt_d.so: undefined reference to `d2i_X509_bio@OPENSSL_1_1_0d'
 /usr/local/lib/libpt_d.so: undefined reference to `SSL_CTX_set_cipher_list@OPENSSL_1_1_0d'
 /usr/local/lib/libpt_d.so: undefined reference to `ERR_peek_error@OPENSSL_1_1_0d'
+/usr/local/lib/libpt_d.so: undefined reference to `SSL_export_keying_material@OPENSSL_1_1_0d'
 /usr/local/lib/libpt_d.so: undefined reference to `X509_PUBKEY_set@OPENSSL_1_1_0d'
 /usr/local/lib/libpt_d.so: undefined reference to `EVP_PKEY_assign@OPENSSL_1_1_0d'
 /usr/local/lib/libpt_d.so: undefined reference to `X509_gmtime_adj@OPENSSL_1_1_0d'
@@ -399,8 +285,34 @@ configure: failed program was:
 |   return 0;
 | }
 configure:4176: arm-arago-linux-gnueabi-g++ -o conftest -I/usr/local/srtp2_arm/include -DPTRACING=1 -D_REENTRANT -fno-exceptions -I/usr/local/include -I/usr/local/Gmssl_arm/include   -felide-constructors -Wreorder  -L/usr/local/srtp2_arm/lib conftest.cpp -L/usr/local/lib -L/usr/local/Gmssl_arm/lib -lpt_s -lpthread -lrt -lssl -lcrypto -lexpat -lresolv -ldl   >&5
-configure:4176: $? = 0
-configure:4187: result: release, static
+/usr/local/dvrrdk/DVRRDK_04.00.00.03/ti_tools/cgt_a8/arago/linux-devkit/bin/../lib/gcc/arm-arago-linux-gnueabi/4.5.3/../../../../arm-arago-linux-gnueabi/bin/ld: cannot find -lpt_s
+collect2: ld returned 1 exit status
+configure:4176: $? = 1
+configure: failed program was:
+| /* confdefs.h */
+| #define PACKAGE_NAME ""
+| #define PACKAGE_TARNAME ""
+| #define PACKAGE_VERSION ""
+| #define PACKAGE_STRING ""
+| #define PACKAGE_BUGREPORT ""
+| #define PACKAGE_URL ""
+| /* end confdefs.h.  */
+| 
+|                             #include <ptbuildopts.h>
+|                             #include <ptlib.h>
+| int
+| main ()
+| {
+| 
+|                               PString str("");
+| 
+|   ;
+|   return 0;
+| }
+configure:4214: arm-arago-linux-gnueabi-g++ -o conftest -I/usr/local/srtp2_arm/include -DPTRACING=1 -D_REENTRANT -fno-exceptions -I/usr/local/include -I/usr/local/Gmssl_arm/include   -felide-constructors -Wreorder  -L/usr/local/srtp2_arm/lib conftest.cpp -L/usr/local/lib -L/usr/local/Gmssl_arm/lib -lpt_d_s -lpthread -lrt -lssl -lcrypto -lexpat -lresolv -ldl   >&5
+/usr/local/dvrrdk/DVRRDK_04.00.00.03/ti_tools/cgt_a8/arago/linux-devkit/bin/../lib/gcc/arm-arago-linux-gnueabi/4.5.3/../../../../arm-arago-linux-gnueabi/bin/ld: warning: libStcSkf.so, needed by /usr/local/Gmssl_arm/lib/libssl.so, not found (try using -rpath or -rpath-link)
+configure:4214: $? = 0
+configure:4225: result: debug, static
 configure:4362: checking for C++ compiler version
 configure:4371: arm-arago-linux-gnueabi-g++ --version >&5
 arm-arago-linux-gnueabi-g++ (GCC) 4.5.3 20110311 (prerelease)

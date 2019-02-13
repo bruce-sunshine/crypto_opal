@@ -66,11 +66,15 @@
 #include <winsock2.h>
 #endif
 
+#include "sdt_skf_hy_cipher.h"		//added by bruce, for close hangye SD_key handle//
+
 /* the debug module for srtp */
 srtp_debug_module_t mod_srtp = {
     1,     /* debugging is off by default */
     "srtp" /* printable name for module */
 };
+
+
 
 #define octets_in_rtp_header 12
 #define uint32s_in_rtp_header 3
@@ -2797,10 +2801,53 @@ srtp_err_status_t srtp_unprotect_mki(srtp_ctx_t *ctx,
 
     return srtp_err_status_ok;
 }
+//added by bruce---/
+srtp_err_status_t set_hy_sd_handle(void* dev_hd, int* value)
+{
+	Set_dev_handle(dev_hd, value, 1);
+	return srtp_err_status_ok;
+}
+
+srtp_err_status_t srtp_Sdt_skf_hy_sd_crypt_init(void** cv, unsigned int ulAlgID, unsigned char *key, int enc)
+{
+	return Sdt_skf_hy_sd_crypt_init(cv, ulAlgID, key, enc);
+}
+
+void srtp_Sdt_skf_hy_sd_crypt_cleanup(void* cv)
+{
+	return Sdt_skf_hy_sd_crypt_cleanup(cv);
+}
+
+srtp_err_status_t srtp_Sdt_skf_hy_sd_encrypt(void* cv, unsigned char *plain, unsigned int palin_len, unsigned char *enc, unsigned int* enc_len)
+{
+	return Sdt_skf_hy_sd_encrypt(cv, plain, palin_len, enc, enc_len);
+}
+
+srtp_err_status_t srtp_Sdt_skf_hy_sd_decrypt(void* cv, unsigned char *enc, unsigned int enc_len, unsigned char *dec, unsigned int* dec_len)
+{
+	return Sdt_skf_hy_sd_decrypt(cv, enc, enc_len, dec, dec_len);
+}
+//added by bruce--/
 
 srtp_err_status_t srtp_init()
 {
     srtp_err_status_t status;
+
+    //added by bruce, for open SD_key dev_handle once at first//
+    if(Get_dev_handle_status() == 0)
+    {
+    	if(Init_SDkey() != 0)
+		{
+			printf("sdt skf hy get handle failed\n");
+			return srtp_err_status_deal_handle_fail;
+		}
+    }
+    else
+    {
+    	printf("sdt skf hy handle has inited by ssl\n");
+    }
+
+    //added by bruce, for open SD_key dev_handle once at first//
 
     /* initialize crypto kernel */
 
@@ -2826,6 +2873,18 @@ srtp_err_status_t srtp_shutdown()
         return status;
 
     /* shutting down crypto kernel frees the srtp debug module as well */
+
+//added by bruce, for close SD_key dev_handle once at last//
+    if(Get_dev_handle_status() == 0)
+    {
+		if(Close_dev_handle() != 0)
+		{
+			printf("sdt skf hy close handle failed\n");
+			return srtp_err_status_deal_handle_fail;
+		}
+    }
+
+//added by bruce, for close SD_key dev_handle once at last//
 
     return srtp_err_status_ok;
 }
@@ -3428,6 +3487,35 @@ void srtp_crypto_policy_set_sdt_skf_sm4_cbc(srtp_crypto_policy_t *p)
      */
 
     p->cipher_type = SRTP_SDT_SKF_SM4_CBC;
+    p->cipher_key_len = 16;
+    p->auth_type = SRTP_NULL_AUTH;
+    p->auth_key_len = 0;
+    p->auth_tag_len = 0;
+    p->sec_serv = sec_serv_conf;
+}
+
+void srtp_crypto_policy_set_sdt_skf_hy_sm4_ecb(srtp_crypto_policy_t *p)
+{
+    /*
+     * Should only be used for sdt sm4
+     */
+
+    p->cipher_type = SRTP_SDT_SKF_HY_SM4_ECB;
+    p->cipher_key_len = 16;
+    p->auth_type = SRTP_NULL_AUTH;
+    p->auth_key_len = 0;
+    p->auth_tag_len = 0;
+    p->sec_serv = sec_serv_conf;
+}
+
+
+void srtp_crypto_policy_set_sdt_skf_hy_sm4_cbc(srtp_crypto_policy_t *p)
+{
+    /*
+     * Should only be used for sdt sm4
+     */
+
+    p->cipher_type = SRTP_SDT_SKF_HY_SM4_CBC;
     p->cipher_key_len = 16;
     p->auth_type = SRTP_NULL_AUTH;
     p->auth_key_len = 0;
@@ -4664,6 +4752,14 @@ srtp_crypto_policy_set_from_profile_for_rtp(srtp_crypto_policy_t *policy,
      	srtp_crypto_policy_set_sdt_skf_sm4_cbc(policy);
      	break;
 
+     case srtp_profile_sdt_skf_hy_sm4_ecb:					//added by lee, for sdt sm4
+     	srtp_crypto_policy_set_sdt_skf_hy_sm4_ecb(policy);
+     	break;
+
+     case srtp_profile_sdt_skf_hy_sm4_cbc:					//added by lee, for sdt sm4
+     	srtp_crypto_policy_set_sdt_skf_hy_sm4_cbc(policy);
+     	break;
+
 /* the following profiles are not (yet) supported */
     case srtp_profile_null_sha1_32:
     default:
@@ -4730,6 +4826,14 @@ srtp_crypto_policy_set_from_profile_for_rtcp(srtp_crypto_policy_t *policy,
 
      case srtp_profile_sdt_skf_sm4_cbc:					//added by lee, for sdt sm4
      	srtp_crypto_policy_set_sdt_skf_sm4_cbc(policy);
+     	break;
+
+     case srtp_profile_sdt_skf_hy_sm4_ecb:					//added by lee, for sdt sm4
+     	srtp_crypto_policy_set_sdt_skf_hy_sm4_ecb(policy);
+     	break;
+
+     case srtp_profile_sdt_skf_hy_sm4_cbc:					//added by lee, for sdt sm4
+     	srtp_crypto_policy_set_sdt_skf_hy_sm4_cbc(policy);
      	break;
 
     /* the following profiles are not (yet) supported */

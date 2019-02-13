@@ -702,7 +702,10 @@ OpalTransport * OpalListenerTCP::CreateTransport(const OpalTransportAddress & lo
       return localAddress.CreateTransport(endpoint, OpalTransportAddress::NoBinding);
 #if OPAL_PTLIB_SSL
     if (remoteAddress.NumCompare(TcpsPrefix) == EqualTo)
+    {
+      printf("--bruce, OpalListenerTCP::CreateTransport\n");
       return new OpalTransportTCPS(endpoint);
+    }
 #endif
     return new OpalTransportTCP(endpoint);
   }
@@ -1521,12 +1524,56 @@ static PBoolean SetSSLCertificate(PSSLContext & sslContext,
          sslContext.UsePrivateKey(certificateFile);
 }
 
+//extern int use_sdt_engine;
+//int OpalTransportTCPS::instant_count = 0;
+
 OpalTransportTCPS::OpalTransportTCPS(OpalEndPoint & ep,
                                      PIPSocket::Address binding,
                                      WORD port,
                                      PBoolean reuseAddr)
   : OpalTransportTCP(ep, binding, port, reuseAddr)
 {
+//added for huashen usbkey sm2, sm3, sm4 hardware api
+//  ++instant_count;
+//  if(use_sdt_engine && instant_count == 2)
+//  {
+//		OpenSSL_add_all_algorithms();
+//
+//		ERR_load_crypto_strings();
+//
+//		ENGINE_load_dynamic();
+//
+//		sdt_engine = ENGINE_by_id("sdt_skf_engine");	//use huashen usbkey for ssl hard encrypt/decrypt
+//
+//		if( sdt_engine == NULL )
+//		{
+//			printf("SSL Could not Load sdt_skf_engine, use soft algorithm !\n");
+//		}
+//		else
+//		{
+//			printf("SSL sdt_skf_engine successfully loaded\n");
+//
+//			int init_res = ENGINE_init(sdt_engine);
+//			printf("Engine name: %s init result : %d \n", ENGINE_get_name(sdt_engine), init_res);
+//			int er;
+//			er = ENGINE_set_default_digests(sdt_engine);
+//			printf("ENGINE SETTING DEFAULT DIGESTS %d\n",er);
+//
+//			er = ENGINE_set_default_ciphers(sdt_engine);
+//			printf("ENGINE SETTING DEFAULT ciphers %d\n",er);
+//
+//			er = ENGINE_set_default_EC(sdt_engine);
+//			printf("ENGINE SETTING DEFAULT EC %d\n",er);
+//
+//			er = ENGINE_set_default_pkey_meths(sdt_engine);
+//			printf("ENGINE SETTING DEFAULT PKEY METHOD %d\n",er);
+//
+//			er = ENGINE_set_default_RAND(sdt_engine);
+//			printf("ENGINE SETTING DEFAULT RAND %d\n",er);
+//		}
+//  }
+
+//
   sslContext = new PSSLContext(PSSLContext::TLSv1_2);
 }
 
@@ -1548,6 +1595,27 @@ OpalTransportTCPS::~OpalTransportTCPS()
   CloseWait();
   delete sslContext;
   PTRACE(4,"Opal\tDeleted transport " << *this);
+
+  //added for huashen usbkey sm2, sm3, sm4 hardware api
+
+//  --instant_count;
+//  if(use_sdt_engine && instant_count == 0)
+//  {
+//	if(sdt_engine != NULL)
+//	{
+//		ENGINE_finish(sdt_engine);
+//		if(sdt_engine)
+//		{
+//			ENGINE_free(sdt_engine);
+//			sdt_engine = NULL;
+//		}
+//		printf("OpalTransportTCPS close sdt_engine ok \n");
+//	}
+//	else
+//		printf("OpalTransportTCPS close, sdt_engine = NULL\n");
+//  }
+
+  //added for huashen usbkey sm2, sm3, sm4 hardware api
 }
 
 
@@ -1715,7 +1783,7 @@ OpalTransport * OpalListenerTCPS::Accept(const PTimeInterval & timeout)
     delete socket;
     return NULL;
   }
-
+  printf("--bruce, OpalListenerTCPS::Accept\n");
   OpalTransportTCPS * transport = new OpalTransportTCPS(endpoint);
   PSSLChannel * ssl = new PSSLChannel(sslContext);
   if (!ssl->Accept(socket)) {

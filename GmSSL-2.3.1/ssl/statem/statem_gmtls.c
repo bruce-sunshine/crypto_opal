@@ -701,7 +701,7 @@ end:
 	return ret;
 }
 
-static int gmtls_construct_ske_sm2(SSL *s, unsigned char **p, int *l, int *al)
+static int gmtls_construct_ske_sm2(SSL *s, unsigned char **p, int *l, int *al)	//note, server key exchange
 {
 	int ret = 0;
 	EVP_PKEY *pkey;
@@ -805,7 +805,7 @@ end:
 	return ret;
 }
 
-static int gmtls_process_ske_sm2(SSL *s, PACKET *pkt, int *al)
+static int gmtls_process_ske_sm2(SSL *s, PACKET *pkt, int *al)		//note, construct server key exchange
 {
 	int ret = 0;
 	EVP_PKEY *pkey;
@@ -1384,7 +1384,7 @@ MSG_PROCESS_RETURN gmtls_process_client_certificate(SSL *s, PACKET *pkt)
 
 // SM2密钥交换实际上不仅仅
 // 实际上还需要知道我是客户端还是服务器
-static int gmtls_sm2_derive(SSL *s, EVP_PKEY *privkey, EVP_PKEY *pubkey, int initiator)
+static int gmtls_sm2_derive(SSL *s, EVP_PKEY *privkey, EVP_PKEY *pubkey, int initiator)		//note , sm2 key exchange, added by bruce
 {
 	int ret = 0;
 	EC_KEY *peer_ephem;

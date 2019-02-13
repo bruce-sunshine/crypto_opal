@@ -517,15 +517,15 @@ ULONG DEVAPI SKF_GenRandom(
 	return SAR_OK;
 }
 
-ULONG DEVAPI SKF_GenExtRSAKey(
-	DEVHANDLE hDev,
-	ULONG ulBitsLen,
-	RSAPRIVATEKEYBLOB *pBlob)
-{
-	if (!pBlob)
-		return SAR_INVALIDPARAMERR;
-	return SAR_OK;
-}
+//ULONG DEVAPI SKF_GenExtRSAKey(				//changed by bruce, 0114, for hangye sd api
+//	DEVHANDLE hDev,
+//	ULONG ulBitsLen,
+//	RSAPRIVATEKEYBLOB *pBlob)
+//{
+//	if (!pBlob)
+//		return SAR_INVALIDPARAMERR;
+//	return SAR_OK;
+//}
 
 ULONG DEVAPI SKF_GenRSAKeyPair(
 	HCONTAINER hContainer,
@@ -587,33 +587,33 @@ ULONG DEVAPI SKF_RSAExportSessionKey(
 	return SAR_OK;
 }
 
-ULONG DEVAPI SKF_ExtRSAPubKeyOperation(
-	DEVHANDLE hDev,
-	RSAPUBLICKEYBLOB *pRSAPubKeyBlob,
-	BYTE *pbInput,
-	ULONG ulInputLen,
-	BYTE *pbOutput,
-	ULONG *pulOutputLen)
-{
-	if (!pulOutputLen)
-		return SAR_INVALIDPARAMERR;
-	*pulOutputLen = 2048/8;
-	return SAR_OK;
-}
+//ULONG DEVAPI SKF_ExtRSAPubKeyOperation(		//changed by bruce, 0114, for hangye sd api
+//	DEVHANDLE hDev,
+//	RSAPUBLICKEYBLOB *pRSAPubKeyBlob,
+//	BYTE *pbInput,
+//	ULONG ulInputLen,
+//	BYTE *pbOutput,
+//	ULONG *pulOutputLen)
+//{
+//	if (!pulOutputLen)
+//		return SAR_INVALIDPARAMERR;
+//	*pulOutputLen = 2048/8;
+//	return SAR_OK;
+//}
 
-ULONG DEVAPI SKF_ExtRSAPriKeyOperation(
-	DEVHANDLE hDev,
-	RSAPRIVATEKEYBLOB *pRSAPriKeyBlob,
-	BYTE *pbInput,
-	ULONG ulInputLen,
-	BYTE *pbOutput,
-	ULONG *pulOutputLen)
-{
-	if (!pulOutputLen)
-		return SAR_INVALIDPARAMERR;
-	*pulOutputLen = 2048/8;
-	return SAR_OK;
-}
+//ULONG DEVAPI SKF_ExtRSAPriKeyOperation(		//changed by bruce, 0114, for hangye sd api
+//	DEVHANDLE hDev,
+//	RSAPRIVATEKEYBLOB *pRSAPriKeyBlob,
+//	BYTE *pbInput,
+//	ULONG ulInputLen,
+//	BYTE *pbOutput,
+//	ULONG *pulOutputLen)
+//{
+//	if (!pulOutputLen)
+//		return SAR_INVALIDPARAMERR;
+//	*pulOutputLen = 2048/8;
+//	return SAR_OK;
+//}
 
 ULONG DEVAPI SKF_GenECCKeyPair(
 	HCONTAINER hContainer,

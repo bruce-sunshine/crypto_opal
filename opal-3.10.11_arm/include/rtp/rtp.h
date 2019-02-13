@@ -48,6 +48,11 @@
 #define gaoshaobo 1
 #define bruce	0
 
+//extern "C"
+//{
+//#include "./crypt_bruce/sdt_skf_hy_sd.h"
+//}
+
 #if gaoshaobo
 /**********gaoshaobo for srtp*************/
 

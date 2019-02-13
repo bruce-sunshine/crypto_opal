@@ -84,7 +84,7 @@ int ENGINE_init(ENGINE *e)
         ENGINEerr(ENGINE_F_ENGINE_INIT, ERR_R_MALLOC_FAILURE);
         return 0;
     }
-    CRYPTO_THREAD_write_lock(global_engine_lock);
+    CRYPTO_THREAD_write_lock(global_engine_lock);	//note, bruce, wr lock
     ret = engine_unlocked_init(e);
     CRYPTO_THREAD_unlock(global_engine_lock);
     return ret;

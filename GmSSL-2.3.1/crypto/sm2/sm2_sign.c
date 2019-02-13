@@ -480,13 +480,7 @@ ECDSA_SIG *SM2_do_sign_ex(const unsigned char *dgst, int dgstlen,
 
 ECDSA_SIG *SM2_do_sign(const unsigned char *dgst, int dgstlen, EC_KEY *ec_key)
 {
-	ENGINE *sdt_engine = ENGINE_by_id("sdt_skf_engine");		//added by bruce, for add sm2 hw api
-	if(sdt_engine == NULL)
-	{
-		return SM2_do_sign_ex(dgst, dgstlen, NULL, NULL, ec_key);
-	}
-	else
-		return SM2_do_sign_ex(dgst, dgstlen, NULL, NULL, ec_key);
+	return SM2_do_sign_ex(dgst, dgstlen, NULL, NULL, ec_key);
 }
 
 int SM2_do_verify(const unsigned char *dgst, int dgstlen,
@@ -503,20 +497,9 @@ int SM2_sign_ex(int type, const unsigned char *dgst, int dgstlen,
 
 	RAND_seed(dgst, dgstlen);
 
-	ENGINE *sdt_engine = ENGINE_by_id("sdt_skf_engine");		//added by bruce, for add sm2 hw api
-	if(sdt_engine == NULL)
-	{
-		if (!(s = SM2_do_sign_ex(dgst, dgstlen, k, x, ec_key))) {
-			*siglen = 0;
-			return 0;
-		}
-	}
-	else
-	{
-		if (!(s = SM2_do_sign_ex(dgst, dgstlen, k, x, ec_key))) {	//changed by bruce, because of bug of ECDSA_SIG_new_from_ECCSIGNATUREBLOB, 0927
-			*siglen = 0;
-			return 0;
-		}
+	if (!(s = SM2_do_sign_ex(dgst, dgstlen, k, x, ec_key))) {	//changed by bruce, because of bug of ECDSA_SIG_new_from_ECCSIGNATUREBLOB, 0927
+		*siglen = 0;
+		return 0;
 	}
 
 	*siglen = i2d_ECDSA_SIG(s, &sig);
@@ -551,11 +534,8 @@ int SM2_verify(int type, const unsigned char *dgst, int dgstlen,		//note, bruce,
 		goto err;
 	}
 
-	ENGINE *sdt_engine = ENGINE_by_id("sdt_skf_engine");	//added by bruce, for add sm2 hw api
-	if(sdt_engine == NULL)
-		ret = SM2_do_verify(dgst, dgstlen, s, ec_key);
-	else
-		ret = SM2_do_verify(dgst, dgstlen, s, ec_key);
+	ret = SM2_do_verify(dgst, dgstlen, s, ec_key);
+
 err:
 	if (derlen > 0) {
 		OPENSSL_cleanse(der, derlen);

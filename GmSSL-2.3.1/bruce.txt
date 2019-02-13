@@ -1,0 +1,8 @@
+github qa:
+
+
+GmSSL的GMTLS测试方式如下：
+gmssl s_server -gmtls -accept port -cert sign.pem -key signkey.pem -dcert enc.pem -dkey enckey.pem -msg -debug
+gmssl s_client -gmtls -connect ip:port -msg -debug
+我觉得你需要看一下GM/T 0009的9.6密钥协商部分，SM2的密钥协商中有四组密钥对参与计算，当然你可以一组使用两次参与计算，这样就需要两组密钥对，
+应该能达到你的预期要求。如果使用四组不同密钥对，客户端就需要发送证书进行双向认证。

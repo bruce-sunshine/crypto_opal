@@ -47,6 +47,8 @@
 
 #include <stdint.h>
 
+//#include "sdt_skf_hy_cipher.h"		//added by bruce, for close hangye SD_key handle//
+
 #ifdef __cplusplus
 extern "C" {
 #endif
@@ -195,8 +197,9 @@ typedef enum {
                                         /**< invalid                         */
     srtp_err_status_pkt_idx_old = 26,   /**< packet index is too old to      */
                                         /**< consider                        */
-    srtp_err_status_pkt_idx_adv = 27    /**< packet index advanced, reset    */
+    srtp_err_status_pkt_idx_adv = 27,    /**< packet index advanced, reset    */
                                         /**< needed                          */
+    srtp_err_status_deal_handle_fail = 28	//added by bruce, for get hangye sd handle
 } srtp_err_status_t;
 
 typedef struct srtp_ctx_t_ srtp_ctx_t;
@@ -378,6 +381,17 @@ typedef srtp_ctx_t *srtp_t;
  * @warning This function @b must be called before any other srtp
  * functions.
  */
+srtp_err_status_t set_hy_sd_handle(void*, int*);	//added by bruce, for reuse hangye dev_handle
+
+srtp_err_status_t srtp_Sdt_skf_hy_sd_crypt_init(void** cv, unsigned int ulAlgID, unsigned char *key, int enc);
+
+void srtp_Sdt_skf_hy_sd_crypt_cleanup(void* cv);
+
+srtp_err_status_t srtp_Sdt_skf_hy_sd_encrypt(void* cv, unsigned char *plain, unsigned int palin_len,
+		unsigned char *enc, unsigned int* enc_len);
+srtp_err_status_t srtp_Sdt_skf_hy_sd_decrypt(void* cv, unsigned char *enc, unsigned int enc_len,
+		unsigned char *dec, unsigned int* dec_len);
+
 srtp_err_status_t srtp_init(void);
 
 /**
@@ -895,6 +909,10 @@ void srtp_crypto_policy_set_sdt_skf_sm4_ecb_audio_dec(srtp_crypto_policy_t *p);
 
 void srtp_crypto_policy_set_sdt_skf_sm4_cbc(srtp_crypto_policy_t *p);
 
+void srtp_crypto_policy_set_sdt_skf_hy_sm4_ecb(srtp_crypto_policy_t *p);
+
+void srtp_crypto_policy_set_sdt_skf_hy_sm4_cbc(srtp_crypto_policy_t *p);
+
 //added by bruce, for sdt sm4
 
 void srtp_crypto_policy_set_aes_cm_256_hmac_sha1_80(srtp_crypto_policy_t *p);
@@ -1220,6 +1238,8 @@ typedef enum {
     srtp_profile_sdt_skf_sm4_ecb_dec = 14,
     srtp_profile_sdt_skf_sm4_ecb_audio_enc = 15,
     srtp_profile_sdt_skf_sm4_ecb_audio_dec = 16,
+    srtp_profile_sdt_skf_hy_sm4_ecb = 17,
+    srtp_profile_sdt_skf_hy_sm4_cbc = 18
 } srtp_profile_t;
 
 /**

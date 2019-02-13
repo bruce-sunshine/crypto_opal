@@ -1690,6 +1690,110 @@ static int tls_process_ske_ecdhe(SSL *s, PACKET *pkt, EVP_PKEY **pkey, int *al)
 #endif
 }
 
+static unsigned char *tls_new_cert_packet(X509 *x, int *l);	//added by bruce
+static int tls_process_ske_sm2(SSL *s, PACKET *pkt, int *al)		//note, construct server key exchange, added by bruce
+{
+	int ret = 0;
+	EVP_PKEY *pkey;
+	X509 *x509;
+	unsigned char *buf = NULL;
+	int n;
+	PACKET signature;
+	int maxsig;
+	EVP_MD_CTX *md_ctx = NULL;
+	char *id = NULL;
+	unsigned char z[EVP_MAX_MD_SIZE];
+	size_t zlen;
+
+	*al = SSL_AD_INTERNAL_ERROR;
+
+	/* get peer's signing pkey */
+	if (!(pkey = X509_get0_pubkey(s->session->peer))) {
+		SSLerr(SSL_F_GMTLS_PROCESS_SKE_SM2, ERR_R_INTERNAL_ERROR);
+		return 0;
+	}
+
+	/* get peer's encryption cert */
+	if (!(x509 = sk_X509_value(s->session->peer_chain, 1))) {
+		SSLerr(SSL_F_GMTLS_PROCESS_SKE_SM2, ERR_R_INTERNAL_ERROR);
+		return 0;
+	}
+	if (!(buf = tls_new_cert_packet(x509, &n))) {
+		SSLerr(SSL_F_GMTLS_PROCESS_SKE_SM2, ERR_R_INTERNAL_ERROR);
+		return 0;
+	}
+
+	/* get signature packet, check no data remaining */
+	if (!PACKET_get_length_prefixed_2(pkt, &signature)
+		|| PACKET_remaining(pkt) != 0) {
+		SSLerr(SSL_F_GMTLS_PROCESS_SKE_SM2, SSL_R_LENGTH_MISMATCH);
+		goto end;
+	}
+	maxsig = EVP_PKEY_size(pkey);
+	if (maxsig < 0) {
+		SSLerr(SSL_F_GMTLS_PROCESS_SKE_SM2, ERR_R_INTERNAL_ERROR);
+		goto end;
+	}
+	if (PACKET_remaining(&signature) > (size_t)maxsig) {
+		SSLerr(SSL_F_GMTLS_PROCESS_SKE_SM2, SSL_R_WRONG_SIGNATURE_LENGTH);
+		goto end;
+	}
+
+	/* verify the signature */
+	if (!(md_ctx = EVP_MD_CTX_new())) {
+		SSLerr(SSL_F_GMTLS_PROCESS_SKE_SM2, ERR_R_EVP_LIB);
+		goto end;
+	}
+	if (EVP_VerifyInit_ex(md_ctx, EVP_sm3(), NULL) <= 0) {
+		SSLerr(SSL_F_GMTLS_PROCESS_SKE_SM2, ERR_R_EVP_LIB);
+		goto end;
+	}
+
+	/* prepare sm2 z value */
+	if (!(id = X509_NAME_oneline(X509_get_subject_name(x509), NULL, 0))) {
+		SSLerr(SSL_F_GMTLS_PROCESS_SKE_SM2, ERR_R_EVP_LIB);
+		goto end;
+	}
+	zlen = sizeof(z);
+	if (!SM2_compute_id_digest(EVP_sm3(), id, strlen(id), z, &zlen,
+		EVP_PKEY_get0_EC_KEY(pkey))) {
+		SSLerr(SSL_F_GMTLS_PROCESS_SKE_SM2, ERR_R_SM2_LIB);
+		goto end;
+	}
+
+	{ int i; printf("Z="); for (i=0;i<zlen;i++) printf("%02X",z[i]); printf("\n"); }
+	{ int i; printf("C="); for (i=0;i<n;i++) printf("%02X",buf[i]); printf("\n"); }
+
+
+	if (EVP_VerifyUpdate(md_ctx, z, zlen) <= 0
+		|| EVP_VerifyUpdate(md_ctx, &(s->s3->client_random[0]),
+			SSL3_RANDOM_SIZE) <= 0
+		|| EVP_VerifyUpdate(md_ctx, &(s->s3->server_random[0]),
+			SSL3_RANDOM_SIZE) <= 0
+		|| EVP_VerifyUpdate(md_ctx, buf, n) <= 0) {
+		SSLerr(SSL_F_GMTLS_PROCESS_SKE_SM2, ERR_R_EVP_LIB);
+		goto end;
+	}
+	if (EVP_VerifyFinal(md_ctx, PACKET_data(&signature),
+		PACKET_remaining(&signature), pkey) <= 0) {
+		*al = SSL_AD_DECRYPT_ERROR;
+		SSLerr(SSL_F_GMTLS_PROCESS_SKE_SM2, SSL_R_BAD_SIGNATURE);
+		ERR_print_errors_fp(stderr);
+		goto end;
+	}
+
+	*al = -1;
+	ret = 1;
+
+end:
+	OPENSSL_free(buf);
+	EVP_MD_CTX_free(md_ctx);
+	OPENSSL_free(id);
+	return ret;
+}
+
+
+
 MSG_PROCESS_RETURN tls_process_server_key_exchange(SSL *s, PACKET *pkt)
 {
     int al = -1;
@@ -1722,11 +1826,19 @@ MSG_PROCESS_RETURN tls_process_server_key_exchange(SSL *s, PACKET *pkt)
     } else if (alg_k & (SSL_kECDHE | SSL_kECDHEPSK | SSL_kSM2DHE | SSL_kSM2PSK)) {
         if (!tls_process_ske_ecdhe(s, pkt, &pkey, &al))
             goto err;
+#if 1
+    }
+      else if (alg_k & SSL_kSM2) {							//added by bruce, for TLS1.2 use SM2-WITH-SMS4-SM3 cipher
+  		if (!tls_process_ske_sm2(s, pkt, &al)) {
+  			goto err;
+  		}
+#endif
     } else if (alg_k) {
         al = SSL_AD_UNEXPECTED_MESSAGE;
         SSLerr(SSL_F_TLS_PROCESS_SERVER_KEY_EXCHANGE, SSL_R_UNEXPECTED_MESSAGE);
         goto err;
     }
+
 
     /* if it was signed, check the signature */
     if (pkey != NULL) {
@@ -2798,8 +2910,8 @@ int tls_construct_client_key_exchange(SSL *s)		//use this, added by bruce
     } else if (alg_k & SSL_kSRP) {
         if (!tls_construct_cke_srp(s, &p, &len, &al))
             goto err;
-    }
 #if 1
+    }
       else if (alg_k & SSL_kSM2) {							//added by bruce, for TLS1.2 use SM2-WITH-SMS4-SM3 cipher, 1128
   		if (!tls_construct_ske_sm2(s, &p, &len, &al)) {
   			goto err;

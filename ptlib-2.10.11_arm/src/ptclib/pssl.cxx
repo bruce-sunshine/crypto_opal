@@ -849,6 +849,44 @@ void PSSLContext::Construct(Method method, const void * sessionId, PINDEX idSize
       break;
   }
 
+#if 0
+	OpenSSL_add_all_algorithms();
+
+	ERR_load_crypto_strings();
+
+	ENGINE_load_dynamic();
+
+	sdt_engine = ENGINE_by_id("sdt_skf_engine");	//use huashen usbkey for ssl hard encrypt/decrypt
+
+	if( sdt_engine == NULL )
+	{
+		printf("SSL Could not Load sdt_skf_engine, use soft algorithm !\n");
+	}
+	else
+	{
+		printf("SSL sdt_skf_engine successfully loaded\n");
+
+		int init_res = ENGINE_init(sdt_engine);
+		printf("Engine name: %s init result : %d \n", ENGINE_get_name(sdt_engine), init_res);
+		int er;
+		er = ENGINE_set_default_digests(sdt_engine);
+		printf("ENGINE SETTING DEFAULT DIGESTS %d\n",er);
+
+		er = ENGINE_set_default_ciphers(sdt_engine);
+		printf("ENGINE SETTING DEFAULT ciphers %d\n",er);
+
+		er = ENGINE_set_default_EC(sdt_engine);
+		printf("ENGINE SETTING DEFAULT EC %d\n",er);
+
+		er = ENGINE_set_default_pkey_meths(sdt_engine);
+		printf("ENGINE SETTING DEFAULT PKEY METHOD %d\n",er);
+
+		er = ENGINE_set_default_RAND(sdt_engine);
+		printf("ENGINE SETTING DEFAULT RAND %d\n",er);
+	}
+#endif
+
+
   context  = SSL_CTX_new(meth);
   if (context == NULL)
     PSSLAssert("Error creating context: ");
@@ -878,6 +916,16 @@ void PSSLContext::Construct(Method method, const void * sessionId, PINDEX idSize
 PSSLContext::~PSSLContext()
 {
   SSL_CTX_free(context);
+  	  	  	  	  	  	  //added by bruce, for sdt engine
+#if 0
+	if( sdt_engine != NULL )
+	{
+		ENGINE_finish(sdt_engine);
+		if(sdt_engine)
+			ENGINE_free(sdt_engine);
+	}
+#endif
+
 }
 
 

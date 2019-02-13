@@ -113,14 +113,14 @@ SKF_METHOD *SKF_METHOD_load_library(const char *so_path)
 	SKF_METHOD_BIND_FUNCTION(ExportCertificate);
 	SKF_METHOD_BIND_FUNCTION(ExportPublicKey);
 	SKF_METHOD_BIND_FUNCTION(GenRandom);
-	SKF_METHOD_BIND_FUNCTION(GenExtRSAKey);
+//	SKF_METHOD_BIND_FUNCTION(GenExtRSAKey);		//changed by bruce, 0114, for hangye sd api
 	SKF_METHOD_BIND_FUNCTION(GenRSAKeyPair);
 	SKF_METHOD_BIND_FUNCTION(ImportRSAKeyPair);
 	SKF_METHOD_BIND_FUNCTION(RSASignData);
 	SKF_METHOD_BIND_FUNCTION(RSAVerify);
 	SKF_METHOD_BIND_FUNCTION(RSAExportSessionKey);
-	SKF_METHOD_BIND_FUNCTION(ExtRSAPubKeyOperation);
-	SKF_METHOD_BIND_FUNCTION(ExtRSAPriKeyOperation);
+//	SKF_METHOD_BIND_FUNCTION(ExtRSAPubKeyOperation);	//changed by bruce, 0114, for hangye sd api
+//	SKF_METHOD_BIND_FUNCTION(ExtRSAPriKeyOperation);	//changed by bruce, 0114, for hangye sd api
 	SKF_METHOD_BIND_FUNCTION(GenECCKeyPair);
 	SKF_METHOD_BIND_FUNCTION(ImportECCKeyPair);
 	SKF_METHOD_BIND_FUNCTION(ECCSignData);

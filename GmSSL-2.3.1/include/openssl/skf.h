@@ -355,10 +355,10 @@ ULONG DEVAPI SKF_GenRSAKeyPair(
 	ULONG ulBitsLen,
 	RSAPUBLICKEYBLOB *pBlob);
 
-ULONG DEVAPI SKF_GenExtRSAKey(
-	DEVHANDLE hDev,
-	ULONG ulBitsLen,
-	RSAPRIVATEKEYBLOB *pBlob);
+//ULONG DEVAPI SKF_GenExtRSAKey(	//changed by bruce, 0114, for hangye sd api
+//	DEVHANDLE hDev,
+//	ULONG ulBitsLen,
+//	RSAPRIVATEKEYBLOB *pBlob);
 
 ULONG DEVAPI SKF_ImportRSAKeyPair(
 	HCONTAINER hContainer,
@@ -391,21 +391,21 @@ ULONG DEVAPI SKF_RSAExportSessionKey(
 	ULONG *pulDataLen,
 	HANDLE *phSessionKey);
 
-ULONG DEVAPI SKF_ExtRSAPubKeyOperation(
-	DEVHANDLE hDev,
-	RSAPUBLICKEYBLOB *pRSAPubKeyBlob,
-	BYTE *pbInput,
-	ULONG ulInputLen,
-	BYTE *pbOutput,
-	ULONG *pulOutputLen);
+//ULONG DEVAPI SKF_ExtRSAPubKeyOperation(	//changed by bruce, 0114, for hangye sd api
+//	DEVHANDLE hDev,
+//	RSAPUBLICKEYBLOB *pRSAPubKeyBlob,
+//	BYTE *pbInput,
+//	ULONG ulInputLen,
+//	BYTE *pbOutput,
+//	ULONG *pulOutputLen);
 
-ULONG DEVAPI SKF_ExtRSAPriKeyOperation(
-	DEVHANDLE hDev,
-	RSAPRIVATEKEYBLOB *pRSAPriKeyBlob,
-	BYTE *pbInput,
-	ULONG ulInputLen,
-	BYTE *pbOutput,
-	ULONG *pulOutputLen);
+//ULONG DEVAPI SKF_ExtRSAPriKeyOperation(	//changed by bruce, 0114, for hangye sd api
+//	DEVHANDLE hDev,
+//	RSAPRIVATEKEYBLOB *pRSAPriKeyBlob,
+//	BYTE *pbInput,
+//	ULONG ulInputLen,
+//	BYTE *pbOutput,
+//	ULONG *pulOutputLen);
 
 ULONG DEVAPI SKF_GenECCKeyPair(
 	HCONTAINER hContainer,
@@ -608,6 +608,11 @@ ULONG DEVAPI SKF_MacFinal(
 ULONG DEVAPI SKF_CloseHandle(
 	HANDLE hHandle);
 
+
+//==============================SDT_MNG======================================================	//added by bruce, 0114, for hangye sd card engine
+int SDT_Init_Devinfo(LPSTR szName, LPSTR szSerial);//初始化设备信息，仅用作管理工具接口
+
+int SDT_Set_AndroidPath(LPSTR szPath);
 
 #define SAR_OK				0x00000000
 #define SAR_FAIL			0x0A000001

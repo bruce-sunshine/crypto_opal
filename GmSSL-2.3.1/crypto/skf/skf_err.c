@@ -61,15 +61,15 @@ static ERR_STRING_DATA SKF_str_functs[] = {
     {ERR_FUNC(SKF_F_SKF_EXTECCENCRYPT), "SKF_ExtECCEncrypt"},
     {ERR_FUNC(SKF_F_SKF_EXTECCSIGN), "SKF_ExtECCSign"},
     {ERR_FUNC(SKF_F_SKF_EXTECCVERIFY), "SKF_ExtECCVerify"},
-    {ERR_FUNC(SKF_F_SKF_EXTRSAPRIKEYOPERATION), "SKF_ExtRSAPriKeyOperation"},
-    {ERR_FUNC(SKF_F_SKF_EXTRSAPUBKEYOPERATION), "SKF_ExtRSAPubKeyOperation"},
+//    {ERR_FUNC(SKF_F_SKF_EXTRSAPRIKEYOPERATION), "SKF_ExtRSAPriKeyOperation"},		//changed by bruce, 0114, for hangye sd api
+//    {ERR_FUNC(SKF_F_SKF_EXTRSAPUBKEYOPERATION), "SKF_ExtRSAPubKeyOperation"},		//changed by bruce, 0114, for hangye sd api
     {ERR_FUNC(SKF_F_SKF_GENECCKEYPAIR), "SKF_GenECCKeyPair"},
     {ERR_FUNC(SKF_F_SKF_GENERATEAGREEMENTDATAANDKEYWITHECC),
      "SKF_GenerateAgreementDataAndKeyWithECC"},
     {ERR_FUNC(SKF_F_SKF_GENERATEAGREEMENTDATAWITHECC),
      "SKF_GenerateAgreementDataWithECC"},
     {ERR_FUNC(SKF_F_SKF_GENERATEKEYWITHECC), "SKF_GenerateKeyWithECC"},
-    {ERR_FUNC(SKF_F_SKF_GENEXTRSAKEY), "SKF_GenExtRSAKey"},
+//    {ERR_FUNC(SKF_F_SKF_GENEXTRSAKEY), "SKF_GenExtRSAKey"},					//changed by bruce, 0114, for hangye sd api
     {ERR_FUNC(SKF_F_SKF_GENRANDOM), "SKF_GenRandom"},
     {ERR_FUNC(SKF_F_SKF_GENRSAKEYPAIR), "SKF_GenRSAKeyPair"},
     {ERR_FUNC(SKF_F_SKF_GETCONTAINERTYPE), "SKF_GetContainerType"},

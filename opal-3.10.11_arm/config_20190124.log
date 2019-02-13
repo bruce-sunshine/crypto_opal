@@ -207,7 +207,122 @@ configure:4954: $? = 0
 configure:5013: result: yes
 configure:5133: checking linkable PTLib
 configure:5162: arm-arago-linux-gnueabi-g++ -o conftest -I/usr/local/srtp2_arm/include -Wall -Wextra -Wstrict-aliasing -Wfloat-equal -Wno-comment -Wno-unused -Winit-self -Wno-missing-field-initializers -DPTRACING=1 -D_REENTRANT -fno-exceptions -I/usr/local/include -I/usr/local/Gmssl_arm/include   -felide-constructors -Wreorder  -L/usr/local/srtp2_arm/lib conftest.cpp -L/usr/local/lib -lpt   >&5
-/usr/local/dvrrdk/DVRRDK_04.00.00.03/ti_tools/cgt_a8/arago/linux-devkit/bin/../lib/gcc/arm-arago-linux-gnueabi/4.5.3/../../../../arm-arago-linux-gnueabi/bin/ld: cannot find -lpt
+/usr/local/dvrrdk/DVRRDK_04.00.00.03/ti_tools/cgt_a8/arago/linux-devkit/bin/../lib/gcc/arm-arago-linux-gnueabi/4.5.3/../../../../arm-arago-linux-gnueabi/bin/ld: warning: libssl.so.1.1, needed by /usr/local/lib/libpt.so, not found (try using -rpath or -rpath-link)
+/usr/local/dvrrdk/DVRRDK_04.00.00.03/ti_tools/cgt_a8/arago/linux-devkit/bin/../lib/gcc/arm-arago-linux-gnueabi/4.5.3/../../../../arm-arago-linux-gnueabi/bin/ld: warning: libcrypto.so.1.1, needed by /usr/local/lib/libpt.so, not found (try using -rpath or -rpath-link)
+/usr/local/lib/libpt.so: undefined reference to `BIO_ctrl@OPENSSL_1_1_0d'
+/usr/local/lib/libpt.so: undefined reference to `EC_KEY_get0_group@OPENSSL_1_1_0d'
+/usr/local/lib/libpt.so: undefined reference to `X509_NAME_oneline@OPENSSL_1_1_0d'
+/usr/local/lib/libpt.so: undefined reference to `BIO_set_data@OPENSSL_1_1_0d'
+/usr/local/lib/libpt.so: undefined reference to `BIO_meth_new@OPENSSL_1_1_0d'
+/usr/local/lib/libpt.so: undefined reference to `SSL_CTX_load_verify_locations@OPENSSL_1_1_0d'
+/usr/local/lib/libpt.so: undefined reference to `SSL_CTX_set_verify@OPENSSL_1_1_0d'
+/usr/local/lib/libpt.so: undefined reference to `SSL_CTX_new@OPENSSL_1_1_0d'
+/usr/local/lib/libpt.so: undefined reference to `SHA1_Init@OPENSSL_1_1_0d'
+/usr/local/lib/libpt.so: undefined reference to `X509_PUBKEY_get@OPENSSL_1_1_0d'
+/usr/local/lib/libpt.so: undefined reference to `ERR_put_error@OPENSSL_1_1_0d'
+/usr/local/lib/libpt.so: undefined reference to `X509_dup@OPENSSL_1_1_0d'
+/usr/local/lib/libpt.so: undefined reference to `SSL_get_version@OPENSSL_1_1_0d'
+/usr/local/lib/libpt.so: undefined reference to `BIO_set_flags@OPENSSL_1_1_0d'
+/usr/local/lib/libpt.so: undefined reference to `BN_bin2bn@OPENSSL_1_1_0d'
+/usr/local/lib/libpt.so: undefined reference to `BIO_meth_set_ctrl@OPENSSL_1_1_0d'
+/usr/local/lib/libpt.so: undefined reference to `OBJ_sn2nid@OPENSSL_1_1_0d'
+/usr/local/lib/libpt.so: undefined reference to `SSL_CTX_set_default_verify_paths@OPENSSL_1_1_0d'
+/usr/local/lib/libpt.so: undefined reference to `BIO_meth_set_create@OPENSSL_1_1_0d'
+/usr/local/lib/libpt.so: undefined reference to `X509_PUBKEY_new@OPENSSL_1_1_0d'
+/usr/local/lib/libpt.so: undefined reference to `BIO_meth_set_destroy@OPENSSL_1_1_0d'
+/usr/local/lib/libpt.so: undefined reference to `DH_set0_pqg@OPENSSL_1_1_0d'
+/usr/local/lib/libpt.so: undefined reference to `SSL_CTX_set_quiet_shutdown@OPENSSL_1_1_0d'
+/usr/local/lib/libpt.so: undefined reference to `SSL_shutdown@OPENSSL_1_1_0d'
+/usr/local/lib/libpt.so: undefined reference to `X509_set_version@OPENSSL_1_1_0d'
+/usr/local/lib/libpt.so: undefined reference to `SSL_connect@OPENSSL_1_1_0d'
+/usr/local/lib/libpt.so: undefined reference to `SSL_CIPHER_get_name@OPENSSL_1_1_0d'
+/usr/local/lib/libpt.so: undefined reference to `PEM_read_bio_DHparams@OPENSSL_1_1_0d'
+/usr/local/lib/libpt.so: undefined reference to `i2d_PrivateKey@OPENSSL_1_1_0d'
+/usr/local/lib/libpt.so: undefined reference to `SSL_get_current_cipher@OPENSSL_1_1_0d'
+/usr/local/lib/libpt.so: undefined reference to `SSL_get_error@OPENSSL_1_1_0d'
+/usr/local/lib/libpt.so: undefined reference to `EC_KEY_generate_key@OPENSSL_1_1_0d'
+/usr/local/lib/libpt.so: undefined reference to `OpenSSL_version@OPENSSL_1_1_0d'
+/usr/local/lib/libpt.so: undefined reference to `X509_NAME_free@OPENSSL_1_1_0d'
+/usr/local/lib/libpt.so: undefined reference to `CRYPTO_num_locks@OPENSSL_1_1_0d'
+/usr/local/lib/libpt.so: undefined reference to `PEM_write_bio_PrivateKey@OPENSSL_1_1_0d'
+/usr/local/lib/libpt.so: undefined reference to `i2d_PrivateKey_bio@OPENSSL_1_1_0d'
+/usr/local/lib/libpt.so: undefined reference to `SSL_write@OPENSSL_1_1_0d'
+/usr/local/lib/libpt.so: undefined reference to `SHA1_Update@OPENSSL_1_1_0d'
+/usr/local/lib/libpt.so: undefined reference to `SSL_read@OPENSSL_1_1_0d'
+/usr/local/lib/libpt.so: undefined reference to `SSL_CTX_use_certificate@OPENSSL_1_1_0d'
+/usr/local/lib/libpt.so: undefined reference to `RAND_seed@OPENSSL_1_1_0d'
+/usr/local/lib/libpt.so: undefined reference to `BIO_new@OPENSSL_1_1_0d'
+/usr/local/lib/libpt.so: undefined reference to `SSL_pending@OPENSSL_1_1_0d'
+/usr/local/lib/libpt.so: undefined reference to `SSL_use_certificate@OPENSSL_1_1_0d'
+/usr/local/lib/libpt.so: undefined reference to `X509_STORE_CTX_get_current_cert@OPENSSL_1_1_0d'
+/usr/local/lib/libpt.so: undefined reference to `d2i_DHparams@OPENSSL_1_1_0d'
+/usr/local/lib/libpt.so: undefined reference to `X509_getm_notAfter@OPENSSL_1_1_0d'
+/usr/local/lib/libpt.so: undefined reference to `DH_new@OPENSSL_1_1_0d'
+/usr/local/lib/libpt.so: undefined reference to `BIO_set_init@OPENSSL_1_1_0d'
+/usr/local/lib/libpt.so: undefined reference to `d2i_AutoPrivateKey@OPENSSL_1_1_0d'
+/usr/local/lib/libpt.so: undefined reference to `EVP_sm3@OPENSSL_1_1_0d'
+/usr/local/lib/libpt.so: undefined reference to `X509_set_subject_name@OPENSSL_1_1_0d'
+/usr/local/lib/libpt.so: undefined reference to `BIO_get_shutdown@OPENSSL_1_1_0d'
+/usr/local/lib/libpt.so: undefined reference to `EC_GROUP_set_asn1_flag@OPENSSL_1_1_0d'
+/usr/local/lib/libpt.so: undefined reference to `TLSv1_2_method@OPENSSL_1_1_0d'
+/usr/local/lib/libpt.so: undefined reference to `EC_KEY_new_by_curve_name@OPENSSL_1_1_0d'
+/usr/local/lib/libpt.so: undefined reference to `SSL_new@OPENSSL_1_1_0d'
+/usr/local/lib/libpt.so: undefined reference to `X509_get_subject_name@OPENSSL_1_1_0d'
+/usr/local/lib/libpt.so: undefined reference to `BIO_meth_set_write@OPENSSL_1_1_0d'
+/usr/local/lib/libpt.so: undefined reference to `BIO_get_init@OPENSSL_1_1_0d'
+/usr/local/lib/libpt.so: undefined reference to `X509_get_serialNumber@OPENSSL_1_1_0d'
+/usr/local/lib/libpt.so: undefined reference to `SSL_CTX_free@OPENSSL_1_1_0d'
+/usr/local/lib/libpt.so: undefined reference to `i2d_X509@OPENSSL_1_1_0d'
+/usr/local/lib/libpt.so: undefined reference to `SSL_set_bio@OPENSSL_1_1_0d'
+/usr/local/lib/libpt.so: undefined reference to `TLSv1_method@OPENSSL_1_1_0d'
+/usr/local/lib/libpt.so: undefined reference to `ASN1_INTEGER_set@OPENSSL_1_1_0d'
+/usr/local/lib/libpt.so: undefined reference to `BIO_meth_free@OPENSSL_1_1_0d'
+/usr/local/lib/libpt.so: undefined reference to `PEM_read_bio_PrivateKey@OPENSSL_1_1_0d'
+/usr/local/lib/libpt.so: undefined reference to `X509_PUBKEY_free@OPENSSL_1_1_0d'
+/usr/local/lib/libpt.so: undefined reference to `BIO_get_data@OPENSSL_1_1_0d'
+/usr/local/lib/libpt.so: undefined reference to `X509_new@OPENSSL_1_1_0d'
+/usr/local/lib/libpt.so: undefined reference to `i2d_X509_bio@OPENSSL_1_1_0d'
+/usr/local/lib/libpt.so: undefined reference to `OPENSSL_init_ssl@OPENSSL_1_1_0d'
+/usr/local/lib/libpt.so: undefined reference to `BIO_meth_set_puts@OPENSSL_1_1_0d'
+/usr/local/lib/libpt.so: undefined reference to `BIO_clear_flags@OPENSSL_1_1_0d'
+/usr/local/lib/libpt.so: undefined reference to `X509_NAME_new@OPENSSL_1_1_0d'
+/usr/local/lib/libpt.so: undefined reference to `OBJ_txt2nid@OPENSSL_1_1_0d'
+/usr/local/lib/libpt.so: undefined reference to `d2i_X509@OPENSSL_1_1_0d'
+/usr/local/lib/libpt.so: undefined reference to `EVP_PKEY_new@OPENSSL_1_1_0d'
+/usr/local/lib/libpt.so: undefined reference to `X509_set_issuer_name@OPENSSL_1_1_0d'
+/usr/local/lib/libpt.so: undefined reference to `d2i_X509_bio@OPENSSL_1_1_0d'
+/usr/local/lib/libpt.so: undefined reference to `SSL_CTX_set_cipher_list@OPENSSL_1_1_0d'
+/usr/local/lib/libpt.so: undefined reference to `ERR_peek_error@OPENSSL_1_1_0d'
+/usr/local/lib/libpt.so: undefined reference to `X509_PUBKEY_set@OPENSSL_1_1_0d'
+/usr/local/lib/libpt.so: undefined reference to `EVP_PKEY_assign@OPENSSL_1_1_0d'
+/usr/local/lib/libpt.so: undefined reference to `X509_gmtime_adj@OPENSSL_1_1_0d'
+/usr/local/lib/libpt.so: undefined reference to `BIO_s_file@OPENSSL_1_1_0d'
+/usr/local/lib/libpt.so: undefined reference to `X509_free@OPENSSL_1_1_0d'
+/usr/local/lib/libpt.so: undefined reference to `BIO_free@OPENSSL_1_1_0d'
+/usr/local/lib/libpt.so: undefined reference to `SSL_CTX_check_private_key@OPENSSL_1_1_0d'
+/usr/local/lib/libpt.so: undefined reference to `ASN1_d2i_bio@OPENSSL_1_1_0d'
+/usr/local/lib/libpt.so: undefined reference to `EVP_PKEY_free@OPENSSL_1_1_0d'
+/usr/local/lib/libpt.so: undefined reference to `PEM_read_bio_X509@OPENSSL_1_1_0d'
+/usr/local/lib/libpt.so: undefined reference to `X509_getm_notBefore@OPENSSL_1_1_0d'
+/usr/local/lib/libpt.so: undefined reference to `SSL_CTX_ctrl@OPENSSL_1_1_0d'
+/usr/local/lib/libpt.so: undefined reference to `SHA1_Final@OPENSSL_1_1_0d'
+/usr/local/lib/libpt.so: undefined reference to `SSL_CTX_use_PrivateKey@OPENSSL_1_1_0d'
+/usr/local/lib/libpt.so: undefined reference to `PEM_write_bio_X509@OPENSSL_1_1_0d'
+/usr/local/lib/libpt.so: undefined reference to `X509_set_pubkey@OPENSSL_1_1_0d'
+/usr/local/lib/libpt.so: undefined reference to `X509_sign@OPENSSL_1_1_0d'
+/usr/local/lib/libpt.so: undefined reference to `X509_STORE_CTX_get_error_depth@OPENSSL_1_1_0d'
+/usr/local/lib/libpt.so: undefined reference to `ERR_error_string@OPENSSL_1_1_0d'
+/usr/local/lib/libpt.so: undefined reference to `X509_NAME_add_entry_by_NID@OPENSSL_1_1_0d'
+/usr/local/lib/libpt.so: undefined reference to `SSL_CTX_set_session_id_context@OPENSSL_1_1_0d'
+/usr/local/lib/libpt.so: undefined reference to `DH_get0_pqg@OPENSSL_1_1_0d'
+/usr/local/lib/libpt.so: undefined reference to `SSL_accept@OPENSSL_1_1_0d'
+/usr/local/lib/libpt.so: undefined reference to `BIO_meth_set_gets@OPENSSL_1_1_0d'
+/usr/local/lib/libpt.so: undefined reference to `DH_free@OPENSSL_1_1_0d'
+/usr/local/lib/libpt.so: undefined reference to `d2i_PrivateKey_bio@OPENSSL_1_1_0d'
+/usr/local/lib/libpt.so: undefined reference to `SSL_set_verify@OPENSSL_1_1_0d'
+/usr/local/lib/libpt.so: undefined reference to `SSL_free@OPENSSL_1_1_0d'
+/usr/local/lib/libpt.so: undefined reference to `BIO_set_shutdown@OPENSSL_1_1_0d'
+/usr/local/lib/libpt.so: undefined reference to `BIO_meth_set_read@OPENSSL_1_1_0d'
 collect2: ld returned 1 exit status
 configure:5162: $? = 1
 configure: failed program was:
@@ -324,7 +439,6 @@ configure:5200: arm-arago-linux-gnueabi-g++ -o conftest -I/usr/local/srtp2_arm/i
 /usr/local/lib/libpt_d.so: undefined reference to `d2i_X509_bio@OPENSSL_1_1_0d'
 /usr/local/lib/libpt_d.so: undefined reference to `SSL_CTX_set_cipher_list@OPENSSL_1_1_0d'
 /usr/local/lib/libpt_d.so: undefined reference to `ERR_peek_error@OPENSSL_1_1_0d'
-/usr/local/lib/libpt_d.so: undefined reference to `SSL_export_keying_material@OPENSSL_1_1_0d'
 /usr/local/lib/libpt_d.so: undefined reference to `X509_PUBKEY_set@OPENSSL_1_1_0d'
 /usr/local/lib/libpt_d.so: undefined reference to `EVP_PKEY_assign@OPENSSL_1_1_0d'
 /usr/local/lib/libpt_d.so: undefined reference to `X509_gmtime_adj@OPENSSL_1_1_0d'
@@ -385,87 +499,47 @@ configure: failed program was:
 |   return 0;
 | }
 configure:5240: arm-arago-linux-gnueabi-g++ -o conftest -I/usr/local/srtp2_arm/include -Wall -Wextra -Wstrict-aliasing -Wfloat-equal -Wno-comment -Wno-unused -Winit-self -Wno-missing-field-initializers -DPTRACING=1 -D_REENTRANT -fno-exceptions -I/usr/local/include -I/usr/local/Gmssl_arm/include   -felide-constructors -Wreorder  -L/usr/local/srtp2_arm/lib conftest.cpp -L/usr/local/lib -L/usr/local/Gmssl_arm/lib -lpt_s -lpthread -lrt -lssl -lcrypto -lexpat -lresolv -ldl   >&5
-/usr/local/dvrrdk/DVRRDK_04.00.00.03/ti_tools/cgt_a8/arago/linux-devkit/bin/../lib/gcc/arm-arago-linux-gnueabi/4.5.3/../../../../arm-arago-linux-gnueabi/bin/ld: cannot find -lpt_s
-collect2: ld returned 1 exit status
-configure:5240: $? = 1
-configure: failed program was:
-| /* confdefs.h */
-| #define PACKAGE_NAME ""
-| #define PACKAGE_TARNAME ""
-| #define PACKAGE_VERSION ""
-| #define PACKAGE_STRING ""
-| #define PACKAGE_BUGREPORT ""
-| #define PACKAGE_URL ""
-| #define STDC_HEADERS 1
-| #define GCC_HAS_CLZ 1
-| #define OPAL_MAJOR 3
-| #define OPAL_MINOR 10
-| #define OPAL_BUILD 11
-| #define OPAL_VERSION "3.10.11"
-| /* end confdefs.h.  */
-| 
-|                             #include <ptbuildopts.h>
-|                             #include <ptlib.h>
-| int
-| main ()
-| {
-| 
-|                               PString str("");
-| 
-|   ;
-|   return 0;
-| }
-configure:5278: arm-arago-linux-gnueabi-g++ -o conftest -I/usr/local/srtp2_arm/include -Wall -Wextra -Wstrict-aliasing -Wfloat-equal -Wno-comment -Wno-unused -Winit-self -Wno-missing-field-initializers -DPTRACING=1 -D_REENTRANT -fno-exceptions -I/usr/local/include -I/usr/local/Gmssl_arm/include   -felide-constructors -Wreorder  -L/usr/local/srtp2_arm/lib conftest.cpp -L/usr/local/lib -L/usr/local/Gmssl_arm/lib -lpt_d_s -lpthread -lrt -lssl -lcrypto -lexpat -lresolv -ldl   >&5
-/usr/local/dvrrdk/DVRRDK_04.00.00.03/ti_tools/cgt_a8/arago/linux-devkit/bin/../lib/gcc/arm-arago-linux-gnueabi/4.5.3/../../../../arm-arago-linux-gnueabi/bin/ld: warning: libStcSkf.so, needed by /usr/local/Gmssl_arm/lib/libssl.so, not found (try using -rpath or -rpath-link)
-configure:5278: $? = 0
-configure:5289: result: debug, static
+configure:5240: $? = 0
+configure:5251: result: release, static
 configure:5319: checking where plugins are being installed
 configure:5353: result: /usr/local/lib/opal-3.10.11
 configure:5767: checking if debug build accepts -g3 -ggdb -O0
 configure:5782: result: yes
 configure:5793: checking ptlib version
 configure:5795: result: 2.10.11
-configure:5828: arm-arago-linux-gnueabi-g++ -o conftest -I/usr/local/srtp2_arm/include -Wall -Wextra -Wstrict-aliasing -Wfloat-equal -Wno-comment -Wno-unused -Winit-self -Wno-missing-field-initializers -DPTRACING=1 -D_REENTRANT -fno-exceptions -I/usr/local/include -I/usr/local/Gmssl_arm/include   -felide-constructors -Wreorder -fPIC -DPTRACING=1 -D_REENTRANT -fno-exceptions -I/usr/local/include -I/usr/local/Gmssl_arm/include   -felide-constructors -Wreorder  -L/usr/local/srtp2_arm/lib -DPTRACING=1 -D_REENTRANT -fno-exceptions -I/usr/local/include -I/usr/local/Gmssl_arm/include   conftest.cpp -lsrtp2 -L/usr/local/lib -L/usr/local/Gmssl_arm/lib -lpt_d_s -lpthread -lrt -lssl -lcrypto -lexpat -lresolv -ldl   >&5
-/usr/local/dvrrdk/DVRRDK_04.00.00.03/ti_tools/cgt_a8/arago/linux-devkit/bin/../lib/gcc/arm-arago-linux-gnueabi/4.5.3/../../../../arm-arago-linux-gnueabi/bin/ld: warning: libStcSkf.so, needed by /usr/local/Gmssl_arm/lib/libssl.so, not found (try using -rpath or -rpath-link)
+configure:5828: arm-arago-linux-gnueabi-g++ -o conftest -I/usr/local/srtp2_arm/include -Wall -Wextra -Wstrict-aliasing -Wfloat-equal -Wno-comment -Wno-unused -Winit-self -Wno-missing-field-initializers -DPTRACING=1 -D_REENTRANT -fno-exceptions -I/usr/local/include -I/usr/local/Gmssl_arm/include   -felide-constructors -Wreorder -fPIC -DPTRACING=1 -D_REENTRANT -fno-exceptions -I/usr/local/include -I/usr/local/Gmssl_arm/include   -felide-constructors -Wreorder  -L/usr/local/srtp2_arm/lib -DPTRACING=1 -D_REENTRANT -fno-exceptions -I/usr/local/include -I/usr/local/Gmssl_arm/include   conftest.cpp -lsrtp2 -L/usr/local/lib -L/usr/local/Gmssl_arm/lib -lpt_s -lpthread -lrt -lssl -lcrypto -lexpat -lresolv -ldl   >&5
 configure:5828: $? = 0
 configure:5840: checking PTLIB has URL
 configure:5842: result: yes
-configure:5880: arm-arago-linux-gnueabi-g++ -o conftest -I/usr/local/srtp2_arm/include -Wall -Wextra -Wstrict-aliasing -Wfloat-equal -Wno-comment -Wno-unused -Winit-self -Wno-missing-field-initializers -DPTRACING=1 -D_REENTRANT -fno-exceptions -I/usr/local/include -I/usr/local/Gmssl_arm/include   -felide-constructors -Wreorder -fPIC -DPTRACING=1 -D_REENTRANT -fno-exceptions -I/usr/local/include -I/usr/local/Gmssl_arm/include   -felide-constructors -Wreorder  -L/usr/local/srtp2_arm/lib -DPTRACING=1 -D_REENTRANT -fno-exceptions -I/usr/local/include -I/usr/local/Gmssl_arm/include   conftest.cpp -lsrtp2 -L/usr/local/lib -L/usr/local/Gmssl_arm/lib -lpt_d_s -lpthread -lrt -lssl -lcrypto -lexpat -lresolv -ldl   >&5
-/usr/local/dvrrdk/DVRRDK_04.00.00.03/ti_tools/cgt_a8/arago/linux-devkit/bin/../lib/gcc/arm-arago-linux-gnueabi/4.5.3/../../../../arm-arago-linux-gnueabi/bin/ld: warning: libStcSkf.so, needed by /usr/local/Gmssl_arm/lib/libssl.so, not found (try using -rpath or -rpath-link)
+configure:5880: arm-arago-linux-gnueabi-g++ -o conftest -I/usr/local/srtp2_arm/include -Wall -Wextra -Wstrict-aliasing -Wfloat-equal -Wno-comment -Wno-unused -Winit-self -Wno-missing-field-initializers -DPTRACING=1 -D_REENTRANT -fno-exceptions -I/usr/local/include -I/usr/local/Gmssl_arm/include   -felide-constructors -Wreorder -fPIC -DPTRACING=1 -D_REENTRANT -fno-exceptions -I/usr/local/include -I/usr/local/Gmssl_arm/include   -felide-constructors -Wreorder  -L/usr/local/srtp2_arm/lib -DPTRACING=1 -D_REENTRANT -fno-exceptions -I/usr/local/include -I/usr/local/Gmssl_arm/include   conftest.cpp -lsrtp2 -L/usr/local/lib -L/usr/local/Gmssl_arm/lib -lpt_s -lpthread -lrt -lssl -lcrypto -lexpat -lresolv -ldl   >&5
 configure:5880: $? = 0
 configure:5892: checking PTLIB has STUN
 configure:5894: result: yes
-configure:5933: arm-arago-linux-gnueabi-g++ -o conftest -I/usr/local/srtp2_arm/include -Wall -Wextra -Wstrict-aliasing -Wfloat-equal -Wno-comment -Wno-unused -Winit-self -Wno-missing-field-initializers -DPTRACING=1 -D_REENTRANT -fno-exceptions -I/usr/local/include -I/usr/local/Gmssl_arm/include   -felide-constructors -Wreorder -fPIC -DPTRACING=1 -D_REENTRANT -fno-exceptions -I/usr/local/include -I/usr/local/Gmssl_arm/include   -felide-constructors -Wreorder  -L/usr/local/srtp2_arm/lib -DPTRACING=1 -D_REENTRANT -fno-exceptions -I/usr/local/include -I/usr/local/Gmssl_arm/include   conftest.cpp -lsrtp2 -L/usr/local/lib -L/usr/local/Gmssl_arm/lib -lpt_d_s -lpthread -lrt -lssl -lcrypto -lexpat -lresolv -ldl   >&5
-/usr/local/dvrrdk/DVRRDK_04.00.00.03/ti_tools/cgt_a8/arago/linux-devkit/bin/../lib/gcc/arm-arago-linux-gnueabi/4.5.3/../../../../arm-arago-linux-gnueabi/bin/ld: warning: libStcSkf.so, needed by /usr/local/Gmssl_arm/lib/libssl.so, not found (try using -rpath or -rpath-link)
+configure:5933: arm-arago-linux-gnueabi-g++ -o conftest -I/usr/local/srtp2_arm/include -Wall -Wextra -Wstrict-aliasing -Wfloat-equal -Wno-comment -Wno-unused -Winit-self -Wno-missing-field-initializers -DPTRACING=1 -D_REENTRANT -fno-exceptions -I/usr/local/include -I/usr/local/Gmssl_arm/include   -felide-constructors -Wreorder -fPIC -DPTRACING=1 -D_REENTRANT -fno-exceptions -I/usr/local/include -I/usr/local/Gmssl_arm/include   -felide-constructors -Wreorder  -L/usr/local/srtp2_arm/lib -DPTRACING=1 -D_REENTRANT -fno-exceptions -I/usr/local/include -I/usr/local/Gmssl_arm/include   conftest.cpp -lsrtp2 -L/usr/local/lib -L/usr/local/Gmssl_arm/lib -lpt_s -lpthread -lrt -lssl -lcrypto -lexpat -lresolv -ldl   >&5
 configure:5933: $? = 0
 configure:5945: checking PTLIB has SSL
 configure:5947: result: yes
-configure:5989: arm-arago-linux-gnueabi-g++ -o conftest -I/usr/local/srtp2_arm/include -Wall -Wextra -Wstrict-aliasing -Wfloat-equal -Wno-comment -Wno-unused -Winit-self -Wno-missing-field-initializers -DPTRACING=1 -D_REENTRANT -fno-exceptions -I/usr/local/include -I/usr/local/Gmssl_arm/include   -felide-constructors -Wreorder -fPIC -DPTRACING=1 -D_REENTRANT -fno-exceptions -I/usr/local/include -I/usr/local/Gmssl_arm/include   -felide-constructors -Wreorder  -L/usr/local/srtp2_arm/lib -DPTRACING=1 -D_REENTRANT -fno-exceptions -I/usr/local/include -I/usr/local/Gmssl_arm/include   conftest.cpp -lsrtp2 -L/usr/local/lib -L/usr/local/Gmssl_arm/lib -lpt_d_s -lpthread -lrt -lssl -lcrypto -lexpat -lresolv -ldl   >&5
-/usr/local/dvrrdk/DVRRDK_04.00.00.03/ti_tools/cgt_a8/arago/linux-devkit/bin/../lib/gcc/arm-arago-linux-gnueabi/4.5.3/../../../../arm-arago-linux-gnueabi/bin/ld: warning: libStcSkf.so, needed by /usr/local/Gmssl_arm/lib/libssl.so, not found (try using -rpath or -rpath-link)
+configure:5989: arm-arago-linux-gnueabi-g++ -o conftest -I/usr/local/srtp2_arm/include -Wall -Wextra -Wstrict-aliasing -Wfloat-equal -Wno-comment -Wno-unused -Winit-self -Wno-missing-field-initializers -DPTRACING=1 -D_REENTRANT -fno-exceptions -I/usr/local/include -I/usr/local/Gmssl_arm/include   -felide-constructors -Wreorder -fPIC -DPTRACING=1 -D_REENTRANT -fno-exceptions -I/usr/local/include -I/usr/local/Gmssl_arm/include   -felide-constructors -Wreorder  -L/usr/local/srtp2_arm/lib -DPTRACING=1 -D_REENTRANT -fno-exceptions -I/usr/local/include -I/usr/local/Gmssl_arm/include   conftest.cpp -lsrtp2 -L/usr/local/lib -L/usr/local/Gmssl_arm/lib -lpt_s -lpthread -lrt -lssl -lcrypto -lexpat -lresolv -ldl   >&5
 configure:5989: $? = 0
 configure:6001: checking PTLIB has ASN.1
 configure:6003: result: yes
-configure:6045: arm-arago-linux-gnueabi-g++ -o conftest -I/usr/local/srtp2_arm/include -Wall -Wextra -Wstrict-aliasing -Wfloat-equal -Wno-comment -Wno-unused -Winit-self -Wno-missing-field-initializers -DPTRACING=1 -D_REENTRANT -fno-exceptions -I/usr/local/include -I/usr/local/Gmssl_arm/include   -felide-constructors -Wreorder -fPIC -DPTRACING=1 -D_REENTRANT -fno-exceptions -I/usr/local/include -I/usr/local/Gmssl_arm/include   -felide-constructors -Wreorder  -L/usr/local/srtp2_arm/lib -DPTRACING=1 -D_REENTRANT -fno-exceptions -I/usr/local/include -I/usr/local/Gmssl_arm/include   conftest.cpp -lsrtp2 -L/usr/local/lib -L/usr/local/Gmssl_arm/lib -lpt_d_s -lpthread -lrt -lssl -lcrypto -lexpat -lresolv -ldl   >&5
-/usr/local/dvrrdk/DVRRDK_04.00.00.03/ti_tools/cgt_a8/arago/linux-devkit/bin/../lib/gcc/arm-arago-linux-gnueabi/4.5.3/../../../../arm-arago-linux-gnueabi/bin/ld: warning: libStcSkf.so, needed by /usr/local/Gmssl_arm/lib/libssl.so, not found (try using -rpath or -rpath-link)
+configure:6045: arm-arago-linux-gnueabi-g++ -o conftest -I/usr/local/srtp2_arm/include -Wall -Wextra -Wstrict-aliasing -Wfloat-equal -Wno-comment -Wno-unused -Winit-self -Wno-missing-field-initializers -DPTRACING=1 -D_REENTRANT -fno-exceptions -I/usr/local/include -I/usr/local/Gmssl_arm/include   -felide-constructors -Wreorder -fPIC -DPTRACING=1 -D_REENTRANT -fno-exceptions -I/usr/local/include -I/usr/local/Gmssl_arm/include   -felide-constructors -Wreorder  -L/usr/local/srtp2_arm/lib -DPTRACING=1 -D_REENTRANT -fno-exceptions -I/usr/local/include -I/usr/local/Gmssl_arm/include   conftest.cpp -lsrtp2 -L/usr/local/lib -L/usr/local/Gmssl_arm/lib -lpt_s -lpthread -lrt -lssl -lcrypto -lexpat -lresolv -ldl   >&5
 configure:6045: $? = 0
 configure:6057: checking PTLIB has expat
 configure:6059: result: yes
-configure:6101: arm-arago-linux-gnueabi-g++ -o conftest -I/usr/local/srtp2_arm/include -Wall -Wextra -Wstrict-aliasing -Wfloat-equal -Wno-comment -Wno-unused -Winit-self -Wno-missing-field-initializers -DPTRACING=1 -D_REENTRANT -fno-exceptions -I/usr/local/include -I/usr/local/Gmssl_arm/include   -felide-constructors -Wreorder -fPIC -DPTRACING=1 -D_REENTRANT -fno-exceptions -I/usr/local/include -I/usr/local/Gmssl_arm/include   -felide-constructors -Wreorder  -L/usr/local/srtp2_arm/lib -DPTRACING=1 -D_REENTRANT -fno-exceptions -I/usr/local/include -I/usr/local/Gmssl_arm/include   conftest.cpp -lsrtp2 -L/usr/local/lib -L/usr/local/Gmssl_arm/lib -lpt_d_s -lpthread -lrt -lssl -lcrypto -lexpat -lresolv -ldl   >&5
-/usr/local/dvrrdk/DVRRDK_04.00.00.03/ti_tools/cgt_a8/arago/linux-devkit/bin/../lib/gcc/arm-arago-linux-gnueabi/4.5.3/../../../../arm-arago-linux-gnueabi/bin/ld: warning: libStcSkf.so, needed by /usr/local/Gmssl_arm/lib/libssl.so, not found (try using -rpath or -rpath-link)
+configure:6101: arm-arago-linux-gnueabi-g++ -o conftest -I/usr/local/srtp2_arm/include -Wall -Wextra -Wstrict-aliasing -Wfloat-equal -Wno-comment -Wno-unused -Winit-self -Wno-missing-field-initializers -DPTRACING=1 -D_REENTRANT -fno-exceptions -I/usr/local/include -I/usr/local/Gmssl_arm/include   -felide-constructors -Wreorder -fPIC -DPTRACING=1 -D_REENTRANT -fno-exceptions -I/usr/local/include -I/usr/local/Gmssl_arm/include   -felide-constructors -Wreorder  -L/usr/local/srtp2_arm/lib -DPTRACING=1 -D_REENTRANT -fno-exceptions -I/usr/local/include -I/usr/local/Gmssl_arm/include   conftest.cpp -lsrtp2 -L/usr/local/lib -L/usr/local/Gmssl_arm/lib -lpt_s -lpthread -lrt -lssl -lcrypto -lexpat -lresolv -ldl   >&5
 configure:6101: $? = 0
 configure:6113: checking PTLIB has video
 configure:6115: result: yes
-configure:6157: arm-arago-linux-gnueabi-g++ -o conftest -I/usr/local/srtp2_arm/include -Wall -Wextra -Wstrict-aliasing -Wfloat-equal -Wno-comment -Wno-unused -Winit-self -Wno-missing-field-initializers -DPTRACING=1 -D_REENTRANT -fno-exceptions -I/usr/local/include -I/usr/local/Gmssl_arm/include   -felide-constructors -Wreorder -fPIC -DPTRACING=1 -D_REENTRANT -fno-exceptions -I/usr/local/include -I/usr/local/Gmssl_arm/include   -felide-constructors -Wreorder  -L/usr/local/srtp2_arm/lib -DPTRACING=1 -D_REENTRANT -fno-exceptions -I/usr/local/include -I/usr/local/Gmssl_arm/include   conftest.cpp -lsrtp2 -L/usr/local/lib -L/usr/local/Gmssl_arm/lib -lpt_d_s -lpthread -lrt -lssl -lcrypto -lexpat -lresolv -ldl   >&5
-/usr/local/dvrrdk/DVRRDK_04.00.00.03/ti_tools/cgt_a8/arago/linux-devkit/bin/../lib/gcc/arm-arago-linux-gnueabi/4.5.3/../../../../arm-arago-linux-gnueabi/bin/ld: warning: libStcSkf.so, needed by /usr/local/Gmssl_arm/lib/libssl.so, not found (try using -rpath or -rpath-link)
+configure:6157: arm-arago-linux-gnueabi-g++ -o conftest -I/usr/local/srtp2_arm/include -Wall -Wextra -Wstrict-aliasing -Wfloat-equal -Wno-comment -Wno-unused -Winit-self -Wno-missing-field-initializers -DPTRACING=1 -D_REENTRANT -fno-exceptions -I/usr/local/include -I/usr/local/Gmssl_arm/include   -felide-constructors -Wreorder -fPIC -DPTRACING=1 -D_REENTRANT -fno-exceptions -I/usr/local/include -I/usr/local/Gmssl_arm/include   -felide-constructors -Wreorder  -L/usr/local/srtp2_arm/lib -DPTRACING=1 -D_REENTRANT -fno-exceptions -I/usr/local/include -I/usr/local/Gmssl_arm/include   conftest.cpp -lsrtp2 -L/usr/local/lib -L/usr/local/Gmssl_arm/lib -lpt_s -lpthread -lrt -lssl -lcrypto -lexpat -lresolv -ldl   >&5
 configure:6157: $? = 0
 configure:6169: checking PTLIB has wavfile
 configure:6171: result: yes
-configure:6213: arm-arago-linux-gnueabi-g++ -o conftest -I/usr/local/srtp2_arm/include -Wall -Wextra -Wstrict-aliasing -Wfloat-equal -Wno-comment -Wno-unused -Winit-self -Wno-missing-field-initializers -DPTRACING=1 -D_REENTRANT -fno-exceptions -I/usr/local/include -I/usr/local/Gmssl_arm/include   -felide-constructors -Wreorder -fPIC -DPTRACING=1 -D_REENTRANT -fno-exceptions -I/usr/local/include -I/usr/local/Gmssl_arm/include   -felide-constructors -Wreorder  -L/usr/local/srtp2_arm/lib -DPTRACING=1 -D_REENTRANT -fno-exceptions -I/usr/local/include -I/usr/local/Gmssl_arm/include   conftest.cpp -lsrtp2 -L/usr/local/lib -L/usr/local/Gmssl_arm/lib -lpt_d_s -lpthread -lrt -lssl -lcrypto -lexpat -lresolv -ldl   >&5
-/usr/local/dvrrdk/DVRRDK_04.00.00.03/ti_tools/cgt_a8/arago/linux-devkit/bin/../lib/gcc/arm-arago-linux-gnueabi/4.5.3/../../../../arm-arago-linux-gnueabi/bin/ld: warning: libStcSkf.so, needed by /usr/local/Gmssl_arm/lib/libssl.so, not found (try using -rpath or -rpath-link)
+configure:6213: arm-arago-linux-gnueabi-g++ -o conftest -I/usr/local/srtp2_arm/include -Wall -Wextra -Wstrict-aliasing -Wfloat-equal -Wno-comment -Wno-unused -Winit-self -Wno-missing-field-initializers -DPTRACING=1 -D_REENTRANT -fno-exceptions -I/usr/local/include -I/usr/local/Gmssl_arm/include   -felide-constructors -Wreorder -fPIC -DPTRACING=1 -D_REENTRANT -fno-exceptions -I/usr/local/include -I/usr/local/Gmssl_arm/include   -felide-constructors -Wreorder  -L/usr/local/srtp2_arm/lib -DPTRACING=1 -D_REENTRANT -fno-exceptions -I/usr/local/include -I/usr/local/Gmssl_arm/include   conftest.cpp -lsrtp2 -L/usr/local/lib -L/usr/local/Gmssl_arm/lib -lpt_s -lpthread -lrt -lssl -lcrypto -lexpat -lresolv -ldl   >&5
 configure:6213: $? = 0
 configure:6225: checking PTLIB has vxml
 configure:6227: result: yes
-configure:6269: arm-arago-linux-gnueabi-g++ -o conftest -I/usr/local/srtp2_arm/include -Wall -Wextra -Wstrict-aliasing -Wfloat-equal -Wno-comment -Wno-unused -Winit-self -Wno-missing-field-initializers -DPTRACING=1 -D_REENTRANT -fno-exceptions -I/usr/local/include -I/usr/local/Gmssl_arm/include   -felide-constructors -Wreorder -fPIC -DPTRACING=1 -D_REENTRANT -fno-exceptions -I/usr/local/include -I/usr/local/Gmssl_arm/include   -felide-constructors -Wreorder  -L/usr/local/srtp2_arm/lib -DPTRACING=1 -D_REENTRANT -fno-exceptions -I/usr/local/include -I/usr/local/Gmssl_arm/include   conftest.cpp -lsrtp2 -L/usr/local/lib -L/usr/local/Gmssl_arm/lib -lpt_d_s -lpthread -lrt -lssl -lcrypto -lexpat -lresolv -ldl   >&5
+configure:6269: arm-arago-linux-gnueabi-g++ -o conftest -I/usr/local/srtp2_arm/include -Wall -Wextra -Wstrict-aliasing -Wfloat-equal -Wno-comment -Wno-unused -Winit-self -Wno-missing-field-initializers -DPTRACING=1 -D_REENTRANT -fno-exceptions -I/usr/local/include -I/usr/local/Gmssl_arm/include   -felide-constructors -Wreorder -fPIC -DPTRACING=1 -D_REENTRANT -fno-exceptions -I/usr/local/include -I/usr/local/Gmssl_arm/include   -felide-constructors -Wreorder  -L/usr/local/srtp2_arm/lib -DPTRACING=1 -D_REENTRANT -fno-exceptions -I/usr/local/include -I/usr/local/Gmssl_arm/include   conftest.cpp -lsrtp2 -L/usr/local/lib -L/usr/local/Gmssl_arm/lib -lpt_s -lpthread -lrt -lssl -lcrypto -lexpat -lresolv -ldl   >&5
 conftest.cpp: In function 'int main()':
 conftest.cpp:30:71: error: no matching function for call to 'PIPSocket::Address::Address(in6_addr&)'
 /usr/local/include/ptlib/ipsock.h:107:9: note: candidates are: PIPSocket::Address::Address(int, int, sockaddr*)
@@ -514,12 +588,11 @@ configure: failed program was:
 | }
 configure:6281: checking PTLIB has ipv6
 configure:6283: result: no
-configure:6325: arm-arago-linux-gnueabi-g++ -o conftest -I/usr/local/srtp2_arm/include -Wall -Wextra -Wstrict-aliasing -Wfloat-equal -Wno-comment -Wno-unused -Winit-self -Wno-missing-field-initializers -DPTRACING=1 -D_REENTRANT -fno-exceptions -I/usr/local/include -I/usr/local/Gmssl_arm/include   -felide-constructors -Wreorder -fPIC -DPTRACING=1 -D_REENTRANT -fno-exceptions -I/usr/local/include -I/usr/local/Gmssl_arm/include   -felide-constructors -Wreorder  -L/usr/local/srtp2_arm/lib -DPTRACING=1 -D_REENTRANT -fno-exceptions -I/usr/local/include -I/usr/local/Gmssl_arm/include   conftest.cpp -lsrtp2 -L/usr/local/lib -L/usr/local/Gmssl_arm/lib -lpt_d_s -lpthread -lrt -lssl -lcrypto -lexpat -lresolv -ldl   >&5
-/usr/local/dvrrdk/DVRRDK_04.00.00.03/ti_tools/cgt_a8/arago/linux-devkit/bin/../lib/gcc/arm-arago-linux-gnueabi/4.5.3/../../../../arm-arago-linux-gnueabi/bin/ld: warning: libStcSkf.so, needed by /usr/local/Gmssl_arm/lib/libssl.so, not found (try using -rpath or -rpath-link)
+configure:6325: arm-arago-linux-gnueabi-g++ -o conftest -I/usr/local/srtp2_arm/include -Wall -Wextra -Wstrict-aliasing -Wfloat-equal -Wno-comment -Wno-unused -Winit-self -Wno-missing-field-initializers -DPTRACING=1 -D_REENTRANT -fno-exceptions -I/usr/local/include -I/usr/local/Gmssl_arm/include   -felide-constructors -Wreorder -fPIC -DPTRACING=1 -D_REENTRANT -fno-exceptions -I/usr/local/include -I/usr/local/Gmssl_arm/include   -felide-constructors -Wreorder  -L/usr/local/srtp2_arm/lib -DPTRACING=1 -D_REENTRANT -fno-exceptions -I/usr/local/include -I/usr/local/Gmssl_arm/include   conftest.cpp -lsrtp2 -L/usr/local/lib -L/usr/local/Gmssl_arm/lib -lpt_s -lpthread -lrt -lssl -lcrypto -lexpat -lresolv -ldl   >&5
 configure:6325: $? = 0
 configure:6337: checking PTLIB has dtmf
 configure:6339: result: yes
-configure:6381: arm-arago-linux-gnueabi-g++ -o conftest -I/usr/local/srtp2_arm/include -Wall -Wextra -Wstrict-aliasing -Wfloat-equal -Wno-comment -Wno-unused -Winit-self -Wno-missing-field-initializers -DPTRACING=1 -D_REENTRANT -fno-exceptions -I/usr/local/include -I/usr/local/Gmssl_arm/include   -felide-constructors -Wreorder -fPIC -DPTRACING=1 -D_REENTRANT -fno-exceptions -I/usr/local/include -I/usr/local/Gmssl_arm/include   -felide-constructors -Wreorder  -L/usr/local/srtp2_arm/lib -DPTRACING=1 -D_REENTRANT -fno-exceptions -I/usr/local/include -I/usr/local/Gmssl_arm/include   conftest.cpp -lsrtp2 -L/usr/local/lib -L/usr/local/Gmssl_arm/lib -lpt_d_s -lpthread -lrt -lssl -lcrypto -lexpat -lresolv -ldl   >&5
+configure:6381: arm-arago-linux-gnueabi-g++ -o conftest -I/usr/local/srtp2_arm/include -Wall -Wextra -Wstrict-aliasing -Wfloat-equal -Wno-comment -Wno-unused -Winit-self -Wno-missing-field-initializers -DPTRACING=1 -D_REENTRANT -fno-exceptions -I/usr/local/include -I/usr/local/Gmssl_arm/include   -felide-constructors -Wreorder -fPIC -DPTRACING=1 -D_REENTRANT -fno-exceptions -I/usr/local/include -I/usr/local/Gmssl_arm/include   -felide-constructors -Wreorder  -L/usr/local/srtp2_arm/lib -DPTRACING=1 -D_REENTRANT -fno-exceptions -I/usr/local/include -I/usr/local/Gmssl_arm/include   conftest.cpp -lsrtp2 -L/usr/local/lib -L/usr/local/Gmssl_arm/lib -lpt_s -lpthread -lrt -lssl -lcrypto -lexpat -lresolv -ldl   >&5
 conftest.cpp: In function 'int main()':
 conftest.cpp:31:29: error: 'PLDAPSession' was not declared in this scope
 conftest.cpp:31:42: error: expected ';' before 'session'
@@ -562,18 +635,15 @@ configure: failed program was:
 | }
 configure:6393: checking PTLIB has ldap
 configure:6395: result: no
-configure:6437: arm-arago-linux-gnueabi-g++ -o conftest -I/usr/local/srtp2_arm/include -Wall -Wextra -Wstrict-aliasing -Wfloat-equal -Wno-comment -Wno-unused -Winit-self -Wno-missing-field-initializers -DPTRACING=1 -D_REENTRANT -fno-exceptions -I/usr/local/include -I/usr/local/Gmssl_arm/include   -felide-constructors -Wreorder -fPIC -DPTRACING=1 -D_REENTRANT -fno-exceptions -I/usr/local/include -I/usr/local/Gmssl_arm/include   -felide-constructors -Wreorder  -L/usr/local/srtp2_arm/lib -DPTRACING=1 -D_REENTRANT -fno-exceptions -I/usr/local/include -I/usr/local/Gmssl_arm/include   conftest.cpp -lsrtp2 -L/usr/local/lib -L/usr/local/Gmssl_arm/lib -lpt_d_s -lpthread -lrt -lssl -lcrypto -lexpat -lresolv -ldl   >&5
-/usr/local/dvrrdk/DVRRDK_04.00.00.03/ti_tools/cgt_a8/arago/linux-devkit/bin/../lib/gcc/arm-arago-linux-gnueabi/4.5.3/../../../../arm-arago-linux-gnueabi/bin/ld: warning: libStcSkf.so, needed by /usr/local/Gmssl_arm/lib/libssl.so, not found (try using -rpath or -rpath-link)
+configure:6437: arm-arago-linux-gnueabi-g++ -o conftest -I/usr/local/srtp2_arm/include -Wall -Wextra -Wstrict-aliasing -Wfloat-equal -Wno-comment -Wno-unused -Winit-self -Wno-missing-field-initializers -DPTRACING=1 -D_REENTRANT -fno-exceptions -I/usr/local/include -I/usr/local/Gmssl_arm/include   -felide-constructors -Wreorder -fPIC -DPTRACING=1 -D_REENTRANT -fno-exceptions -I/usr/local/include -I/usr/local/Gmssl_arm/include   -felide-constructors -Wreorder  -L/usr/local/srtp2_arm/lib -DPTRACING=1 -D_REENTRANT -fno-exceptions -I/usr/local/include -I/usr/local/Gmssl_arm/include   conftest.cpp -lsrtp2 -L/usr/local/lib -L/usr/local/Gmssl_arm/lib -lpt_s -lpthread -lrt -lssl -lcrypto -lexpat -lresolv -ldl   >&5
 configure:6437: $? = 0
 configure:6449: checking PTLIB has dns
 configure:6451: result: yes
-configure:6493: arm-arago-linux-gnueabi-g++ -o conftest -I/usr/local/srtp2_arm/include -Wall -Wextra -Wstrict-aliasing -Wfloat-equal -Wno-comment -Wno-unused -Winit-self -Wno-missing-field-initializers -DPTRACING=1 -D_REENTRANT -fno-exceptions -I/usr/local/include -I/usr/local/Gmssl_arm/include   -felide-constructors -Wreorder -fPIC -DPTRACING=1 -D_REENTRANT -fno-exceptions -I/usr/local/include -I/usr/local/Gmssl_arm/include   -felide-constructors -Wreorder  -L/usr/local/srtp2_arm/lib -DPTRACING=1 -D_REENTRANT -fno-exceptions -I/usr/local/include -I/usr/local/Gmssl_arm/include   conftest.cpp -lsrtp2 -L/usr/local/lib -L/usr/local/Gmssl_arm/lib -lpt_d_s -lpthread -lrt -lssl -lcrypto -lexpat -lresolv -ldl   >&5
-/usr/local/dvrrdk/DVRRDK_04.00.00.03/ti_tools/cgt_a8/arago/linux-devkit/bin/../lib/gcc/arm-arago-linux-gnueabi/4.5.3/../../../../arm-arago-linux-gnueabi/bin/ld: warning: libStcSkf.so, needed by /usr/local/Gmssl_arm/lib/libssl.so, not found (try using -rpath or -rpath-link)
+configure:6493: arm-arago-linux-gnueabi-g++ -o conftest -I/usr/local/srtp2_arm/include -Wall -Wextra -Wstrict-aliasing -Wfloat-equal -Wno-comment -Wno-unused -Winit-self -Wno-missing-field-initializers -DPTRACING=1 -D_REENTRANT -fno-exceptions -I/usr/local/include -I/usr/local/Gmssl_arm/include   -felide-constructors -Wreorder -fPIC -DPTRACING=1 -D_REENTRANT -fno-exceptions -I/usr/local/include -I/usr/local/Gmssl_arm/include   -felide-constructors -Wreorder  -L/usr/local/srtp2_arm/lib -DPTRACING=1 -D_REENTRANT -fno-exceptions -I/usr/local/include -I/usr/local/Gmssl_arm/include   conftest.cpp -lsrtp2 -L/usr/local/lib -L/usr/local/Gmssl_arm/lib -lpt_s -lpthread -lrt -lssl -lcrypto -lexpat -lresolv -ldl   >&5
 configure:6493: $? = 0
 configure:6505: checking PTLIB has audio
 configure:6507: result: yes
-configure:6549: arm-arago-linux-gnueabi-g++ -o conftest -I/usr/local/srtp2_arm/include -Wall -Wextra -Wstrict-aliasing -Wfloat-equal -Wno-comment -Wno-unused -Winit-self -Wno-missing-field-initializers -DPTRACING=1 -D_REENTRANT -fno-exceptions -I/usr/local/include -I/usr/local/Gmssl_arm/include   -felide-constructors -Wreorder -fPIC -DPTRACING=1 -D_REENTRANT -fno-exceptions -I/usr/local/include -I/usr/local/Gmssl_arm/include   -felide-constructors -Wreorder  -L/usr/local/srtp2_arm/lib -DPTRACING=1 -D_REENTRANT -fno-exceptions -I/usr/local/include -I/usr/local/Gmssl_arm/include   conftest.cpp -lsrtp2 -L/usr/local/lib -L/usr/local/Gmssl_arm/lib -lpt_d_s -lpthread -lrt -lssl -lcrypto -lexpat -lresolv -ldl   >&5
-/usr/local/dvrrdk/DVRRDK_04.00.00.03/ti_tools/cgt_a8/arago/linux-devkit/bin/../lib/gcc/arm-arago-linux-gnueabi/4.5.3/../../../../arm-arago-linux-gnueabi/bin/ld: warning: libStcSkf.so, needed by /usr/local/Gmssl_arm/lib/libssl.so, not found (try using -rpath or -rpath-link)
+configure:6549: arm-arago-linux-gnueabi-g++ -o conftest -I/usr/local/srtp2_arm/include -Wall -Wextra -Wstrict-aliasing -Wfloat-equal -Wno-comment -Wno-unused -Winit-self -Wno-missing-field-initializers -DPTRACING=1 -D_REENTRANT -fno-exceptions -I/usr/local/include -I/usr/local/Gmssl_arm/include   -felide-constructors -Wreorder -fPIC -DPTRACING=1 -D_REENTRANT -fno-exceptions -I/usr/local/include -I/usr/local/Gmssl_arm/include   -felide-constructors -Wreorder  -L/usr/local/srtp2_arm/lib -DPTRACING=1 -D_REENTRANT -fno-exceptions -I/usr/local/include -I/usr/local/Gmssl_arm/include   conftest.cpp -lsrtp2 -L/usr/local/lib -L/usr/local/Gmssl_arm/lib -lpt_s -lpthread -lrt -lssl -lcrypto -lexpat -lresolv -ldl   >&5
 configure:6549: $? = 0
 configure:6561: checking PTLIB has config
 configure:6563: result: yes
@@ -2112,8 +2182,7 @@ configure:7807: checking whether to enable SIP protocol support
 configure:7809: result: yes
 configure:7847: checking whether to enable H.323 protocol support
 configure:7849: result: yes
-configure:7890: arm-arago-linux-gnueabi-g++ -o conftest -I/usr/local/srtp2_arm/include -Wall -Wextra -Wstrict-aliasing -Wfloat-equal -Wno-comment -Wno-unused -Winit-self -Wno-missing-field-initializers -DPTRACING=1 -D_REENTRANT -fno-exceptions -I/usr/local/include -I/usr/local/Gmssl_arm/include   -felide-constructors -Wreorder -fPIC  -DPTRACING=1 -D_REENTRANT -fno-exceptions -I/usr/local/include -I/usr/local/Gmssl_arm/include   -felide-constructors -Wreorder  -L/usr/local/srtp2_arm/lib -DPTRACING=1 -D_REENTRANT -fno-exceptions -I/usr/local/include -I/usr/local/Gmssl_arm/include   conftest.cpp -lsrtp2 -ldl -L/usr/local/lib -L/usr/local/Gmssl_arm/lib -lpt_d_s -lpthread -lrt -lssl -lcrypto -lexpat -lresolv -ldl   >&5
-/usr/local/dvrrdk/DVRRDK_04.00.00.03/ti_tools/cgt_a8/arago/linux-devkit/bin/../lib/gcc/arm-arago-linux-gnueabi/4.5.3/../../../../arm-arago-linux-gnueabi/bin/ld: warning: libStcSkf.so, needed by /usr/local/Gmssl_arm/lib/libssl.so, not found (try using -rpath or -rpath-link)
+configure:7890: arm-arago-linux-gnueabi-g++ -o conftest -I/usr/local/srtp2_arm/include -Wall -Wextra -Wstrict-aliasing -Wfloat-equal -Wno-comment -Wno-unused -Winit-self -Wno-missing-field-initializers -DPTRACING=1 -D_REENTRANT -fno-exceptions -I/usr/local/include -I/usr/local/Gmssl_arm/include   -felide-constructors -Wreorder -fPIC  -DPTRACING=1 -D_REENTRANT -fno-exceptions -I/usr/local/include -I/usr/local/Gmssl_arm/include   -felide-constructors -Wreorder  -L/usr/local/srtp2_arm/lib -DPTRACING=1 -D_REENTRANT -fno-exceptions -I/usr/local/include -I/usr/local/Gmssl_arm/include   conftest.cpp -lsrtp2 -ldl -L/usr/local/lib -L/usr/local/Gmssl_arm/lib -lpt_s -lpthread -lrt -lssl -lcrypto -lexpat -lresolv -ldl   >&5
 configure:7890: $? = 0
 configure:7902: checking PTLIB has ASN
 configure:7904: result: yes

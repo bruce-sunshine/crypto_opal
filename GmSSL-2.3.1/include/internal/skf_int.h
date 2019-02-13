@@ -252,10 +252,10 @@ typedef ULONG (*SKF_GenRandom_FuncPtr)(
 	BYTE *pbRandom,
 	ULONG ulRandomLen);
 
-typedef ULONG (*SKF_GenExtRSAKey_FuncPtr)(
-	DEVHANDLE hDev,
-	ULONG ulBitsLen,
-	RSAPRIVATEKEYBLOB *pBlob);
+//typedef ULONG (*SKF_GenExtRSAKey_FuncPtr)(	//changed by bruce, 0114, for hangye sd api
+//	DEVHANDLE hDev,
+//	ULONG ulBitsLen,
+//	RSAPRIVATEKEYBLOB *pBlob);
 
 typedef ULONG (*SKF_GenRSAKeyPair_FuncPtr)(
 	HCONTAINER hContainer,
@@ -293,21 +293,21 @@ typedef ULONG (*SKF_RSAExportSessionKey_FuncPtr)(
 	ULONG *pulDataLen,
 	HANDLE *phSessionKey);
 
-typedef ULONG (*SKF_ExtRSAPubKeyOperation_FuncPtr)(
-	DEVHANDLE hDev,
-	RSAPUBLICKEYBLOB *pRSAPubKeyBlob,
-	BYTE *pbInput,
-	ULONG ulInputLen,
-	BYTE *pbOutput,
-	ULONG *pulOutputLen);
-
-typedef ULONG (*SKF_ExtRSAPriKeyOperation_FuncPtr)(
-	DEVHANDLE hDev,
-	RSAPRIVATEKEYBLOB *pRSAPriKeyBlob,
-	BYTE *pbInput,
-	ULONG ulInputLen,
-	BYTE *pbOutput,
-	ULONG *pulOutputLen);
+//typedef ULONG (*SKF_ExtRSAPubKeyOperation_FuncPtr)(	//changed by bruce, 0114, for hangye sd api
+//	DEVHANDLE hDev,
+//	RSAPUBLICKEYBLOB *pRSAPubKeyBlob,
+//	BYTE *pbInput,
+//	ULONG ulInputLen,
+//	BYTE *pbOutput,
+//	ULONG *pulOutputLen);
+//
+//typedef ULONG (*SKF_ExtRSAPriKeyOperation_FuncPtr)(	//changed by bruce, 0114, for hangye sd api
+//	DEVHANDLE hDev,
+//	RSAPRIVATEKEYBLOB *pRSAPriKeyBlob,
+//	BYTE *pbInput,
+//	ULONG ulInputLen,
+//	BYTE *pbOutput,
+//	ULONG *pulOutputLen);
 
 typedef ULONG (*SKF_GenECCKeyPair_FuncPtr)(
 	HCONTAINER hContainer,
@@ -552,14 +552,14 @@ typedef struct skf_method_st {
 	SKF_ExportCertificate_FuncPtr ExportCertificate;
 	SKF_ExportPublicKey_FuncPtr ExportPublicKey;
 	SKF_GenRandom_FuncPtr GenRandom;
-	SKF_GenExtRSAKey_FuncPtr GenExtRSAKey;
+//	SKF_GenExtRSAKey_FuncPtr GenExtRSAKey;
 	SKF_GenRSAKeyPair_FuncPtr GenRSAKeyPair;
 	SKF_ImportRSAKeyPair_FuncPtr ImportRSAKeyPair;
 	SKF_RSASignData_FuncPtr RSASignData;
 	SKF_RSAVerify_FuncPtr RSAVerify;
 	SKF_RSAExportSessionKey_FuncPtr RSAExportSessionKey;
-	SKF_ExtRSAPubKeyOperation_FuncPtr ExtRSAPubKeyOperation;
-	SKF_ExtRSAPriKeyOperation_FuncPtr ExtRSAPriKeyOperation;
+//	SKF_ExtRSAPubKeyOperation_FuncPtr ExtRSAPubKeyOperation;
+//	SKF_ExtRSAPriKeyOperation_FuncPtr ExtRSAPriKeyOperation;
 	SKF_GenECCKeyPair_FuncPtr GenECCKeyPair;
 	SKF_ImportECCKeyPair_FuncPtr ImportECCKeyPair;
 	SKF_ECCSignData_FuncPtr ECCSignData;

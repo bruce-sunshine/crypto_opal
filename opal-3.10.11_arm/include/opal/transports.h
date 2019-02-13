@@ -45,6 +45,7 @@
 #include <ptlib/sockets.h>
 #include <ptclib/psockbun.h>
 
+#include <openssl/engine.h>		//added by bruce, 20190114
 
 class OpalManager;
 class OpalEndPoint;
@@ -1372,8 +1373,11 @@ class OpalTransportTCPS : public OpalTransportTCP
       PBoolean OnOpen();
       const char * GetProtoPrefix() const;
 
+//      static int instant_count;	//added by bruce, for sdt engine, 20190117
     protected:
       PSSLContext * sslContext;
+//      ENGINE *sdt_engine;	//added by bruce, for sdt engine, 20190114
+
 };
 
 typedef OpalInternalIPTransportTemplate<OpalListenerTCPS, OpalTransportTCPS, OpalTransportAddress::Datagram, OpalTransportUDP> OpalInternalTCPSTransport;

@@ -67,9 +67,11 @@ const unsigned SecondsFrom1900to1970 = (70*365+17)*24*60*60U;
 char *defKey = "c1eec3717da76195bb878578790af71c4ee9f859e197a414a78d5abc7451";	//gaoshaobo for srtp
 char inputKey[96];								//gaoshaobo for srtp
 unsigned char pKey_audio[16] = {0x01,0x23,0x45,0x67,0x89,0xab,0xcd,0xef,0xfe,0xdc,0xba,0x98,0x76,0x54,0x32,0x10};
-extern unsigned char ssl_session_key[16];
 #endif
-								
+
+extern unsigned char ssl_session_key[16];
+
+
 #define RTP_VIDEO_RX_BUFFER_SIZE 0x100000 // 1Mb
 #define RTP_AUDIO_RX_BUFFER_SIZE 0x4000   // 16kb
 #define RTP_DATA_TX_BUFFER_SIZE  0x2000   // 8kb
@@ -683,6 +685,8 @@ static PTimeInterval GetDefaultOutOfOrderWaitTime()
 #define GetDefaultOutOfOrderWaitTime() (100)
 #endif
 
+
+extern int srtp_use_audio;
 #if gaoshaobo
 /***********gaoshaobo for srtp********/
 
@@ -690,6 +694,7 @@ PBoolean RTP_Session::inited = PFalse;
 //unsigned char* RTP_Session::key_audio = (unsigned char*)pKey_audio;
 int RTP_Session::audio_srtp = 0;
 extern int srtp_use_audio;
+//extern int srtp_use_video;
 /***********gaoshaobo for srtp********/
 #endif
 
@@ -772,19 +777,27 @@ RTP_Session::RTP_Session(const Params & params)
 
   if (!RTP_Session::inited && RTP_Session::audio_srtp)
   {
+	printf("initialize srtp library, in audio\n");
     srtp_err_status_t err = srtp_init();
 	if (err)
 	{
 		printf("error: srtp init failed with error code %d\n", err);
-		exit(1);
+//		exit(1);
+		 RTP_Session::inited = PFalse;
 	}
-    RTP_Session::inited = PTrue;
-    printf("srtp audio init ok \n");
+	else
+	{
+		RTP_Session::inited = PTrue;
+		printf("srtp audio init ok \n");
+	}
   }
 
 ////////////////////////////////////////////////
 #endif
+//
 
+//  printf("Get sdt_skf_hy_crypt status = %d\n", Get_hy_sd_dev_handle_status());
+//
   m_reportTimer.SetNotifier(PCREATE_NOTIFIER(SendReport));
 }
 
@@ -847,13 +860,18 @@ RTP_Session::~RTP_Session()
 
   if (inited)
   {
-	  srtp_shutdown();
+//	  printf("srtp_shutdown by audio, begin\n");
+//	  if(!srtp_use_video)
+	  {
+		  srtp_shutdown();
+		  printf("srtp_shutdown by audio\n");
+	  }
 	  inited = PFalse;
   }
   ////////////////////////////////////////////////
 #endif
 
-#if 0
+#if bruce
     if(RTP_Session::audio_zrtp_inited && RTP_Session::audio_zrtp)
     {
 		printf("111\n");
@@ -1131,10 +1149,9 @@ void RTP_Session::AddReceiverReport(RTP_ControlFrame::ReceiverReport & receiver)
 
 RTP_Session::SendReceiveStatus RTP_Session::OnSendData(RTP_DataFrame & frame)
 {
+
 #if gaoshaobo
 	/************gaoshaobo for srtp*********************/
-	if(!RTP_Session::audio_srtp)		//added by lee, for zrtp
-		return EncodingLock(*this)->OnSendData(frame);
 	if(RTP_Session::audio_srtp)
 	{
 		srtp_err_status_t err;
@@ -1146,7 +1163,7 @@ RTP_Session::SendReceiveStatus RTP_Session::OnSendData(RTP_DataFrame & frame)
 		if(!createdOut_audio && inited)
 		{
 			memset(&policyOut_audio, 0, sizeof(srtp_policy_t));
-			srtp_crypto_policy_set_sdt_skf_sm4_ecb(&policyOut_audio.rtp);
+			srtp_crypto_policy_set_sdt_skf_hy_sm4_ecb(&policyOut_audio.rtp);
 		//	srtp_crypto_policy_set_rtp_default(&policyOut_audio.rtp);
 			policyOut_audio.ssrc.type = ssrc_specific;
 			policyOut_audio.ssrc.value = frame.GetSyncSource();
@@ -1241,7 +1258,7 @@ RTP_Session::SendReceiveStatus RTP_Session::OnSendData(RTP_DataFrame & frame)
 			return e_ProcessPacket;
 		}
 #endif
-
+		return EncodingLock(*this)->OnSendData(frame);
 }
 
 
@@ -1389,7 +1406,7 @@ RTP_Session::SendReceiveStatus RTP_Session::OnReceiveData(RTP_DataFrame & frame)
 		if(!createdIn_audio && inited)
 		{
 			memset(&policyIn_audio, 0, sizeof(srtp_policy_t));
-			srtp_crypto_policy_set_sdt_skf_sm4_ecb_dec(&policyIn_audio.rtp);
+			srtp_crypto_policy_set_sdt_skf_hy_sm4_ecb(&policyIn_audio.rtp);
 //			srtp_crypto_policy_set_rtp_default(&policyIn_audio.rtp);
 			policyIn_audio.ssrc.type = ssrc_specific;
 			policyIn_audio.ssrc.value = frame.GetSyncSource();

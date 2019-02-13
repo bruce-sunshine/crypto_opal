@@ -1382,35 +1382,36 @@ ULONG DEVAPI SKF_GenRandom(
 	return SAR_OK;
 }
 
-ULONG DEVAPI SKF_GenExtRSAKey(
-	DEVHANDLE hDev,
-	ULONG ulBitsLen,
-	RSAPRIVATEKEYBLOB *pBlob)
-{
-	ULONG rv;
+//ULONG DEVAPI SKF_GenExtRSAKey(		//added by bruce, marked for hangye sd api
+//	DEVHANDLE hDev,
+//	ULONG ulBitsLen,
+//	RSAPRIVATEKEYBLOB *pBlob)
+//{
+//	ULONG rv;
+//
+//	if (!skf_method) {
+//		SKFerr(SKF_F_SKF_GENEXTRSAKEY,
+//			SKF_R_SKF_METHOD_NOT_INITIALIZED);
+//		return SAR_NOTINITIALIZEERR;
+//	}
+//
+//	if (!skf_method->GenExtRSAKey) {
+//		SKFerr(SKF_F_SKF_GENEXTRSAKEY,
+//			SKF_R_FUNCTION_NOT_SUPPORTED);
+//		return SAR_NOTSUPPORTYETERR;
+//	}
+//
+//	if ((rv = skf_method->GenExtRSAKey(
+//		hDev,
+//		ulBitsLen,
+//		pBlob)) != SAR_OK) {
+//		SKFerr(SKF_F_SKF_GENEXTRSAKEY, skf_get_error_reason(rv));
+//		return rv;
+//	}
+//
+//	return SAR_OK;
+//}
 
-	if (!skf_method) {
-		SKFerr(SKF_F_SKF_GENEXTRSAKEY,
-			SKF_R_SKF_METHOD_NOT_INITIALIZED);
-		return SAR_NOTINITIALIZEERR;
-	}
-
-	if (!skf_method->GenExtRSAKey) {
-		SKFerr(SKF_F_SKF_GENEXTRSAKEY,
-			SKF_R_FUNCTION_NOT_SUPPORTED);
-		return SAR_NOTSUPPORTYETERR;
-	}
-
-	if ((rv = skf_method->GenExtRSAKey(
-		hDev,
-		ulBitsLen,
-		pBlob)) != SAR_OK) {
-		SKFerr(SKF_F_SKF_GENEXTRSAKEY, skf_get_error_reason(rv));
-		return rv;
-	}
-
-	return SAR_OK;
-}
 
 ULONG DEVAPI SKF_GenRSAKeyPair(
 	HCONTAINER hContainer,
@@ -1601,77 +1602,77 @@ ULONG DEVAPI SKF_RSAExportSessionKey(
 	return SAR_OK;
 }
 
-ULONG DEVAPI SKF_ExtRSAPubKeyOperation(
-	DEVHANDLE hDev,
-	RSAPUBLICKEYBLOB *pRSAPubKeyBlob,
-	BYTE *pbInput,
-	ULONG ulInputLen,
-	BYTE *pbOutput,
-	ULONG *pulOutputLen)
-{
-	ULONG rv;
+//ULONG DEVAPI SKF_ExtRSAPubKeyOperation(		//added by bruce, marked for hangye sd api
+//	DEVHANDLE hDev,
+//	RSAPUBLICKEYBLOB *pRSAPubKeyBlob,
+//	BYTE *pbInput,
+//	ULONG ulInputLen,
+//	BYTE *pbOutput,
+//	ULONG *pulOutputLen)
+//{
+//	ULONG rv;
+//
+//	if (!skf_method) {
+//		SKFerr(SKF_F_SKF_EXTRSAPUBKEYOPERATION,
+//			SKF_R_SKF_METHOD_NOT_INITIALIZED);
+//		return SAR_NOTINITIALIZEERR;
+//	}
+//
+//	if (!skf_method->ExtRSAPubKeyOperation) {
+//		SKFerr(SKF_F_SKF_EXTRSAPUBKEYOPERATION,
+//			SKF_R_FUNCTION_NOT_SUPPORTED);
+//		return SAR_NOTSUPPORTYETERR;
+//	}
+//
+//	if ((rv = skf_method->ExtRSAPubKeyOperation(
+//		hDev,
+//		pRSAPubKeyBlob,
+//		pbInput,
+//		ulInputLen,
+//		pbOutput,
+//		pulOutputLen)) != SAR_OK) {
+//		SKFerr(SKF_F_SKF_EXTRSAPUBKEYOPERATION, skf_get_error_reason(rv));
+//		return rv;
+//	}
+//
+//	return SAR_OK;
+//}
 
-	if (!skf_method) {
-		SKFerr(SKF_F_SKF_EXTRSAPUBKEYOPERATION,
-			SKF_R_SKF_METHOD_NOT_INITIALIZED);
-		return SAR_NOTINITIALIZEERR;
-	}
-
-	if (!skf_method->ExtRSAPubKeyOperation) {
-		SKFerr(SKF_F_SKF_EXTRSAPUBKEYOPERATION,
-			SKF_R_FUNCTION_NOT_SUPPORTED);
-		return SAR_NOTSUPPORTYETERR;
-	}
-
-	if ((rv = skf_method->ExtRSAPubKeyOperation(
-		hDev,
-		pRSAPubKeyBlob,
-		pbInput,
-		ulInputLen,
-		pbOutput,
-		pulOutputLen)) != SAR_OK) {
-		SKFerr(SKF_F_SKF_EXTRSAPUBKEYOPERATION, skf_get_error_reason(rv));
-		return rv;
-	}
-
-	return SAR_OK;
-}
-
-ULONG DEVAPI SKF_ExtRSAPriKeyOperation(
-	DEVHANDLE hDev,
-	RSAPRIVATEKEYBLOB *pRSAPriKeyBlob,
-	BYTE *pbInput,
-	ULONG ulInputLen,
-	BYTE *pbOutput,
-	ULONG *pulOutputLen)
-{
-	ULONG rv;
-
-	if (!skf_method) {
-		SKFerr(SKF_F_SKF_EXTRSAPRIKEYOPERATION,
-			SKF_R_SKF_METHOD_NOT_INITIALIZED);
-		return SAR_NOTINITIALIZEERR;
-	}
-
-	if (!skf_method->ExtRSAPriKeyOperation) {
-		SKFerr(SKF_F_SKF_EXTRSAPRIKEYOPERATION,
-			SKF_R_FUNCTION_NOT_SUPPORTED);
-		return SAR_NOTSUPPORTYETERR;
-	}
-
-	if ((rv = skf_method->ExtRSAPriKeyOperation(
-		hDev,
-		pRSAPriKeyBlob,
-		pbInput,
-		ulInputLen,
-		pbOutput,
-		pulOutputLen)) != SAR_OK) {
-		SKFerr(SKF_F_SKF_EXTRSAPRIKEYOPERATION, skf_get_error_reason(rv));
-		return rv;
-	}
-
-	return SAR_OK;
-}
+//ULONG DEVAPI SKF_ExtRSAPriKeyOperation(		//added by bruce, marked for hangye sd api
+//	DEVHANDLE hDev,
+//	RSAPRIVATEKEYBLOB *pRSAPriKeyBlob,
+//	BYTE *pbInput,
+//	ULONG ulInputLen,
+//	BYTE *pbOutput,
+//	ULONG *pulOutputLen)
+//{
+//	ULONG rv;
+//
+//	if (!skf_method) {
+//		SKFerr(SKF_F_SKF_EXTRSAPRIKEYOPERATION,
+//			SKF_R_SKF_METHOD_NOT_INITIALIZED);
+//		return SAR_NOTINITIALIZEERR;
+//	}
+//
+//	if (!skf_method->ExtRSAPriKeyOperation) {
+//		SKFerr(SKF_F_SKF_EXTRSAPRIKEYOPERATION,
+//			SKF_R_FUNCTION_NOT_SUPPORTED);
+//		return SAR_NOTSUPPORTYETERR;
+//	}
+//
+//	if ((rv = skf_method->ExtRSAPriKeyOperation(
+//		hDev,
+//		pRSAPriKeyBlob,
+//		pbInput,
+//		ulInputLen,
+//		pbOutput,
+//		pulOutputLen)) != SAR_OK) {
+//		SKFerr(SKF_F_SKF_EXTRSAPRIKEYOPERATION, skf_get_error_reason(rv));
+//		return rv;
+//	}
+//
+//	return SAR_OK;
+//}
 
 ULONG DEVAPI SKF_GenECCKeyPair(
 	HCONTAINER hContainer,

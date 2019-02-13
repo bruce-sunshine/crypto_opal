@@ -47,6 +47,8 @@ extern "C" {
 #include <openssl/bio.h>
 #include <openssl/ossl_typ.h>
 //#include <openssl/dh.h>
+//#include <openssl/engine.h>		//added by bruce, 20190114
+
 };
 
 struct ssl_st;
@@ -357,6 +359,8 @@ class PSSLContext {
       TLSv1_2
     };
 
+
+
     /**Create a new context for SSL channels.
        An optional session ID may be provided in the context. This is used
        to identify sessions across multiple channels in this context. The
@@ -422,6 +426,7 @@ class PSSLContext {
   protected:
     void Construct(Method method, const void * sessionId, PINDEX idSize);
     ssl_ctx_st * context;
+//    ENGINE *sdt_engine;		//added by bruce, for sdt engine, 20190114
 };
 
 
